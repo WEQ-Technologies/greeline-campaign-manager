@@ -5,9 +5,9 @@ import { CheckCircle2, AlertCircle } from "lucide-react";
 
 const clients = [
   { id: "1", name: "Tech Startup Inc", status: "connected", campaigns: 3 },
-  { id: "2", name: "Local Bakery", status: "connected", campaigns: 2 },
-  { id: "3", name: "Fitness Center", status: "connected", campaigns: 1 },
-  { id: "4", name: "Restaurant Chain", status: "pending", campaigns: 0 },
+  { id: "2", name: "Nations Auto Glass", status: "connected", campaigns: 2 },
+  { id: "3", name: "VW Heavy Up", status: "connected", campaigns: 1 },
+  { id: "4", name: "Volkswagen", status: "pending", campaigns: 0 },
 ];
 
 interface SelectClientProps {

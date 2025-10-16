@@ -13,7 +13,7 @@ const activities = [
   {
     id: 2,
     action: "Budget increased",
-    client: "Local Bakery",
+    client: "Nations Auto Glass",
     campaign: "Holiday Special",
     time: "5 hours ago",
     status: "info",
@@ -21,7 +21,7 @@ const activities = [
   {
     id: 3,
     action: "Campaign paused",
-    client: "Fitness Center",
+    client: "VW Heavy Up",
     campaign: "New Year Promo",
     time: "1 day ago",
     status: "warning",
@@ -29,7 +29,7 @@ const activities = [
   {
     id: 4,
     action: "New client added",
-    client: "Restaurant Chain",
+    client: "Volkswagen",
     campaign: "-",
     time: "2 days ago",
     status: "success",
