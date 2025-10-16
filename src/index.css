@@ -17,18 +17,18 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    --primary: 188 95% 35%;
+    --primary: 88 55% 51%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 188 95% 30%;
+    --primary-hover: 88 55% 45%;
 
-    --secondary: 243 75% 59%;
+    --secondary: 152 100% 19%;
     --secondary-foreground: 0 0% 100%;
-    --secondary-hover: 243 75% 54%;
+    --secondary-hover: 152 100% 24%;
 
     --muted: 220 13% 95%;
     --muted-foreground: 220 9% 46%;
 
-    --accent: 188 95% 35%;
+    --accent: 88 55% 51%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -42,20 +42,20 @@ All colors MUST be HSL.
 
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 188 95% 35%;
+    --ring: 88 55% 51%;
 
     --radius: 0.5rem;
 
     --sidebar-background: 222 47% 11%;
     --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 188 95% 35%;
+    --sidebar-primary: 88 55% 51%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 222 47% 15%;
     --sidebar-accent-foreground: 210 40% 98%;
     --sidebar-border: 222 47% 20%;
-    --sidebar-ring: 188 95% 35%;
+    --sidebar-ring: 88 55% 51%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(188 95% 35%), hsl(243 75% 59%));
+    --gradient-primary: linear-gradient(135deg, hsl(88 55% 51%), hsl(152 100% 19%));
     --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(220 13% 98%));
     
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -75,18 +75,18 @@ All colors MUST be HSL.
     --popover: 222 47% 13%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 188 95% 42%;
+    --primary: 88 55% 55%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 188 95% 48%;
+    --primary-hover: 88 55% 60%;
 
-    --secondary: 243 75% 65%;
+    --secondary: 152 100% 25%;
     --secondary-foreground: 0 0% 100%;
-    --secondary-hover: 243 75% 70%;
+    --secondary-hover: 152 100% 30%;
 
     --muted: 222 47% 17%;
     --muted-foreground: 215 20% 65%;
 
-    --accent: 188 95% 42%;
+    --accent: 88 55% 55%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62% 50%;
@@ -100,18 +100,18 @@ All colors MUST be HSL.
 
     --border: 222 47% 20%;
     --input: 222 47% 20%;
-    --ring: 188 95% 42%;
+    --ring: 88 55% 55%;
 
     --sidebar-background: 222 47% 9%;
     --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 188 95% 42%;
+    --sidebar-primary: 88 55% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 222 47% 13%;
     --sidebar-accent-foreground: 210 40% 98%;
     --sidebar-border: 222 47% 17%;
-    --sidebar-ring: 188 95% 42%;
+    --sidebar-ring: 88 55% 55%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(188 95% 42%), hsl(243 75% 65%));
+    --gradient-primary: linear-gradient(135deg, hsl(88 55% 55%), hsl(152 100% 25%));
     --gradient-subtle: linear-gradient(180deg, hsl(222 47% 11%), hsl(222 47% 13%));
   }
 }
