@@ -1,4 +1,5 @@
-import { Plus, MoreVertical, CheckCircle2, AlertCircle } from "lucide-react";
+import { useState } from "react";
+import { Plus, MoreVertical, CheckCircle2, AlertCircle, Link as LinkIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +9,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { ClientConnectionDialog } from "@/components/clients/ClientConnectionDialog";
+import { Separator } from "@/components/ui/separator";
 
 const clients = [
   {
@@ -16,7 +19,14 @@ const clients = [
     status: "active",
     campaigns: 3,
     spend: "$4,250",
-    connected: true,
+    connections: {
+      googleMyBusiness: "https://google.com/maps/123",
+      googleAds: "123-456-7890",
+      googleAnalytics: "G-XXXXXXXXXX",
+      facebookPage: "https://facebook.com/techstartup",
+      facebookPixel: "123456789012345",
+      youtubeChannel: "https://youtube.com/@techstartup",
+    },
   },
   {
     id: 2,
@@ -24,7 +34,14 @@ const clients = [
     status: "active",
     campaigns: 2,
     spend: "$1,820",
-    connected: true,
+    connections: {
+      googleMyBusiness: "https://google.com/maps/456",
+      googleAds: "234-567-8901",
+      googleAnalytics: "UA-123456789-1",
+      facebookPage: "https://facebook.com/localbakery",
+      facebookPixel: "",
+      youtubeChannel: "",
+    },
   },
   {
     id: 3,
@@ -32,7 +49,14 @@ const clients = [
     status: "paused",
     campaigns: 1,
     spend: "$850",
-    connected: true,
+    connections: {
+      googleMyBusiness: "https://google.com/maps/789",
+      googleAds: "",
+      googleAnalytics: "",
+      facebookPage: "",
+      facebookPixel: "",
+      youtubeChannel: "",
+    },
   },
   {
     id: 4,
@@ -40,11 +64,30 @@ const clients = [
     status: "pending",
     campaigns: 0,
     spend: "$0",
-    connected: false,
+    connections: {
+      googleMyBusiness: "",
+      googleAds: "",
+      googleAnalytics: "",
+      facebookPage: "",
+      facebookPixel: "",
+      youtubeChannel: "",
+    },
   },
 ];
 
 export default function Clients() {
+  const [connectionDialogOpen, setConnectionDialogOpen] = useState(false);
+  const [selectedClient, setSelectedClient] = useState<typeof clients[0] | null>(null);
+
+  const getConnectedCount = (connections: typeof clients[0]["connections"]) => {
+    return Object.values(connections).filter((val) => val !== "").length;
+  };
+
+  const handleManageConnections = (client: typeof clients[0]) => {
+    setSelectedClient(client);
+    setConnectionDialogOpen(true);
+  };
+
   return (
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
@@ -66,14 +109,17 @@ export default function Clients() {
                 <div className="space-y-1">
                   <CardTitle className="text-lg">{client.name}</CardTitle>
                   <div className="flex items-center gap-2">
-                    {client.connected ? (
-                      <CheckCircle2 className="w-4 h-4 text-success" />
-                    ) : (
-                      <AlertCircle className="w-4 h-4 text-warning" />
-                    )}
-                    <span className="text-sm text-muted-foreground">
-                      {client.connected ? "Connected" : "Pending"}
-                    </span>
+                    <Badge
+                      variant={
+                        client.status === "active"
+                          ? "default"
+                          : client.status === "paused"
+                          ? "secondary"
+                          : "outline"
+                      }
+                    >
+                      {client.status}
+                    </Badge>
                   </div>
                 </div>
                 <DropdownMenu>
@@ -85,6 +131,12 @@ export default function Clients() {
                   <DropdownMenuContent align="end" className="bg-popover">
                     <DropdownMenuItem>View Details</DropdownMenuItem>
                     <DropdownMenuItem>Edit Client</DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => handleManageConnections(client)}
+                    >
+                      <LinkIcon className="w-4 h-4 mr-2" />
+                      Manage Connections
+                    </DropdownMenuItem>
                     <DropdownMenuItem className="text-destructive">
                       Remove Client
                     </DropdownMenuItem>
@@ -94,20 +146,6 @@ export default function Clients() {
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Status</span>
-                <Badge
-                  variant={
-                    client.status === "active"
-                      ? "default"
-                      : client.status === "paused"
-                      ? "secondary"
-                      : "outline"
-                  }
-                >
-                  {client.status}
-                </Badge>
-              </div>
-              <div className="flex items-center justify-between">
                 <span className="text-sm text-muted-foreground">Campaigns</span>
                 <span className="text-sm font-medium">{client.campaigns}</span>
               </div>
@@ -115,10 +153,89 @@ export default function Clients() {
                 <span className="text-sm text-muted-foreground">Total Spend</span>
                 <span className="text-sm font-medium">{client.spend}</span>
               </div>
+
+              <Separator />
+
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium">Integrations</span>
+                  <span className="text-xs text-muted-foreground">
+                    {getConnectedCount(client.connections)}/6 connected
+                  </span>
+                </div>
+                <div className="grid grid-cols-3 gap-2">
+                  <div className="flex flex-col items-center gap-1 p-2 rounded-lg bg-muted/50">
+                    {client.connections.googleMyBusiness ? (
+                      <CheckCircle2 className="w-4 h-4 text-success" />
+                    ) : (
+                      <AlertCircle className="w-4 h-4 text-muted-foreground" />
+                    )}
+                    <span className="text-xs text-center">GMB</span>
+                  </div>
+                  <div className="flex flex-col items-center gap-1 p-2 rounded-lg bg-muted/50">
+                    {client.connections.googleAds ? (
+                      <CheckCircle2 className="w-4 h-4 text-success" />
+                    ) : (
+                      <AlertCircle className="w-4 h-4 text-muted-foreground" />
+                    )}
+                    <span className="text-xs text-center">Ads</span>
+                  </div>
+                  <div className="flex flex-col items-center gap-1 p-2 rounded-lg bg-muted/50">
+                    {client.connections.googleAnalytics ? (
+                      <CheckCircle2 className="w-4 h-4 text-success" />
+                    ) : (
+                      <AlertCircle className="w-4 h-4 text-muted-foreground" />
+                    )}
+                    <span className="text-xs text-center">GA</span>
+                  </div>
+                  <div className="flex flex-col items-center gap-1 p-2 rounded-lg bg-muted/50">
+                    {client.connections.facebookPage ? (
+                      <CheckCircle2 className="w-4 h-4 text-success" />
+                    ) : (
+                      <AlertCircle className="w-4 h-4 text-muted-foreground" />
+                    )}
+                    <span className="text-xs text-center">FB</span>
+                  </div>
+                  <div className="flex flex-col items-center gap-1 p-2 rounded-lg bg-muted/50">
+                    {client.connections.facebookPixel ? (
+                      <CheckCircle2 className="w-4 h-4 text-success" />
+                    ) : (
+                      <AlertCircle className="w-4 h-4 text-muted-foreground" />
+                    )}
+                    <span className="text-xs text-center">Pixel</span>
+                  </div>
+                  <div className="flex flex-col items-center gap-1 p-2 rounded-lg bg-muted/50">
+                    {client.connections.youtubeChannel ? (
+                      <CheckCircle2 className="w-4 h-4 text-success" />
+                    ) : (
+                      <AlertCircle className="w-4 h-4 text-muted-foreground" />
+                    )}
+                    <span className="text-xs text-center">YT</span>
+                  </div>
+                </div>
+              </div>
+
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full"
+                onClick={() => handleManageConnections(client)}
+              >
+                <LinkIcon className="w-4 h-4 mr-2" />
+                Manage Connections
+              </Button>
             </CardContent>
           </Card>
         ))}
       </div>
+
+      <ClientConnectionDialog
+        open={connectionDialogOpen}
+        onOpenChange={setConnectionDialogOpen}
+        clientId={selectedClient?.id.toString()}
+        clientName={selectedClient?.name}
+        existingConnections={selectedClient?.connections}
+      />
     </div>
   );
 }
