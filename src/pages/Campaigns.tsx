@@ -32,7 +32,7 @@ const campaigns = [
   {
     id: 2,
     name: "Holiday Special",
-    client: "Local Bakery",
+    client: "Nations Auto Glass",
     status: "active",
     budget: "$800",
     spent: "$720",
@@ -42,7 +42,7 @@ const campaigns = [
   {
     id: 3,
     name: "New Year Promo",
-    client: "Fitness Center",
+    client: "VW Heavy Up",
     status: "paused",
     budget: "$1,200",
     spent: "$850",
