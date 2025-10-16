@@ -30,7 +30,7 @@ const clients = [
   },
   {
     id: 2,
-    name: "Local Bakery",
+    name: "Nations Auto Glass",
     status: "active",
     campaigns: 2,
     spend: "$1,820",
@@ -45,7 +45,7 @@ const clients = [
   },
   {
     id: 3,
-    name: "Fitness Center",
+    name: "VW Heavy Up",
     status: "paused",
     campaigns: 1,
     spend: "$850",
@@ -60,7 +60,7 @@ const clients = [
   },
   {
     id: 4,
-    name: "Restaurant Chain",
+    name: "Volkswagen",
     status: "pending",
     campaigns: 0,
     spend: "$0",

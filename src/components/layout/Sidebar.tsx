@@ -1,4 +1,4 @@
-import { LayoutDashboard, Users, Megaphone, BarChart3, Settings, Building2 } from "lucide-react";
+import { LayoutDashboard, Users, Megaphone } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "react-router-dom";
 import logo from "@/assets/logo.svg";
@@ -7,9 +7,6 @@ const navigation = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
   { name: "Clients", href: "/clients", icon: Users },
   { name: "Campaigns", href: "/campaigns", icon: Megaphone },
-  { name: "Business Profiles", href: "/profiles", icon: Building2 },
-  { name: "Reports", href: "/reports", icon: BarChart3 },
-  { name: "Settings", href: "/settings", icon: Settings },
 ];
 
 export function Sidebar() {
