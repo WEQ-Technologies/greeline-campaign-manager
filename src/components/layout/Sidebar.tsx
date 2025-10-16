@@ -32,7 +32,7 @@ export function Sidebar() {
                 "flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors",
                 isActive
                   ? "bg-sidebar-accent text-sidebar-primary"
-                  : "text-sidebar-foreground hover:bg-sidebar-accent/50"
+                  : "text-sidebar-foreground hover:bg-sidebar-accent/50",
               )}
             >
               <item.icon className="w-5 h-5" />
@@ -47,7 +47,7 @@ export function Sidebar() {
           <div className="w-8 h-8 rounded-full bg-gradient-primary" />
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-sidebar-foreground truncate">Admin User</p>
-            <p className="text-xs text-muted-foreground truncate">admin@agency.com</p>
+            <p className="text-xs text-muted-foreground truncate">admin@greenlinenyc.com</p>
           </div>
         </div>
       </div>
