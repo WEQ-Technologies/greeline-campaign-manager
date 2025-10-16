@@ -7,6 +7,8 @@ import Layout from "./pages/Layout";
 import Dashboard from "./pages/Dashboard";
 import Clients from "./pages/Clients";
 import Campaigns from "./pages/Campaigns";
+import CampaignWizard from "./pages/CampaignWizard";
+import AdEditor from "./pages/AdEditor";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +25,8 @@ const App = () => (
             <Route path="clients" element={<Clients />} />
             <Route path="campaigns" element={<Campaigns />} />
           </Route>
+          <Route path="/campaigns/new" element={<CampaignWizard />} />
+          <Route path="/campaigns/:id/edit" element={<AdEditor />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1,5 +1,6 @@
-import { Plus, Play, Pause, MoreVertical } from "lucide-react";
+import { Plus, Play, Pause, MoreVertical, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -51,6 +52,8 @@ const campaigns = [
 ];
 
 export default function Campaigns() {
+  const navigate = useNavigate();
+
   return (
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
@@ -58,7 +61,10 @@ export default function Campaigns() {
           <h1 className="text-3xl font-bold tracking-tight">Campaigns</h1>
           <p className="text-muted-foreground mt-1">Manage and monitor all campaigns</p>
         </div>
-        <Button className="bg-primary hover:bg-primary-hover">
+        <Button 
+          className="bg-primary hover:bg-primary-hover"
+          onClick={() => navigate("/campaigns/new")}
+        >
           <Plus className="w-4 h-4 mr-2" />
           Create Campaign
         </Button>
@@ -103,6 +109,14 @@ export default function Campaigns() {
                         variant="ghost"
                         size="icon"
                         className="h-8 w-8"
+                        onClick={() => navigate(`/campaigns/${campaign.id}/edit`)}
+                      >
+                        <Edit className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
                       >
                         {campaign.status === "active" ? (
                           <Pause className="w-4 h-4" />
@@ -118,7 +132,9 @@ export default function Campaigns() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="bg-popover">
                           <DropdownMenuItem>View Details</DropdownMenuItem>
-                          <DropdownMenuItem>Edit Campaign</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => navigate(`/campaigns/${campaign.id}/edit`)}>
+                            Edit Campaign
+                          </DropdownMenuItem>
                           <DropdownMenuItem>Duplicate</DropdownMenuItem>
                           <DropdownMenuItem className="text-destructive">
                             Delete
