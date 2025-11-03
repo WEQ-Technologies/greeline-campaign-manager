@@ -14,8 +14,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 export default function OtherSettings() {
   const { id: campaignId } = useParams();
 
-  const [keywords, setKeywords] = useState<Array<{ text: string; matchType: string; bid: string }>>([
-    { text: "winter suv sale", matchType: "broad", bid: "2.50" },
+  const [keywords, setKeywords] = useState<Array<{ text: string; matchType: string }>>([
+    { text: "winter suv sale", matchType: "broad" },
   ]);
 
   const [locations, setLocations] = useState<string[]>(["United States", "Canada"]);
@@ -24,7 +24,7 @@ export default function OtherSettings() {
   ]);
 
   const addKeyword = () => {
-    setKeywords([...keywords, { text: "", matchType: "broad", bid: "" }]);
+    setKeywords([...keywords, { text: "", matchType: "broad" }]);
   };
 
   const removeKeyword = (index: number) => {
@@ -87,7 +87,7 @@ export default function OtherSettings() {
                 <Card key={index}>
                   <CardContent className="pt-4">
                     <div className="grid grid-cols-12 gap-3 items-end">
-                      <div className="col-span-5 space-y-2">
+                      <div className="col-span-8 space-y-2">
                         <Label>Keyword Text</Label>
                         <Input
                           value={keyword.text}
@@ -118,20 +118,6 @@ export default function OtherSettings() {
                             <SelectItem value="exact">Exact</SelectItem>
                           </SelectContent>
                         </Select>
-                      </div>
-                      <div className="col-span-3 space-y-2">
-                        <Label>Bid ($)</Label>
-                        <Input
-                          type="number"
-                          step="0.01"
-                          value={keyword.bid}
-                          onChange={(e) => {
-                            const newKeywords = [...keywords];
-                            newKeywords[index].bid = e.target.value;
-                            setKeywords(newKeywords);
-                          }}
-                          placeholder="2.50"
-                        />
                       </div>
                       <div className="col-span-1">
                         <Button variant="ghost" size="icon" onClick={() => removeKeyword(index)}>

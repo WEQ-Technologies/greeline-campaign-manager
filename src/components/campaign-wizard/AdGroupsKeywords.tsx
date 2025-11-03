@@ -10,7 +10,7 @@ import { useState } from "react";
 interface AdGroup {
   id: string;
   name: string;
-  keywords: Array<{ keyword: string; matchType: string; bid: string }>;
+  keywords: Array<{ keyword: string; matchType: string }>;
 }
 
 interface AdGroupsKeywordsProps {
@@ -43,7 +43,7 @@ export function AdGroupsKeywords({ data, onChange }: AdGroupsKeywordsProps) {
   const addKeyword = (groupId: string) => {
     const group = data.adGroups.find((g) => g.id === groupId);
     if (group) {
-      const newKeyword = { keyword: "", matchType: "broad", bid: "" };
+      const newKeyword = { keyword: "", matchType: "broad" };
       updateAdGroup(groupId, "keywords", [...group.keywords, newKeyword]);
     }
   };
@@ -122,7 +122,7 @@ export function AdGroupsKeywords({ data, onChange }: AdGroupsKeywordsProps) {
                 <div key={index} className="grid grid-cols-12 gap-2">
                   <Input
                     placeholder="Keyword"
-                    className="col-span-5"
+                    className="col-span-8"
                     value={keyword.keyword}
                     onChange={(e) =>
                       updateKeyword(activeAdGroup.id, index, "keyword", e.target.value)
@@ -143,16 +143,6 @@ export function AdGroupsKeywords({ data, onChange }: AdGroupsKeywordsProps) {
                       <SelectItem value="exact">Exact</SelectItem>
                     </SelectContent>
                   </Select>
-                  <Input
-                    placeholder="Bid"
-                    type="number"
-                    step="0.01"
-                    className="col-span-3"
-                    value={keyword.bid}
-                    onChange={(e) =>
-                      updateKeyword(activeAdGroup.id, index, "bid", e.target.value)
-                    }
-                  />
                   <Button
                     variant="ghost"
                     size="icon"

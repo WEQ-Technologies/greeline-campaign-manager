@@ -20,17 +20,6 @@ interface ExtensionsProps {
       startDate: string;
       endDate: string;
     }>;
-    promotions: Array<{
-      occasion: string;
-      language: string;
-      currency: string;
-      promoType: string;
-      amount: string;
-      details: string;
-      startDate: string;
-      endDate: string;
-      terms: string;
-    }>;
     priceAssets: Array<{
       language: string;
       type: string;
@@ -92,24 +81,6 @@ export function Extensions({ data, onChange }: ExtensionsProps) {
 
   const removeSitelink = (index: number) => {
     onChange("sitelinks", data.sitelinks.filter((_, i) => i !== index));
-  };
-
-  // Promotions functions
-  const addPromotion = () => {
-    onChange("promotions", [...data.promotions, {
-      occasion: "", language: "English", currency: "USD", promoType: "", 
-      amount: "", details: "", startDate: "", endDate: "", terms: ""
-    }]);
-  };
-
-  const updatePromotion = (index: number, field: string, value: string) => {
-    const updated = [...data.promotions];
-    updated[index] = { ...updated[index], [field]: value };
-    onChange("promotions", updated);
-  };
-
-  const removePromotion = (index: number) => {
-    onChange("promotions", data.promotions.filter((_, i) => i !== index));
   };
 
   // Price Assets functions
@@ -190,9 +161,8 @@ export function Extensions({ data, onChange }: ExtensionsProps) {
 
   return (
     <Tabs defaultValue="sitelinks" className="w-full">
-      <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8">
+      <TabsList className="grid w-full grid-cols-4 lg:grid-cols-7">
         <TabsTrigger value="sitelinks">Sitelinks</TabsTrigger>
-        <TabsTrigger value="promotions">Promotions</TabsTrigger>
         <TabsTrigger value="prices">Prices</TabsTrigger>
         <TabsTrigger value="calls">Calls</TabsTrigger>
         <TabsTrigger value="callouts">Callouts</TabsTrigger>
@@ -276,125 +246,6 @@ export function Extensions({ data, onChange }: ExtensionsProps) {
                         type="date"
                         value={sitelink.endDate}
                         onChange={(e) => updateSitelink(index, "endDate", e.target.value)}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </CardContent>
-        </Card>
-      </TabsContent>
-
-      {/* Promotions Tab */}
-      <TabsContent value="promotions" className="space-y-4">
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <div>
-                <CardTitle>Promotions</CardTitle>
-                <CardDescription>Add promotional offers</CardDescription>
-              </div>
-              <Button onClick={addPromotion} variant="outline" size="sm">
-                <Plus className="w-4 h-4 mr-2" />
-                Add Promotion
-              </Button>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {data.promotions.map((promo, index) => (
-              <Card key={index} className="p-4">
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-medium">Promotion {index + 1}</h4>
-                    <Button variant="ghost" size="sm" onClick={() => removePromotion(index)}>
-                      <Trash2 className="w-4 h-4 text-destructive" />
-                    </Button>
-                  </div>
-                  <div className="grid md:grid-cols-2 gap-3">
-                    <div className="space-y-2">
-                      <Label>Occasion</Label>
-                      <Select value={promo.occasion} onValueChange={(value) => updatePromotion(index, "occasion", value)}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select occasion" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-popover">
-                          <SelectItem value="black-friday">Black Friday</SelectItem>
-                          <SelectItem value="cyber-monday">Cyber Monday</SelectItem>
-                          <SelectItem value="holiday">Holiday Season</SelectItem>
-                          <SelectItem value="summer-sale">Summer Sale</SelectItem>
-                          <SelectItem value="back-to-school">Back to School</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Promotion Type</Label>
-                      <Select value={promo.promoType} onValueChange={(value) => updatePromotion(index, "promoType", value)}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select type" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-popover">
-                          <SelectItem value="percentage">Percentage Off</SelectItem>
-                          <SelectItem value="amount">Amount Off</SelectItem>
-                          <SelectItem value="bogo">Buy One Get One</SelectItem>
-                          <SelectItem value="free-shipping">Free Shipping</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Amount/Percentage</Label>
-                      <Input
-                        placeholder="e.g., 20 or 50.00"
-                        value={promo.amount}
-                        onChange={(e) => updatePromotion(index, "amount", e.target.value)}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Currency</Label>
-                      <Select value={promo.currency} onValueChange={(value) => updatePromotion(index, "currency", value)}>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="bg-popover">
-                          <SelectItem value="USD">USD</SelectItem>
-                          <SelectItem value="EUR">EUR</SelectItem>
-                          <SelectItem value="GBP">GBP</SelectItem>
-                          <SelectItem value="INR">INR</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2 md:col-span-2">
-                      <Label>Promotion Details (max 15 chars)</Label>
-                      <Input
-                        maxLength={15}
-                        placeholder="e.g., SAVE20NOW"
-                        value={promo.details}
-                        onChange={(e) => updatePromotion(index, "details", e.target.value)}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Start Date</Label>
-                      <Input
-                        type="date"
-                        value={promo.startDate}
-                        onChange={(e) => updatePromotion(index, "startDate", e.target.value)}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>End Date</Label>
-                      <Input
-                        type="date"
-                        value={promo.endDate}
-                        onChange={(e) => updatePromotion(index, "endDate", e.target.value)}
-                      />
-                    </div>
-                    <div className="space-y-2 md:col-span-2">
-                      <Label>Terms & Conditions</Label>
-                      <Textarea
-                        placeholder="Enter terms and conditions..."
-                        value={promo.terms}
-                        onChange={(e) => updatePromotion(index, "terms", e.target.value)}
-                        rows={3}
                       />
                     </div>
                   </div>

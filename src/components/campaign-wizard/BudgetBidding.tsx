@@ -3,7 +3,6 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Switch } from "@/components/ui/switch";
 import { Calendar } from "lucide-react";
 
 interface BudgetBiddingProps {
@@ -16,9 +15,6 @@ interface BudgetBiddingProps {
     totalBudget?: string;
     startDate: string;
     endDate: string;
-    promotionMode: boolean;
-    promotionStartDate?: string;
-    promotionEndDate?: string;
   };
   onChange: (field: string, value: any) => void;
 }
@@ -160,46 +156,6 @@ export function BudgetBidding({ data, onChange }: BudgetBiddingProps) {
             </div>
             <p className="text-xs text-muted-foreground">Leave empty for no end date</p>
           </div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Promotion Mode</CardTitle>
-          <CardDescription>Ramp up spending during promotion dates</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <Label htmlFor="promotion-mode">Enable Promotion Mode</Label>
-            <Switch
-              id="promotion-mode"
-              checked={data.promotionMode}
-              onCheckedChange={(checked) => onChange("promotionMode", checked)}
-            />
-          </div>
-
-          {data.promotionMode && (
-            <div className="space-y-4 pl-4 border-l-2">
-              <div className="space-y-2">
-                <Label htmlFor="promo-start">Promotion Start Date</Label>
-                <Input
-                  id="promo-start"
-                  type="date"
-                  value={data.promotionStartDate || ""}
-                  onChange={(e) => onChange("promotionStartDate", e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="promo-end">Promotion End Date</Label>
-                <Input
-                  id="promo-end"
-                  type="date"
-                  value={data.promotionEndDate || ""}
-                  onChange={(e) => onChange("promotionEndDate", e.target.value)}
-                />
-              </div>
-            </div>
-          )}
         </CardContent>
       </Card>
     </div>

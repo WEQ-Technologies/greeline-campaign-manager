@@ -50,9 +50,6 @@ export default function CampaignWizard() {
       totalBudget: "",
       startDate: "",
       endDate: "",
-      promotionMode: false,
-      promotionStartDate: "",
-      promotionEndDate: "",
     },
     targeting: { 
       locationType: "all-countries",
@@ -71,7 +68,6 @@ export default function CampaignWizard() {
     ads: { headline1: "", headline2: "", headline3: "", description1: "", description2: "", finalUrl: "" },
     extensions: { 
       sitelinks: [] as Array<{ text: string; desc1: string; desc2: string; finalUrl: string; trackingUrl: string; startDate: string; endDate: string; }>,
-      promotions: [] as Array<{ occasion: string; language: string; currency: string; promoType: string; amount: string; details: string; startDate: string; endDate: string; terms: string; }>,
       priceAssets: [] as Array<{ language: string; type: string; currency: string; qualifier: string; header: string; amount: string; unit: string; description: string; finalUrl: string; }>,
       calls: [] as Array<{ countryCode: string; phoneNumber: string; conversionAction: string; }>,
       callouts: [] as Array<{ text: string; startDate: string; endDate: string; }>,
