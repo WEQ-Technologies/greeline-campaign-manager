@@ -29,7 +29,18 @@ export default function CampaignWizard() {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
     client: "",
-    settings: { name: "", type: "", objective: "" },
+    settings: { 
+      name: "", 
+      type: "", 
+      objective: "",
+      reachGoals: [] as string[],
+      businessWebsiteUrl: "",
+      phoneNumber: "",
+      countryCode: "+1",
+      salesConversionGoals: [] as string[],
+      leadsConversionGoals: [] as string[],
+      finalUrl: "",
+    },
     budget: { budgetType: "daily", budget: "", biddingStrategy: "", maxCpc: "" },
     targeting: { locations: [], radius: "", languages: [] },
     adGroups: { adGroups: [{ id: "1", name: "Ad Group 1", keywords: [] }] },
