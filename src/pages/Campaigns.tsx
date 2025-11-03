@@ -109,7 +109,7 @@ export default function Campaigns() {
                         variant="ghost"
                         size="icon"
                         className="h-8 w-8"
-                        onClick={() => navigate(`/campaigns/${campaign.id}/edit`)}
+                        onClick={() => navigate(`/campaigns/${campaign.id}`)}
                       >
                         <Edit className="w-4 h-4" />
                       </Button>
@@ -131,9 +131,11 @@ export default function Campaigns() {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="bg-popover">
-                          <DropdownMenuItem>View Details</DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => navigate(`/campaigns/${campaign.id}/edit`)}>
-                            Edit Campaign
+                          <DropdownMenuItem onClick={() => navigate(`/campaigns/${campaign.id}`)}>
+                            View Details
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => navigate(`/campaigns/${campaign.id}/ad-groups`)}>
+                            Manage Ad Groups
                           </DropdownMenuItem>
                           <DropdownMenuItem>Duplicate</DropdownMenuItem>
                           <DropdownMenuItem className="text-destructive">
