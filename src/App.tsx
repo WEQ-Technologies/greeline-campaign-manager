@@ -5,7 +5,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout";
 import Dashboard from "./pages/Dashboard";
+import Accounts from "./pages/Accounts";
+import AccountDetail from "./pages/AccountDetail";
+import AccountForm from "./pages/AccountForm";
 import Clients from "./pages/Clients";
+import ClientDetail from "./pages/ClientDetail";
+import ClientForm from "./pages/ClientForm";
 import Campaigns from "./pages/Campaigns";
 import CampaignWizard from "./pages/CampaignWizard";
 import CampaignDetail from "./pages/CampaignDetail";
@@ -30,7 +35,14 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Dashboard />} />
+            <Route path="accounts" element={<Accounts />} />
+            <Route path="accounts/:id" element={<AccountDetail />} />
+            <Route path="accounts/new" element={<AccountForm />} />
+            <Route path="accounts/:id/edit" element={<AccountForm />} />
             <Route path="clients" element={<Clients />} />
+            <Route path="clients/:id" element={<ClientDetail />} />
+            <Route path="clients/new" element={<ClientForm />} />
+            <Route path="clients/:id/edit" element={<ClientForm />} />
             <Route path="campaigns" element={<Campaigns />} />
           </Route>
           <Route path="/campaigns/new" element={<CampaignWizard />} />

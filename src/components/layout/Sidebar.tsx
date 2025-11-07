@@ -1,10 +1,11 @@
-import { LayoutDashboard, Users, Megaphone, Layers, Image, Settings, History } from "lucide-react";
+import { LayoutDashboard, UserCircle, Users, Megaphone, Layers, Image, Settings, History } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "react-router-dom";
 import logo from "@/assets/logo.svg";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
+  { name: "Account Management", href: "/accounts", icon: UserCircle },
   { name: "Clients", href: "/clients", icon: Users },
   { name: "Campaigns", href: "/campaigns", icon: Megaphone },
   { name: "Ad Groups", href: "/campaigns/1/ad-groups", icon: Layers, indent: true },
