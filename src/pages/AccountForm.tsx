@@ -15,34 +15,34 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
-const existingAccounts = [
-  { id: "1", name: "Tech Startup Google Ads" },
-  { id: "2", name: "Nations Auto Facebook" },
-  { id: "3", name: "VW Heavy Up Ads" },
-];
-
 export default function AccountForm() {
   const navigate = useNavigate();
   const { id } = useParams();
   const isEditing = !!id;
 
-  const [formData, setFormData] = useState({
+  const [createFormData, setCreateFormData] = useState({
     name: "",
-    country: "",
     timezone: "",
     currency: "",
-    accountIds: "",
-    assignManager: "",
+    accountType: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [linkFormData, setLinkFormData] = useState({
+    name: "",
+    accountType: "",
+    accountIds: "",
+  });
+
+  const handleCreateSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success(isEditing ? "Account updated successfully!" : "Account created successfully!");
+    toast.success("New account created successfully!");
     navigate("/accounts");
   };
 
-  const handleLinkExisting = () => {
-    toast.info("Link existing account functionality");
+  const handleLinkSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast.success("Existing account linked successfully!");
+    navigate("/accounts");
   };
 
   return (
@@ -65,47 +65,30 @@ export default function AccountForm() {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Account Details</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                placeholder="Enter account name"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                required
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
+      <div className="space-y-6">
+        {/* Create New Account Section */}
+        <form onSubmit={handleCreateSubmit}>
+          <Card>
+            <CardHeader>
+              <CardTitle>1️⃣ Create New Account</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="country">Country</Label>
-                <Select
-                  value={formData.country}
-                  onValueChange={(value) => setFormData({ ...formData, country: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select country" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="us">United States</SelectItem>
-                    <SelectItem value="ca">Canada</SelectItem>
-                    <SelectItem value="uk">United Kingdom</SelectItem>
-                    <SelectItem value="au">Australia</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label htmlFor="create-name">Account Name</Label>
+                <Input
+                  id="create-name"
+                  placeholder="Enter account name"
+                  value={createFormData.name}
+                  onChange={(e) => setCreateFormData({ ...createFormData, name: e.target.value })}
+                  required
+                />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="timezone">Timezone</Label>
+                <Label htmlFor="create-timezone">Time Zone</Label>
                 <Select
-                  value={formData.timezone}
-                  onValueChange={(value) => setFormData({ ...formData, timezone: value })}
+                  value={createFormData.timezone}
+                  onValueChange={(value) => setCreateFormData({ ...createFormData, timezone: value })}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select timezone" />
@@ -118,83 +101,126 @@ export default function AccountForm() {
                   </SelectContent>
                 </Select>
               </div>
-            </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="currency">Currency</Label>
-              <Select
-                value={formData.currency}
-                onValueChange={(value) => setFormData({ ...formData, currency: value })}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select currency" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="usd">USD - US Dollar</SelectItem>
-                  <SelectItem value="cad">CAD - Canadian Dollar</SelectItem>
-                  <SelectItem value="gbp">GBP - British Pound</SelectItem>
-                  <SelectItem value="eur">EUR - Euro</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+              <div className="space-y-2">
+                <Label htmlFor="create-currency">Currency</Label>
+                <Select
+                  value={createFormData.currency}
+                  onValueChange={(value) => setCreateFormData({ ...createFormData, currency: value })}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select currency" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="usd">USD - US Dollar</SelectItem>
+                    <SelectItem value="cad">CAD - Canadian Dollar</SelectItem>
+                    <SelectItem value="gbp">GBP - British Pound</SelectItem>
+                    <SelectItem value="eur">EUR - Euro</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="accountIds">Add Account IDs</Label>
-              <Textarea
-                id="accountIds"
-                placeholder="Enter account IDs (one per line or comma-separated)"
-                rows={4}
-                value={formData.accountIds}
-                onChange={(e) => setFormData({ ...formData, accountIds: e.target.value })}
-              />
-              <p className="text-xs text-muted-foreground">
-                Enter multiple account IDs separated by commas or new lines
-              </p>
-            </div>
+              <div className="space-y-2">
+                <Label htmlFor="create-account-type">Account Type</Label>
+                <Select
+                  value={createFormData.accountType}
+                  onValueChange={(value) => setCreateFormData({ ...createFormData, accountType: value })}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select account type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="google-ads">Google Ads</SelectItem>
+                    <SelectItem value="meta-ads">Meta Ads</SelectItem>
+                    <SelectItem value="linkedin-ads">LinkedIn Ads</SelectItem>
+                    <SelectItem value="twitter-ads">Twitter Ads</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="assignManager">Assign Manager</Label>
-              <Select
-                value={formData.assignManager}
-                onValueChange={(value) => setFormData({ ...formData, assignManager: value })}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select account manager" />
-                </SelectTrigger>
-                <SelectContent>
-                  {existingAccounts.map((account) => (
-                    <SelectItem key={account.id} value={account.id}>
-                      {account.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </CardContent>
-        </Card>
+              <div className="flex justify-end gap-3 pt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => navigate("/accounts")}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" className="bg-primary hover:bg-primary-hover">
+                  Create Account
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </form>
 
-        <div className="flex items-center justify-between">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleLinkExisting}
-          >
-            Link Existing Account
-          </Button>
-          <div className="flex gap-3">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => navigate("/accounts")}
-            >
-              Cancel
-            </Button>
-            <Button type="submit" className="bg-primary hover:bg-primary-hover">
-              {isEditing ? "Update Account" : "Save Account"}
-            </Button>
-          </div>
-        </div>
-      </form>
+        {/* Link Existing Account Section */}
+        <form onSubmit={handleLinkSubmit}>
+          <Card>
+            <CardHeader>
+              <CardTitle>2️⃣ Link Existing Account</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="link-name">Account Name</Label>
+                <Input
+                  id="link-name"
+                  placeholder="Enter account name"
+                  value={linkFormData.name}
+                  onChange={(e) => setLinkFormData({ ...linkFormData, name: e.target.value })}
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="link-account-type">Account Type</Label>
+                <Select
+                  value={linkFormData.accountType}
+                  onValueChange={(value) => setLinkFormData({ ...linkFormData, accountType: value })}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select account type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="google-ads">Google Ads</SelectItem>
+                    <SelectItem value="meta-ads">Meta Ads</SelectItem>
+                    <SelectItem value="linkedin-ads">LinkedIn Ads</SelectItem>
+                    <SelectItem value="twitter-ads">Twitter Ads</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="link-account-ids">Add Account IDs</Label>
+                <Textarea
+                  id="link-account-ids"
+                  placeholder="Enter account IDs (one per line or comma-separated)"
+                  rows={4}
+                  value={linkFormData.accountIds}
+                  onChange={(e) => setLinkFormData({ ...linkFormData, accountIds: e.target.value })}
+                  required
+                />
+                <p className="text-xs text-muted-foreground">
+                  Enter multiple account IDs separated by commas or new lines
+                </p>
+              </div>
+
+              <div className="flex justify-end gap-3 pt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => navigate("/accounts")}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" className="bg-primary hover:bg-primary-hover">
+                  Link Account
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </form>
+      </div>
     </div>
   );
 }

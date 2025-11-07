@@ -22,26 +22,20 @@ import { useNavigate } from "react-router-dom";
 const accounts = [
   {
     id: 1,
-    name: "Tech Startup Google Ads",
-    searchLinked: true,
+    name: "Account 1",
     budget: "$5,000",
-    adAccounts: "123-456-7890",
     status: "active",
   },
   {
     id: 2,
-    name: "Nations Auto Facebook",
-    searchLinked: false,
+    name: "Account 2",
     budget: "$2,500",
-    adAccounts: "234-567-8901",
     status: "active",
   },
   {
     id: 3,
-    name: "VW Heavy Up Ads",
-    searchLinked: true,
+    name: "Account 3",
     budget: "$1,200",
-    adAccounts: "345-678-9012",
     status: "deactive",
   },
 ];
@@ -81,9 +75,7 @@ export default function Accounts() {
             <TableHeader>
               <TableRow>
                 <TableHead>Account Name</TableHead>
-                <TableHead>Search Linked</TableHead>
                 <TableHead>Budget</TableHead>
-                <TableHead>Ad Accounts</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead className="text-right">Action</TableHead>
               </TableRow>
@@ -92,13 +84,7 @@ export default function Accounts() {
               {accounts.map((account) => (
                 <TableRow key={account.id}>
                   <TableCell className="font-medium">{account.name}</TableCell>
-                  <TableCell>
-                    <Badge variant={account.searchLinked ? "default" : "secondary"}>
-                      {account.searchLinked ? "Yes" : "No"}
-                    </Badge>
-                  </TableCell>
                   <TableCell>{account.budget}</TableCell>
-                  <TableCell className="font-mono text-sm">{account.adAccounts}</TableCell>
                   <TableCell>
                     <Badge
                       variant={accountStatus[account.id] === "active" ? "default" : "secondary"}
