@@ -1,80 +1,63 @@
-import { Plus, Play, Pause, MoreVertical, Edit, Filter } from "lucide-react";
+import { Plus, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-const campaigns = [
+const locations = [
   {
-    id: 1,
-    name: "Brand Awareness Q1",
+    id: "1",
+    location: "New York, NY",
     client: "Tech Startup Inc",
-    account: "Account 1",
-    campaignType: "Search",
+    campaign: "Brand Awareness Q1",
+    targetType: "City",
+    bidAdjustment: "+20%",
     status: "active",
-    budget: "$1,500",
-    spent: "$1,245",
-    clicks: 8450,
-    conversions: 245,
+    impressions: 8450,
+    conversions: 145,
   },
   {
-    id: 2,
-    name: "Holiday Special",
+    id: "2",
+    location: "Los Angeles County, CA",
     client: "Nations Auto Glass",
-    account: "Account 2",
-    campaignType: "Display",
+    campaign: "Holiday Special",
+    targetType: "County",
+    bidAdjustment: "+15%",
     status: "active",
-    budget: "$800",
-    spent: "$720",
-    clicks: 3250,
+    impressions: 6230,
     conversions: 98,
   },
   {
-    id: 3,
-    name: "New Year Promo",
+    id: "3",
+    location: "Chicago Metro Area",
     client: "VW Heavy Up",
-    account: "Account 3",
-    campaignType: "Video",
+    campaign: "New Year Promo",
+    targetType: "Metro Area",
+    bidAdjustment: "-10%",
     status: "paused",
-    budget: "$1,200",
-    spent: "$850",
-    clicks: 4120,
-    conversions: 156,
+    impressions: 4120,
+    conversions: 67,
   },
 ];
 
-export default function Campaigns() {
+export default function Location() {
   const navigate = useNavigate();
 
   return (
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Campaigns</h1>
-          <p className="text-muted-foreground mt-1">Manage and monitor all campaigns</p>
+          <h1 className="text-3xl font-bold tracking-tight">Location</h1>
+          <p className="text-muted-foreground mt-1">Manage and monitor location targeting</p>
         </div>
-        <Button 
-          onClick={() => navigate("/campaigns/new")}
-        >
+        <Button onClick={() => navigate("/location/new")}>
           <Plus className="w-4 h-4 mr-2" />
-          Create Campaign
+          Add Location
         </Button>
       </div>
 
@@ -87,7 +70,7 @@ export default function Campaigns() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="space-y-2">
               <Label>Client Name</Label>
               <Select>
@@ -98,21 +81,6 @@ export default function Campaigns() {
                   <SelectItem value="all">All Clients</SelectItem>
                   <SelectItem value="tech">Tech Startup Inc</SelectItem>
                   <SelectItem value="nations">Nations Auto Glass</SelectItem>
-                  <SelectItem value="vw">VW Heavy Up</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label>Account Name</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select account" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover">
-                  <SelectItem value="all">All Accounts</SelectItem>
-                  <SelectItem value="account1">Account 1</SelectItem>
-                  <SelectItem value="account2">Account 2</SelectItem>
-                  <SelectItem value="account3">Account 3</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -126,7 +94,32 @@ export default function Campaigns() {
                   <SelectItem value="all">All Campaigns</SelectItem>
                   <SelectItem value="brand">Brand Awareness Q1</SelectItem>
                   <SelectItem value="holiday">Holiday Special</SelectItem>
-                  <SelectItem value="newyear">New Year Promo</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label>Ad Group</Label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select ad group" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover">
+                  <SelectItem value="all">All Ad Groups</SelectItem>
+                  <SelectItem value="suv">SUV Models - Winter</SelectItem>
+                  <SelectItem value="sedan">Sedan Specials</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label>Account</Label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select account" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover">
+                  <SelectItem value="all">All Accounts</SelectItem>
+                  <SelectItem value="account1">Account 1</SelectItem>
+                  <SelectItem value="account2">Account 2</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -142,8 +135,19 @@ export default function Campaigns() {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label>Date Range</Label>
-              <Input type="date" />
+              <Label>Target Type</Label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover">
+                  <SelectItem value="all">All Types</SelectItem>
+                  <SelectItem value="city">City</SelectItem>
+                  <SelectItem value="county">County</SelectItem>
+                  <SelectItem value="metro">Metro Area</SelectItem>
+                  <SelectItem value="radius">Radius</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div className="space-y-2">
               <Label>Status</Label>
@@ -163,7 +167,6 @@ export default function Campaigns() {
       </Card>
 
       {/* List View */}
-
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">List View</CardTitle>
@@ -172,38 +175,32 @@ export default function Campaigns() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Campaign Name</TableHead>
+                <TableHead>Location</TableHead>
                 <TableHead>Client Name</TableHead>
-                <TableHead>Budget</TableHead>
+                <TableHead>Campaign</TableHead>
+                <TableHead>Target Type</TableHead>
+                <TableHead>Bid Adjustment</TableHead>
                 <TableHead>Status</TableHead>
-                <TableHead>Account</TableHead>
-                <TableHead>Campaign Type</TableHead>
-                <TableHead className="text-right">Spend</TableHead>
-                <TableHead className="text-right">Clicks</TableHead>
+                <TableHead className="text-right">Impressions</TableHead>
                 <TableHead className="text-right">Conversions</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {campaigns.map((campaign) => (
-                <TableRow key={campaign.id}>
-                  <TableCell className="font-medium">{campaign.name}</TableCell>
-                  <TableCell>{campaign.client}</TableCell>
-                  <TableCell>{campaign.budget}</TableCell>
+              {locations.map((location) => (
+                <TableRow key={location.id}>
+                  <TableCell className="font-medium">{location.location}</TableCell>
+                  <TableCell>{location.client}</TableCell>
+                  <TableCell>{location.campaign}</TableCell>
+                  <TableCell>{location.targetType}</TableCell>
+                  <TableCell>{location.bidAdjustment}</TableCell>
                   <TableCell>
-                    <Badge
-                      variant={campaign.status === "active" ? "default" : "secondary"}
-                    >
-                      {campaign.status}
+                    <Badge variant={location.status === "active" ? "default" : "secondary"}>
+                      {location.status}
                     </Badge>
                   </TableCell>
-                  <TableCell>{campaign.account}</TableCell>
-                  <TableCell>{campaign.campaignType}</TableCell>
-                  <TableCell className="text-right">{campaign.spent}</TableCell>
-                  <TableCell className="text-right">
-                    {campaign.clicks.toLocaleString()}
-                  </TableCell>
-                  <TableCell className="text-right">{campaign.conversions}</TableCell>
+                  <TableCell className="text-right">{location.impressions.toLocaleString()}</TableCell>
+                  <TableCell className="text-right">{location.conversions}</TableCell>
                   <TableCell className="text-right">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -212,16 +209,10 @@ export default function Campaigns() {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="bg-popover">
-                        <DropdownMenuItem onClick={() => navigate(`/campaigns/${campaign.id}`)}>
-                          Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate(`/campaigns/${campaign.id}`)}>
-                          View
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>Duplicate</DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive">
-                          Remove
-                        </DropdownMenuItem>
+                        <DropdownMenuItem>Edit</DropdownMenuItem>
+                        <DropdownMenuItem>View Performance</DropdownMenuItem>
+                        <DropdownMenuItem>Update Bid</DropdownMenuItem>
+                        <DropdownMenuItem className="text-destructive">Remove</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

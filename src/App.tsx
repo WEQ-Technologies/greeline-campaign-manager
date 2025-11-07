@@ -12,6 +12,14 @@ import Clients from "./pages/Clients";
 import ClientDetail from "./pages/ClientDetail";
 import ClientForm from "./pages/ClientForm";
 import Campaigns from "./pages/Campaigns";
+import AdGroups from "./pages/AdGroups";
+import Ads from "./pages/Ads";
+import Assets from "./pages/Assets";
+import Audience from "./pages/Audience";
+import Keywords from "./pages/Keywords";
+import Location from "./pages/Location";
+import Content from "./pages/Content";
+import ChangeHistory from "./pages/ChangeHistory";
 import CampaignWizard from "./pages/CampaignWizard";
 import CampaignDetail from "./pages/CampaignDetail";
 import CampaignSettings from "./pages/campaign-detail/CampaignSettings";
@@ -20,7 +28,7 @@ import AdGroupForm from "./pages/campaign-detail/AdGroupForm";
 import AssetsList from "./pages/campaign-detail/AssetsList";
 import AssetsForm from "./pages/campaign-detail/AssetsForm";
 import OtherSettings from "./pages/campaign-detail/OtherSettings";
-import ChangeHistory from "./pages/campaign-detail/ChangeHistory";
+import CampaignChangeHistory from "./pages/campaign-detail/ChangeHistory";
 import AdEditor from "./pages/AdEditor";
 import NotFound from "./pages/NotFound";
 
@@ -44,6 +52,14 @@ const App = () => (
             <Route path="clients/new" element={<ClientForm />} />
             <Route path="clients/:id/edit" element={<ClientForm />} />
             <Route path="campaigns" element={<Campaigns />} />
+            <Route path="ad-groups" element={<AdGroups />} />
+            <Route path="ads" element={<Ads />} />
+            <Route path="assets" element={<Assets />} />
+            <Route path="audience" element={<Audience />} />
+            <Route path="keywords" element={<Keywords />} />
+            <Route path="location" element={<Location />} />
+            <Route path="content" element={<Content />} />
+            <Route path="change-history" element={<ChangeHistory />} />
           </Route>
           <Route path="/campaigns/new" element={<CampaignWizard />} />
           <Route path="/campaigns/:id" element={<CampaignDetail />}>
@@ -55,7 +71,7 @@ const App = () => (
             <Route path="assets/new" element={<AssetsForm />} />
             <Route path="assets/:assetId/edit" element={<AssetsForm />} />
             <Route path="other" element={<OtherSettings />} />
-            <Route path="history" element={<ChangeHistory />} />
+            <Route path="history" element={<CampaignChangeHistory />} />
           </Route>
           <Route path="/campaigns/:id/edit" element={<AdEditor />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
