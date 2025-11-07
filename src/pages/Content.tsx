@@ -118,44 +118,6 @@ export default function Content() {
         </CardContent>
       </Card>
 
-      {/* Filter Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Filter</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>Content Type</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select type" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover">
-                  <SelectItem value="all">All Types</SelectItem>
-                  <SelectItem value="landing">Landing Page</SelectItem>
-                  <SelectItem value="email">Email</SelectItem>
-                  <SelectItem value="product">Product Page</SelectItem>
-                  <SelectItem value="blog">Blog Post</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label>Status</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover">
-                  <SelectItem value="all">All</SelectItem>
-                  <SelectItem value="active">Active</SelectItem>
-                  <SelectItem value="paused">Paused</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* List View */}
       <Card>

@@ -115,43 +115,6 @@ export default function Audience() {
         </CardContent>
       </Card>
 
-      {/* Filter Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Filter</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>Audience Type</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select type" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover">
-                  <SelectItem value="all">All Types</SelectItem>
-                  <SelectItem value="interest">Interest-based</SelectItem>
-                  <SelectItem value="intent">Custom Intent</SelectItem>
-                  <SelectItem value="market">In-Market</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label>Status</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover">
-                  <SelectItem value="all">All</SelectItem>
-                  <SelectItem value="active">Active</SelectItem>
-                  <SelectItem value="paused">Paused</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* List View */}
       <Card>

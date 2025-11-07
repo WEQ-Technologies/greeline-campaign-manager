@@ -131,33 +131,6 @@ export default function Assets() {
         </CardContent>
       </Card>
 
-      {/* Filter Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Filter</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>Date Range</Label>
-              <Input type="date" />
-            </div>
-            <div className="space-y-2">
-              <Label>Status</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover">
-                  <SelectItem value="all">All</SelectItem>
-                  <SelectItem value="active">Active</SelectItem>
-                  <SelectItem value="paused">Paused</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* List View */}
       <Card>

@@ -123,34 +123,6 @@ export default function ChangeHistory() {
         </CardContent>
       </Card>
 
-      {/* Filter Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Filter</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>Date Range</Label>
-              <Input type="date" />
-            </div>
-            <div className="space-y-2">
-              <Label>Module</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select module" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover">
-                  <SelectItem value="all">All Modules</SelectItem>
-                  <SelectItem value="campaign">Campaign</SelectItem>
-                  <SelectItem value="adgroup">Ad Group</SelectItem>
-                  <SelectItem value="asset">Asset</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* List View */}
       <Card>
