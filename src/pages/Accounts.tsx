@@ -77,7 +77,7 @@ export default function Accounts() {
                 <TableHead>Account Name</TableHead>
                 <TableHead>Budget</TableHead>
                 <TableHead>Status</TableHead>
-                <TableHead className="text-right">Action</TableHead>
+                <TableHead className="w-[50px]"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -92,14 +92,14 @@ export default function Accounts() {
                       {accountStatus[account.id]}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                          <MoreVertical className="w-4 h-4" />
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                          <MoreVertical className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="bg-popover">
+                      <DropdownMenuContent className="bg-popover" align="end">
                         <DropdownMenuItem onClick={() => navigate(`/accounts/${account.id}`)}>
                           View Details
                         </DropdownMenuItem>
@@ -107,11 +107,9 @@ export default function Accounts() {
                           {accountStatus[account.id] === "active" ? "Deactivate" : "Activate"}
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => navigate(`/accounts/${account.id}/edit`)}>
-                          Edit Account
+                          Edit
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive">
-                          Delete Account
-                        </DropdownMenuItem>
+                        <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

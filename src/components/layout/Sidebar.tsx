@@ -14,7 +14,6 @@ const navigation = [
   { name: "Audience", href: "/audience", icon: Users },
   { name: "Keywords", href: "/keywords", icon: Key },
   { name: "Location", href: "/location", icon: MapPin },
-  { name: "Content", href: "/content", icon: FileText },
   { name: "Change History", href: "/change-history", icon: History },
 ];
 

@@ -115,7 +115,7 @@ export default function Clients() {
                 <TableHead>Total Budget</TableHead>
                 <TableHead>% Spent</TableHead>
                 <TableHead>Connections</TableHead>
-                <TableHead className="text-right">Action</TableHead>
+                <TableHead className="w-[50px]"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -159,14 +159,14 @@ export default function Clients() {
                       <span className="text-xs">Facebook</span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                          <MoreVertical className="w-4 h-4" />
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                          <MoreVertical className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="bg-popover">
+                      <DropdownMenuContent className="bg-popover" align="end">
                         <DropdownMenuItem onClick={() => navigate(`/clients/${client.id}`)}>
                           View Details
                         </DropdownMenuItem>
@@ -174,11 +174,9 @@ export default function Clients() {
                           Update Status
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => navigate(`/clients/${client.id}/edit`)}>
-                          Edit Client
+                          Edit
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive">
-                          Delete Client
-                        </DropdownMenuItem>
+                        <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

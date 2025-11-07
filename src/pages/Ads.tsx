@@ -1,4 +1,4 @@
-import { Plus, Filter } from "lucide-react";
+import { Plus, MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -172,7 +172,7 @@ export default function Ads() {
                 <TableHead className="text-right">Impressions</TableHead>
                 <TableHead className="text-right">Clicks</TableHead>
                 <TableHead className="text-right">Conversions</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+                <TableHead className="w-[50px]"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -190,18 +190,18 @@ export default function Ads() {
                   <TableCell className="text-right">{ad.impressions.toLocaleString()}</TableCell>
                   <TableCell className="text-right">{ad.clicks}</TableCell>
                   <TableCell className="text-right">{ad.conversions}</TableCell>
-                  <TableCell className="text-right">
+                  <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm">
-                          Actions
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                          <MoreVertical className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="bg-popover">
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>View</DropdownMenuItem>
-                        <DropdownMenuItem>Update Status</DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive">Remove</DropdownMenuItem>
+                      <DropdownMenuContent className="bg-popover" align="end">
+                        <DropdownMenuItem>View Details</DropdownMenuItem>
+                        <DropdownMenuItem>Edit Ad</DropdownMenuItem>
+                        <DropdownMenuItem>Pause Ad</DropdownMenuItem>
+                        <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

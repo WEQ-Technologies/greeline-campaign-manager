@@ -1,4 +1,4 @@
-import { Plus, Filter } from "lucide-react";
+import { Plus, MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -183,7 +183,7 @@ export default function Location() {
                 <TableHead>Status</TableHead>
                 <TableHead className="text-right">Impressions</TableHead>
                 <TableHead className="text-right">Conversions</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+                <TableHead className="w-[50px]"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -201,17 +201,16 @@ export default function Location() {
                   </TableCell>
                   <TableCell className="text-right">{location.impressions.toLocaleString()}</TableCell>
                   <TableCell className="text-right">{location.conversions}</TableCell>
-                  <TableCell className="text-right">
+                  <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm">
-                          Actions
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                          <MoreVertical className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="bg-popover">
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>View Performance</DropdownMenuItem>
-                        <DropdownMenuItem>Update Bid</DropdownMenuItem>
+                      <DropdownMenuContent className="bg-popover" align="end">
+                        <DropdownMenuItem>Edit Bid Adjustment</DropdownMenuItem>
+                        <DropdownMenuItem>Exclude Location</DropdownMenuItem>
                         <DropdownMenuItem className="text-destructive">Remove</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>

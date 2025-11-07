@@ -1,4 +1,4 @@
-import { Plus, Filter, Image as ImageIcon, Video, Type } from "lucide-react";
+import { Plus, MoreVertical, Image as ImageIcon, Video, Type } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -181,7 +181,7 @@ export default function Assets() {
                 <TableHead>Ad Group</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Added Date</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+                <TableHead className="w-[50px]"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -203,18 +203,18 @@ export default function Assets() {
                     </Badge>
                   </TableCell>
                   <TableCell>{asset.addedDate}</TableCell>
-                  <TableCell className="text-right">
+                  <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm">
-                          Actions
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                          <MoreVertical className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="bg-popover">
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>View</DropdownMenuItem>
-                        <DropdownMenuItem>Update Status</DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive">Remove</DropdownMenuItem>
+                      <DropdownMenuContent className="bg-popover" align="end">
+                        <DropdownMenuItem>View Details</DropdownMenuItem>
+                        <DropdownMenuItem>Edit Asset</DropdownMenuItem>
+                        <DropdownMenuItem>Remove Asset</DropdownMenuItem>
+                        <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
