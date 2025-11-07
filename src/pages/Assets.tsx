@@ -71,15 +71,9 @@ export default function Assets() {
         </Button>
       </div>
 
-      {/* Selection Layer */}
+      {/* Filters */}
       <Card>
-        <CardHeader>
-          <CardTitle className="text-lg flex items-center gap-2">
-            <Filter className="w-4 h-4" />
-            Selection Layer
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="space-y-2">
               <Label>Client Name</Label>
