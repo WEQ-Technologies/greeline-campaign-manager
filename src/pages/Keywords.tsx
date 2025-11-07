@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { useToast } from "@/hooks/use-toast";
 
 const keywords = [
   {
@@ -50,6 +51,7 @@ const keywords = [
 
 export default function Keywords() {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   return (
     <div className="p-6 space-y-6">
@@ -58,7 +60,7 @@ export default function Keywords() {
           <h1 className="text-3xl font-bold tracking-tight">Keywords</h1>
           <p className="text-muted-foreground mt-1">Manage and monitor all keywords</p>
         </div>
-        <Button onClick={() => navigate("/keywords/new")}>
+        <Button onClick={() => toast({ title: "Feature coming soon", description: "Keyword creation page is not yet available" })}>
           <Plus className="w-4 h-4 mr-2" />
           Add Keyword
         </Button>

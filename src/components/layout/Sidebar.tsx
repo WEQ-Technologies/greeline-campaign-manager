@@ -4,17 +4,17 @@ import { Link, useLocation } from "react-router-dom";
 import logo from "@/assets/logo.svg";
 
 const navigation = [
-  { name: "Dashboard", href: "/", icon: LayoutDashboard },
-  { name: "Account Management", href: "/accounts", icon: UserCircle },
-  { name: "Clients", href: "/clients", icon: Users },
-  { name: "Campaigns", href: "/campaigns", icon: Megaphone },
-  { name: "Ad Groups", href: "/ad-groups", icon: Layers },
-  { name: "Ads", href: "/ads", icon: Target },
-  { name: "Assets", href: "/assets", icon: Image },
-  { name: "Audience", href: "/audience", icon: Users },
-  { name: "Keywords", href: "/keywords", icon: Key },
-  { name: "Location", href: "/location", icon: MapPin },
-  { name: "Change History", href: "/change-history", icon: History },
+  { name: "Dashboard", href: "/", icon: LayoutDashboard, available: true },
+  { name: "Account Management", href: "/accounts", icon: UserCircle, available: true },
+  { name: "Clients", href: "/clients", icon: Users, available: true },
+  { name: "Campaigns", href: "/campaigns", icon: Megaphone, available: true },
+  { name: "Ad Groups", href: "/ad-groups", icon: Layers, available: true },
+  { name: "Ads", href: "/ads", icon: Target, available: true },
+  { name: "Assets", href: "/assets", icon: Image, available: true },
+  { name: "Audience", href: "/audience", icon: Users, available: true },
+  { name: "Keywords", href: "/keywords", icon: Key, available: true },
+  { name: "Location", href: "/location", icon: MapPin, available: true },
+  { name: "Change History", href: "/change-history", icon: History, available: true },
 ];
 
 export function Sidebar() {
@@ -32,6 +32,23 @@ export function Sidebar() {
       <nav className="flex-1 space-y-1 px-3 py-4 overflow-y-auto">
         {navigation.map((item) => {
           const isActive = location.pathname === item.href;
+          
+          if (!item.available) {
+            return (
+              <div
+                key={item.name}
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg opacity-50 cursor-not-allowed",
+                  "text-sidebar-foreground"
+                )}
+                title="Coming soon"
+              >
+                <item.icon className="w-5 h-5" />
+                {item.name}
+              </div>
+            );
+          }
+          
           return (
             <Link
               key={item.name}

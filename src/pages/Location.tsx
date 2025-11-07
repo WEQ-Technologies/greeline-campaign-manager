@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { useToast } from "@/hooks/use-toast";
 
 const locations = [
   {
@@ -47,6 +48,7 @@ const locations = [
 
 export default function Location() {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   return (
     <div className="p-6 space-y-6">
@@ -55,7 +57,7 @@ export default function Location() {
           <h1 className="text-3xl font-bold tracking-tight">Location</h1>
           <p className="text-muted-foreground mt-1">Manage and monitor location targeting</p>
         </div>
-        <Button onClick={() => navigate("/location/new")}>
+        <Button onClick={() => toast({ title: "Feature coming soon", description: "Location creation page is not yet available" })}>
           <Plus className="w-4 h-4 mr-2" />
           Add Location
         </Button>
