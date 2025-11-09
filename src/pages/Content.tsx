@@ -60,67 +60,6 @@ export default function Content() {
         </Button>
       </div>
 
-      {/* Filters */}
-      <Card>
-        <CardContent className="pt-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="space-y-2">
-              <Label>Client Name</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select client" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover">
-                  <SelectItem value="all">All Clients</SelectItem>
-                  <SelectItem value="tech">Tech Startup Inc</SelectItem>
-                  <SelectItem value="nations">Nations Auto Glass</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label>Campaign</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select campaign" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover">
-                  <SelectItem value="all">All Campaigns</SelectItem>
-                  <SelectItem value="brand">Brand Awareness Q1</SelectItem>
-                  <SelectItem value="holiday">Holiday Special</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label>Ad Group</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select ad group" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover">
-                  <SelectItem value="all">All Ad Groups</SelectItem>
-                  <SelectItem value="suv">SUV Models - Winter</SelectItem>
-                  <SelectItem value="sedan">Sedan Specials</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label>Account</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select account" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover">
-                  <SelectItem value="all">All Accounts</SelectItem>
-                  <SelectItem value="account1">Account 1</SelectItem>
-                  <SelectItem value="account2">Account 2</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-
       {/* List View */}
       <Card>
         <CardHeader>
