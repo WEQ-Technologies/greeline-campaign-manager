@@ -11,6 +11,8 @@ import AccountForm from "./pages/AccountForm";
 import Clients from "./pages/Clients";
 import ClientDetail from "./pages/ClientDetail";
 import ClientForm from "./pages/ClientForm";
+import GoogleAdsLayout from "./pages/google-ads/GoogleAdsLayout";
+import Overview from "./pages/google-ads/Overview";
 import Campaigns from "./pages/Campaigns";
 import AdGroups from "./pages/AdGroups";
 import Ads from "./pages/Ads";
@@ -51,16 +53,22 @@ const App = () => (
             <Route path="clients/:id" element={<ClientDetail />} />
             <Route path="clients/new" element={<ClientForm />} />
             <Route path="clients/:id/edit" element={<ClientForm />} />
+          </Route>
+          
+          {/* Google Ads Workspace */}
+          <Route path="/google-ads" element={<GoogleAdsLayout />}>
+            <Route path="overview" element={<Overview />} />
             <Route path="campaigns" element={<Campaigns />} />
             <Route path="ad-groups" element={<AdGroups />} />
             <Route path="ads" element={<Ads />} />
             <Route path="assets" element={<Assets />} />
             <Route path="audience" element={<Audience />} />
             <Route path="keywords" element={<Keywords />} />
-            <Route path="location" element={<Location />} />
             <Route path="content" element={<Content />} />
+            <Route path="location" element={<Location />} />
             <Route path="change-history" element={<ChangeHistory />} />
           </Route>
+          
           <Route path="/campaigns/new" element={<CampaignWizard />} />
           <Route path="/campaigns/:id" element={<CampaignDetail />}>
             <Route index element={<CampaignSettings />} />

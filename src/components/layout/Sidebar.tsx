@@ -1,24 +1,20 @@
-import { LayoutDashboard, UserCircle, Users, Megaphone, Layers, Image, Target, Key, MapPin, FileText, History } from "lucide-react";
+import { LayoutDashboard, UserCircle, Users, Megaphone } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "react-router-dom";
 import logo from "@/assets/logo.svg";
+import { useState } from "react";
+import { PlatformSelectionDialog } from "@/components/platform/PlatformSelectionDialog";
 
 const navigation = [
-  { name: "Dashboard", href: "/", icon: LayoutDashboard, available: true },
-  { name: "Account Management", href: "/accounts", icon: UserCircle, available: true },
-  { name: "Clients", href: "/clients", icon: Users, available: true },
-  { name: "Campaigns", href: "/campaigns", icon: Megaphone, available: true },
-  { name: "Ad Groups", href: "/ad-groups", icon: Layers, available: true },
-  { name: "Ads", href: "/ads", icon: Target, available: true },
-  { name: "Assets", href: "/assets", icon: Image, available: true },
-  { name: "Audience", href: "/audience", icon: Users, available: true },
-  { name: "Keywords", href: "/keywords", icon: Key, available: true },
-  { name: "Location", href: "/location", icon: MapPin, available: true },
-  { name: "Change History", href: "/change-history", icon: History, available: true },
+  { name: "Dashboard", href: "/", icon: LayoutDashboard },
+  { name: "Clients", href: "/clients", icon: Users },
+  { name: "Accounts", href: "/accounts", icon: UserCircle },
+  { name: "Campaigns", href: "#", icon: Megaphone, special: "campaigns" },
 ];
 
 export function Sidebar() {
   const location = useLocation();
+  const [platformDialogOpen, setPlatformDialogOpen] = useState(false);
 
   return (
     <div className="flex h-screen w-64 flex-col bg-sidebar border-r border-sidebar-border">
@@ -33,19 +29,19 @@ export function Sidebar() {
         {navigation.map((item) => {
           const isActive = location.pathname === item.href;
           
-          if (!item.available) {
+          if (item.special === "campaigns") {
             return (
-              <div
+              <button
                 key={item.name}
+                onClick={() => setPlatformDialogOpen(true)}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg opacity-50 cursor-not-allowed",
-                  "text-sidebar-foreground"
+                  "w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors",
+                  "text-sidebar-foreground hover:bg-sidebar-accent/50"
                 )}
-                title="Coming soon"
               >
                 <item.icon className="w-5 h-5" />
                 {item.name}
-              </div>
+              </button>
             );
           }
           
@@ -66,6 +62,8 @@ export function Sidebar() {
           );
         })}
       </nav>
+
+      <PlatformSelectionDialog open={platformDialogOpen} onOpenChange={setPlatformDialogOpen} />
 
       <div className="p-4 border-t border-sidebar-border">
         <div className="flex items-center gap-3 px-3 py-2">
