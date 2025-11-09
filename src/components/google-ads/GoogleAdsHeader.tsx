@@ -1,12 +1,25 @@
-import { Search, Bell, User } from "lucide-react";
+import { Search, Bell, User, ArrowLeft } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export function GoogleAdsHeader() {
+  const navigate = useNavigate();
+
   return (
     <header className="h-16 border-b border-border bg-card flex items-center px-6 gap-4">
+      {/* Back Button */}
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={() => navigate("/")}
+        title="Back to Dashboard"
+      >
+        <ArrowLeft className="w-5 h-5" />
+      </Button>
+
       {/* Left Section */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
