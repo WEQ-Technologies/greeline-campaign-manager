@@ -1,57 +1,70 @@
-import { Plus, MoreVertical } from "lucide-react";
+import { useState } from "react";
+import { Plus, MoreVertical, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { useToast } from "@/hooks/use-toast";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AddKeywordDialog } from "@/components/keywords/AddKeywordDialog";
+import { AddNegativeKeywordDialog } from "@/components/keywords/AddNegativeKeywordDialog";
+import { UploadCSVDialog } from "@/components/keywords/UploadCSVDialog";
 
 const keywords = [
   {
     id: "1",
     keyword: "luxury suv winter tires",
-    client: "Tech Startup Inc",
     campaign: "Brand Awareness Q1",
     adGroup: "SUV Models - Winter",
-    matchType: "Broad Match",
-    status: "active",
-    avgCpc: "$2.45",
-    impressions: 5420,
-    clicks: 234,
+    matchType: "Broad",
+    status: "Pending",
   },
   {
     id: "2",
     keyword: "sedan lease deals",
-    client: "Nations Auto Glass",
     campaign: "Holiday Special",
     adGroup: "Sedan Specials",
-    matchType: "Phrase Match",
-    status: "active",
-    avgCpc: "$1.85",
-    impressions: 3890,
-    clicks: 187,
+    matchType: "Phrase",
+    status: "Under Review",
   },
   {
     id: "3",
     keyword: "emergency glass repair",
-    client: "VW Heavy Up",
     campaign: "New Year Promo",
     adGroup: "Glass Repair - Emergency",
-    matchType: "Exact Match",
-    status: "paused",
-    avgCpc: "$3.20",
-    impressions: 2340,
-    clicks: 98,
+    matchType: "Exact",
+    status: "Pending",
+  },
+];
+
+const negativeKeywords = [
+  {
+    id: "1",
+    keyword: "free",
+    matchType: "Broad",
+    addedTo: "Brand Awareness Q1",
+    level: "Campaign",
+  },
+  {
+    id: "2",
+    keyword: "cheap",
+    matchType: "Exact",
+    addedTo: "Holiday Special",
+    level: "Ad Group",
+  },
+  {
+    id: "3",
+    keyword: "discount",
+    matchType: "Phrase",
+    addedTo: "New Year Promo",
+    level: "Campaign",
   },
 ];
 
 export default function Keywords() {
-  const navigate = useNavigate();
-  const { toast } = useToast();
+  const [addKeywordOpen, setAddKeywordOpen] = useState(false);
+  const [addNegativeKeywordOpen, setAddNegativeKeywordOpen] = useState(false);
+  const [uploadCSVOpen, setUploadCSVOpen] = useState(false);
 
   return (
     <div className="p-6 space-y-6">
@@ -60,70 +73,131 @@ export default function Keywords() {
           <h1 className="text-3xl font-bold tracking-tight">Keywords</h1>
           <p className="text-muted-foreground mt-1">Manage and monitor all keywords</p>
         </div>
-        <Button onClick={() => toast({ title: "Feature coming soon", description: "Keyword creation page is not yet available" })}>
-          <Plus className="w-4 h-4 mr-2" />
-          Add Keyword
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => setUploadCSVOpen(true)}>
+            <Upload className="w-4 h-4 mr-2" />
+            Upload CSV
+          </Button>
+          <Button onClick={() => setAddKeywordOpen(true)}>
+            <Plus className="w-4 h-4 mr-2" />
+            Add Keywords
+          </Button>
+        </div>
       </div>
 
-      {/* List View */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">List View</CardTitle>
-        </CardHeader>
-        <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Keyword</TableHead>
-                <TableHead>Client Name</TableHead>
-                <TableHead>Campaign</TableHead>
-                <TableHead>Ad Group</TableHead>
-                <TableHead>Match Type</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Avg CPC</TableHead>
-                <TableHead className="text-right">Impressions</TableHead>
-                <TableHead className="text-right">Clicks</TableHead>
-                <TableHead className="w-[50px]"></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {keywords.map((keyword) => (
-                <TableRow key={keyword.id}>
-                  <TableCell className="font-medium">{keyword.keyword}</TableCell>
-                  <TableCell>{keyword.client}</TableCell>
-                  <TableCell>{keyword.campaign}</TableCell>
-                  <TableCell>{keyword.adGroup}</TableCell>
-                  <TableCell>{keyword.matchType}</TableCell>
-                  <TableCell>
-                    <Badge variant={keyword.status === "active" ? "default" : "secondary"}>
-                      {keyword.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">{keyword.avgCpc}</TableCell>
-                  <TableCell className="text-right">{keyword.impressions.toLocaleString()}</TableCell>
-                  <TableCell className="text-right">{keyword.clicks}</TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                          <MoreVertical className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="bg-popover" align="end">
-                        <DropdownMenuItem>View Details</DropdownMenuItem>
-                        <DropdownMenuItem>Edit Keyword</DropdownMenuItem>
-                        <DropdownMenuItem>Pause Keyword</DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+      <Tabs defaultValue="keywords" className="space-y-4">
+        <TabsList>
+          <TabsTrigger value="keywords">Keywords</TabsTrigger>
+          <TabsTrigger value="negative">Negative Keywords</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="keywords" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Keywords List</CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Keyword</TableHead>
+                    <TableHead>Match Type</TableHead>
+                    <TableHead>Added To - Campaign</TableHead>
+                    <TableHead>Added To - Ad Group</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="w-[50px]"></TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {keywords.map((keyword) => (
+                    <TableRow key={keyword.id}>
+                      <TableCell className="font-medium">{keyword.keyword}</TableCell>
+                      <TableCell>{keyword.matchType}</TableCell>
+                      <TableCell>{keyword.campaign}</TableCell>
+                      <TableCell>{keyword.adGroup}</TableCell>
+                      <TableCell>
+                        <Badge variant={keyword.status === "Pending" ? "secondary" : "default"}>
+                          {keyword.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                              <MoreVertical className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent className="bg-popover" align="end">
+                            <DropdownMenuItem>Edit</DropdownMenuItem>
+                            <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="negative" className="space-y-4">
+          <div className="flex justify-end">
+            <Button onClick={() => setAddNegativeKeywordOpen(true)}>
+              <Plus className="w-4 h-4 mr-2" />
+              Add Negative Keywords
+            </Button>
+          </div>
+          
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Negative Keywords List</CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Negative Keyword or List Name</TableHead>
+                    <TableHead>Match Type</TableHead>
+                    <TableHead>Added To</TableHead>
+                    <TableHead>Level</TableHead>
+                    <TableHead className="w-[50px]"></TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {negativeKeywords.map((keyword) => (
+                    <TableRow key={keyword.id}>
+                      <TableCell className="font-medium">{keyword.keyword}</TableCell>
+                      <TableCell>{keyword.matchType}</TableCell>
+                      <TableCell>{keyword.addedTo}</TableCell>
+                      <TableCell>
+                        <Badge variant="outline">{keyword.level}</Badge>
+                      </TableCell>
+                      <TableCell>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                              <MoreVertical className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent className="bg-popover" align="end">
+                            <DropdownMenuItem>Edit</DropdownMenuItem>
+                            <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+
+      <AddKeywordDialog open={addKeywordOpen} onOpenChange={setAddKeywordOpen} />
+      <AddNegativeKeywordDialog open={addNegativeKeywordOpen} onOpenChange={setAddNegativeKeywordOpen} />
+      <UploadCSVDialog open={uploadCSVOpen} onOpenChange={setUploadCSVOpen} />
     </div>
   );
 }
