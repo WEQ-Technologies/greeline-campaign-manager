@@ -1,4 +1,4 @@
-import { MoreVertical, Plus } from "lucide-react";
+import { MoreVertical, Plus, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
 
 const assets = [
@@ -57,6 +58,7 @@ export default function Assets() {
   const [filterDateRange, setFilterDateRange] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
   const [dateRange, setDateRange] = useState({ start: "", end: "" });
+  const [filterOpen, setFilterOpen] = useState(false);
 
   return (
     <div className="p-6 space-y-6">
@@ -65,52 +67,65 @@ export default function Assets() {
           <h1 className="text-3xl font-bold tracking-tight">Assets</h1>
           <p className="text-muted-foreground mt-1">Manage and monitor all creative assets</p>
         </div>
-        <Button onClick={() => navigate("/google-ads/assets/new")}>
-          <Plus className="w-4 h-4 mr-2" />
-          Add Asset
-        </Button>
+        <div className="flex gap-2">
+          <Dialog open={filterOpen} onOpenChange={setFilterOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline" size="icon">
+                <Filter className="h-4 w-4" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Filter</DialogTitle>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="space-y-2">
+                  <Label htmlFor="status">Status</Label>
+                  <Select value={filterStatus} onValueChange={setFilterStatus}>
+                    <SelectTrigger id="status">
+                      <SelectValue placeholder="Select status" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover z-50">
+                      <SelectItem value="Active">Active</SelectItem>
+                      <SelectItem value="Deactive">Deactive</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="startDate">Start Date</Label>
+                  <Input
+                    id="startDate"
+                    type="date"
+                    value={dateRange.start}
+                    onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="endDate">End Date</Label>
+                  <Input
+                    id="endDate"
+                    type="date"
+                    value={dateRange.end}
+                    onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
+                  />
+                </div>
+                <div className="flex justify-end gap-2">
+                  <Button variant="outline" onClick={() => setFilterOpen(false)}>
+                    Cancel
+                  </Button>
+                  <Button onClick={() => setFilterOpen(false)}>
+                    Apply
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+          <Button onClick={() => navigate("/google-ads/assets/new")}>
+            <Plus className="w-4 h-4 mr-2" />
+            Add Asset
+          </Button>
+        </div>
       </div>
-
-      {/* Filter Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Filter</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="status">Status</Label>
-              <Select value={filterStatus} onValueChange={setFilterStatus}>
-                <SelectTrigger id="status">
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover z-50">
-                  <SelectItem value="Active">Active</SelectItem>
-                  <SelectItem value="Deactive">Deactive</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="startDate">Start Date</Label>
-              <Input
-                id="startDate"
-                type="date"
-                value={dateRange.start}
-                onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="endDate">End Date</Label>
-              <Input
-                id="endDate"
-                type="date"
-                value={dateRange.end}
-                onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
-              />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* List View */}
       <Card>

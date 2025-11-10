@@ -1,4 +1,4 @@
-import { MoreVertical, Plus } from "lucide-react";
+import { MoreVertical, Plus, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +8,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
 
 const ads = [
@@ -39,6 +40,7 @@ export default function Ads() {
   const [filterCampaign, setFilterCampaign] = useState("");
   const [filterAdGroup, setFilterAdGroup] = useState("");
   const [dateRange, setDateRange] = useState({ start: "", end: "" });
+  const [filterOpen, setFilterOpen] = useState(false);
 
   return (
     <div className="p-6 space-y-6">
@@ -47,68 +49,81 @@ export default function Ads() {
           <h1 className="text-3xl font-bold tracking-tight">Ads</h1>
           <p className="text-muted-foreground mt-1">Manage and monitor all ads</p>
         </div>
-        <Button onClick={() => navigate("/google-ads/ads/new")}>
-          <Plus className="w-4 h-4 mr-2" />
-          Create Ad
-        </Button>
+        <div className="flex gap-2">
+          <Dialog open={filterOpen} onOpenChange={setFilterOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline" size="icon">
+                <Filter className="h-4 w-4" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Filter</DialogTitle>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="space-y-2">
+                  <Label htmlFor="campaign">Campaign</Label>
+                  <Select value={filterCampaign} onValueChange={setFilterCampaign}>
+                    <SelectTrigger id="campaign">
+                      <SelectValue placeholder="Select campaign" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover z-50">
+                      <SelectItem value="all">All Campaigns</SelectItem>
+                      <SelectItem value="brand-awareness">Brand Awareness Q1</SelectItem>
+                      <SelectItem value="holiday-special">Holiday Special</SelectItem>
+                      <SelectItem value="new-year-promo">New Year Promo</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="adGroup">Ad Group</Label>
+                  <Select value={filterAdGroup} onValueChange={setFilterAdGroup}>
+                    <SelectTrigger id="adGroup">
+                      <SelectValue placeholder="Select ad group" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover z-50">
+                      <SelectItem value="all">All Ad Groups</SelectItem>
+                      <SelectItem value="suv-winter">SUV Models - Winter</SelectItem>
+                      <SelectItem value="sedan-specials">Sedan Specials</SelectItem>
+                      <SelectItem value="glass-repair">Glass Repair - Emergency</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="startDate">Start Date</Label>
+                  <Input
+                    id="startDate"
+                    type="date"
+                    value={dateRange.start}
+                    onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="endDate">End Date</Label>
+                  <Input
+                    id="endDate"
+                    type="date"
+                    value={dateRange.end}
+                    onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
+                  />
+                </div>
+                <div className="flex justify-end gap-2">
+                  <Button variant="outline" onClick={() => setFilterOpen(false)}>
+                    Cancel
+                  </Button>
+                  <Button onClick={() => setFilterOpen(false)}>
+                    Apply
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+          <Button onClick={() => navigate("/google-ads/ads/new")}>
+            <Plus className="w-4 h-4 mr-2" />
+            Create Ad
+          </Button>
+        </div>
       </div>
-
-      {/* Filter Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Filter</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-4 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="campaign">Campaign</Label>
-              <Select value={filterCampaign} onValueChange={setFilterCampaign}>
-                <SelectTrigger id="campaign">
-                  <SelectValue placeholder="Select campaign" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover z-50">
-                  <SelectItem value="all">All Campaigns</SelectItem>
-                  <SelectItem value="brand-awareness">Brand Awareness Q1</SelectItem>
-                  <SelectItem value="holiday-special">Holiday Special</SelectItem>
-                  <SelectItem value="new-year-promo">New Year Promo</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="adGroup">Ad Group</Label>
-              <Select value={filterAdGroup} onValueChange={setFilterAdGroup}>
-                <SelectTrigger id="adGroup">
-                  <SelectValue placeholder="Select ad group" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover z-50">
-                  <SelectItem value="all">All Ad Groups</SelectItem>
-                  <SelectItem value="suv-winter">SUV Models - Winter</SelectItem>
-                  <SelectItem value="sedan-specials">Sedan Specials</SelectItem>
-                  <SelectItem value="glass-repair">Glass Repair - Emergency</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="startDate">Start Date</Label>
-              <Input
-                id="startDate"
-                type="date"
-                value={dateRange.start}
-                onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="endDate">End Date</Label>
-              <Input
-                id="endDate"
-                type="date"
-                value={dateRange.end}
-                onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
-              />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* List View */}
       <Card>

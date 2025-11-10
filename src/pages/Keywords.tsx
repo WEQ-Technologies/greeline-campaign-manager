@@ -1,4 +1,4 @@
-import { Plus, MoreVertical, Upload } from "lucide-react";
+import { Plus, MoreVertical, Upload, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
 
 const keywords = [
@@ -64,6 +65,7 @@ const negativeKeywords = [
 export default function Keywords() {
   const navigate = useNavigate();
   const [dateRange, setDateRange] = useState({ start: "", end: "" });
+  const [filterOpen, setFilterOpen] = useState(false);
 
   return (
     <div className="p-6 space-y-6">
@@ -73,6 +75,46 @@ export default function Keywords() {
           <p className="text-muted-foreground mt-1">Manage and monitor all keywords</p>
         </div>
         <div className="flex gap-2">
+          <Dialog open={filterOpen} onOpenChange={setFilterOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline" size="icon">
+                <Filter className="h-4 w-4" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Filter</DialogTitle>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="space-y-2">
+                  <Label htmlFor="startDate">Start Date</Label>
+                  <Input
+                    id="startDate"
+                    type="date"
+                    value={dateRange.start}
+                    onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="endDate">End Date</Label>
+                  <Input
+                    id="endDate"
+                    type="date"
+                    value={dateRange.end}
+                    onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
+                  />
+                </div>
+                <div className="flex justify-end gap-2">
+                  <Button variant="outline" onClick={() => setFilterOpen(false)}>
+                    Cancel
+                  </Button>
+                  <Button onClick={() => setFilterOpen(false)}>
+                    Apply
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
           <Button variant="outline" onClick={() => navigate("/google-ads/keywords/upload")}>
             <Upload className="w-4 h-4 mr-2" />
             Upload CSV
@@ -83,35 +125,6 @@ export default function Keywords() {
           </Button>
         </div>
       </div>
-
-      {/* Filter Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Filter</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="startDate">Start Date</Label>
-              <Input
-                id="startDate"
-                type="date"
-                value={dateRange.start}
-                onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="endDate">End Date</Label>
-              <Input
-                id="endDate"
-                type="date"
-                value={dateRange.end}
-                onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
-              />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
       <Tabs defaultValue="keywords" className="space-y-4">
         <TabsList>

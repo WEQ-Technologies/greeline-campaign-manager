@@ -1,4 +1,4 @@
-import { Plus, MoreVertical } from "lucide-react";
+import { Plus, MoreVertical, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 
@@ -51,6 +52,7 @@ export default function Location() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [dateRange, setDateRange] = useState({ start: "", end: "" });
+  const [filterOpen, setFilterOpen] = useState(false);
 
   return (
     <div className="p-6 space-y-6">
@@ -59,40 +61,53 @@ export default function Location() {
           <h1 className="text-3xl font-bold tracking-tight">Location</h1>
           <p className="text-muted-foreground mt-1">Manage and monitor location targeting</p>
         </div>
-        <Button onClick={() => toast({ title: "Feature coming soon", description: "Location creation page is not yet available" })}>
-          <Plus className="w-4 h-4 mr-2" />
-          Add Location
-        </Button>
+        <div className="flex gap-2">
+          <Dialog open={filterOpen} onOpenChange={setFilterOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline" size="icon">
+                <Filter className="h-4 w-4" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Filter</DialogTitle>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="space-y-2">
+                  <Label htmlFor="startDate">Start Date</Label>
+                  <Input
+                    id="startDate"
+                    type="date"
+                    value={dateRange.start}
+                    onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="endDate">End Date</Label>
+                  <Input
+                    id="endDate"
+                    type="date"
+                    value={dateRange.end}
+                    onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
+                  />
+                </div>
+                <div className="flex justify-end gap-2">
+                  <Button variant="outline" onClick={() => setFilterOpen(false)}>
+                    Cancel
+                  </Button>
+                  <Button onClick={() => setFilterOpen(false)}>
+                    Apply
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+          <Button onClick={() => toast({ title: "Feature coming soon", description: "Location creation page is not yet available" })}>
+            <Plus className="w-4 h-4 mr-2" />
+            Add Location
+          </Button>
+        </div>
       </div>
-
-      {/* Filter Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Filter</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="startDate">Start Date</Label>
-              <Input
-                id="startDate"
-                type="date"
-                value={dateRange.start}
-                onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="endDate">End Date</Label>
-              <Input
-                id="endDate"
-                type="date"
-                value={dateRange.end}
-                onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
-              />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* List View */}
       <Card>
