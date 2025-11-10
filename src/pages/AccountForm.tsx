@@ -118,10 +118,8 @@ export default function AccountForm() {
                     <SelectValue placeholder="Select account type" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="google-ads">Google Ads</SelectItem>
-                    <SelectItem value="meta-ads">Meta Ads</SelectItem>
-                    <SelectItem value="linkedin-ads">LinkedIn Ads</SelectItem>
-                    <SelectItem value="twitter-ads">Twitter Ads</SelectItem>
+                    <SelectItem value="google-ads">Google Ads Account</SelectItem>
+                    <SelectItem value="meta-ads">Meta Ads Account</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -166,10 +164,8 @@ export default function AccountForm() {
                     <SelectValue placeholder="Select account type" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="google-ads">Google Ads</SelectItem>
-                    <SelectItem value="meta-ads">Meta Ads</SelectItem>
-                    <SelectItem value="linkedin-ads">LinkedIn Ads</SelectItem>
-                    <SelectItem value="twitter-ads">Twitter Ads</SelectItem>
+                    <SelectItem value="google-ads">Google Ads Account</SelectItem>
+                    <SelectItem value="meta-ads">Meta Ads Account</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
