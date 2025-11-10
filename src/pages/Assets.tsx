@@ -13,75 +13,52 @@ import { useState } from "react";
 const assets = [
   {
     id: "1",
-    type: "Headline",
-    name: "Winter Sale Headlines",
+    asset: "Winter Sale Headlines",
+    assetType: "Headline",
+    addedTo: "Brand Awareness Q1",
+    level: "Campaign",
+    status: "Active",
   },
   {
     id: "2",
-    type: "Long headline",
-    name: "Extended Product Descriptions",
+    asset: "Extended Product Descriptions",
+    assetType: "Long headline",
+    addedTo: "Holiday Special",
+    level: "Ad",
+    status: "Active",
   },
   {
     id: "3",
-    type: "Description",
-    name: "Service Descriptions",
+    asset: "Service Descriptions",
+    assetType: "Description",
+    addedTo: "New Year Promo",
+    level: "Campaign",
+    status: "Deactive",
   },
   {
     id: "4",
-    type: "Images",
-    name: "Product Photography",
+    asset: "Product Photography",
+    assetType: "Images",
+    addedTo: "Brand Awareness Q1",
+    level: "Ad",
+    status: "Active",
   },
   {
     id: "5",
-    type: "Videos",
-    name: "Product Demo Videos",
-  },
-  {
-    id: "6",
-    type: "Sitelinks",
-    name: "Navigation Links",
-  },
-  {
-    id: "7",
-    type: "Promotion",
-    name: "Winter Discount Promo",
-  },
-  {
-    id: "8",
-    type: "Price",
-    name: "Service Pricing",
-  },
-  {
-    id: "9",
-    type: "Calls",
-    name: "Contact Numbers",
-  },
-  {
-    id: "10",
-    type: "Callouts",
-    name: "Feature Highlights",
-  },
-  {
-    id: "11",
-    type: "Structured Snippets",
-    name: "Product Categories",
-  },
-  {
-    id: "12",
-    type: "Lead Form",
-    name: "Contact Form",
-  },
-  {
-    id: "13",
-    type: "Location",
-    name: "Business Locations",
+    asset: "Product Demo Videos",
+    assetType: "Videos",
+    addedTo: "Holiday Special",
+    level: "Campaign",
+    status: "Active",
   },
 ];
 
 export default function Assets() {
   const navigate = useNavigate();
-  const [filterType, setFilterType] = useState("");
-  const [filterName, setFilterName] = useState("");
+  const [filterDateRange, setFilterDateRange] = useState("");
+  const [filterStatus, setFilterStatus] = useState("");
+  const [filterAsset, setFilterAsset] = useState("");
+  const [filterAssetType, setFilterAssetType] = useState("");
 
   return (
     <div className="p-6 space-y-6">
@@ -99,14 +76,44 @@ export default function Assets() {
           <CardTitle className="text-lg">Filter</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="dateRange">Date Range</Label>
+              <Input
+                id="dateRange"
+                type="date"
+                value={filterDateRange}
+                onChange={(e) => setFilterDateRange(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="status">Status</Label>
+              <Select value={filterStatus} onValueChange={setFilterStatus}>
+                <SelectTrigger id="status">
+                  <SelectValue placeholder="Select status" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover z-50">
+                  <SelectItem value="Active">Active</SelectItem>
+                  <SelectItem value="Deactive">Deactive</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="asset">Asset</Label>
+              <Input
+                id="asset"
+                value={filterAsset}
+                onChange={(e) => setFilterAsset(e.target.value)}
+                placeholder="Search asset"
+              />
+            </div>
             <div className="space-y-2">
               <Label htmlFor="assetType">Asset Type</Label>
-              <Select value={filterType} onValueChange={setFilterType}>
+              <Select value={filterAssetType} onValueChange={setFilterAssetType}>
                 <SelectTrigger id="assetType">
-                  <SelectValue placeholder="Select asset type" />
+                  <SelectValue placeholder="Select type" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-popover z-50">
                   <SelectItem value="Headline">Headline</SelectItem>
                   <SelectItem value="Long headline">Long headline</SelectItem>
                   <SelectItem value="Description">Description</SelectItem>
@@ -123,15 +130,6 @@ export default function Assets() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="assetName">Name</Label>
-              <Input
-                id="assetName"
-                value={filterName}
-                onChange={(e) => setFilterName(e.target.value)}
-                placeholder="Search by name"
-              />
-            </div>
           </div>
         </CardContent>
       </Card>
@@ -145,21 +143,34 @@ export default function Assets() {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead>Asset</TableHead>
                 <TableHead>Asset Type</TableHead>
-                <TableHead>Name</TableHead>
+                <TableHead>Added to (Campaign Name)</TableHead>
+                <TableHead>Level</TableHead>
                 <TableHead>Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {assets
                 .filter(asset => 
-                  (!filterType || asset.type === filterType) &&
-                  (!filterName || asset.name.toLowerCase().includes(filterName.toLowerCase()))
+                  (!filterAssetType || asset.assetType === filterAssetType) &&
+                  (!filterAsset || asset.asset.toLowerCase().includes(filterAsset.toLowerCase())) &&
+                  (!filterStatus || asset.status === filterStatus)
                 )
                 .map((asset) => (
                   <TableRow key={asset.id}>
-                    <TableCell className="font-medium">{asset.type}</TableCell>
-                    <TableCell>{asset.name}</TableCell>
+                    <TableCell className="font-medium">{asset.asset}</TableCell>
+                    <TableCell>{asset.assetType}</TableCell>
+                    <TableCell>
+                      <Button 
+                        variant="link" 
+                        className="p-0 h-auto text-primary hover:underline"
+                        onClick={() => navigate('/google-ads/campaigns')}
+                      >
+                        {asset.addedTo}
+                      </Button>
+                    </TableCell>
+                    <TableCell>{asset.level}</TableCell>
                     <TableCell>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -167,9 +178,12 @@ export default function Assets() {
                             <MoreVertical className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent className="bg-popover" align="end">
+                        <DropdownMenuContent className="bg-popover z-50" align="end">
+                          <DropdownMenuItem>Remove</DropdownMenuItem>
                           <DropdownMenuItem>Edit</DropdownMenuItem>
-                          <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+                          <DropdownMenuItem>
+                            Update Status (Status: {asset.status})
+                          </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>
