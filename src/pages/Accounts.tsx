@@ -3,14 +3,7 @@ import { Plus, MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -43,7 +36,7 @@ const accounts = [
 export default function Accounts() {
   const navigate = useNavigate();
   const [accountStatus, setAccountStatus] = useState<Record<number, string>>(
-    Object.fromEntries(accounts.map((a) => [a.id, a.status]))
+    Object.fromEntries(accounts.map((a) => [a.id, a.status])),
   );
 
   const toggleStatus = (id: number) => {
@@ -57,13 +50,10 @@ export default function Accounts() {
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Account Management</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Ads Accounts</h1>
           <p className="text-muted-foreground mt-1">Manage advertising accounts</p>
         </div>
-        <Button 
-          className="bg-primary hover:bg-primary-hover"
-          onClick={() => navigate("/accounts/new")}
-        >
+        <Button className="bg-primary hover:bg-primary-hover" onClick={() => navigate("/accounts/new")}>
           <Plus className="w-4 h-4 mr-2" />
           Add Account
         </Button>
@@ -86,9 +76,7 @@ export default function Accounts() {
                   <TableCell className="font-medium">{account.name}</TableCell>
                   <TableCell>{account.budget}</TableCell>
                   <TableCell>
-                    <Badge
-                      variant={accountStatus[account.id] === "active" ? "default" : "secondary"}
-                    >
+                    <Badge variant={accountStatus[account.id] === "active" ? "default" : "secondary"}>
                       {accountStatus[account.id]}
                     </Badge>
                   </TableCell>

@@ -5,13 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -48,17 +42,11 @@ export default function AccountForm() {
   return (
     <div className="p-6 space-y-6">
       <div className="flex items-center gap-4">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => navigate("/accounts")}
-        >
+        <Button variant="ghost" size="icon" onClick={() => navigate("/accounts")}>
           <ArrowLeft className="w-5 h-5" />
         </Button>
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">
-            {isEditing ? "Edit Account" : "Create New Account"}
-          </h1>
+          <h1 className="text-3xl font-bold tracking-tight">{isEditing ? "Edit Account" : "Create New Account"}</h1>
           <p className="text-muted-foreground mt-1">
             {isEditing ? "Update account details" : "Add a new advertising account"}
           </p>
@@ -70,11 +58,11 @@ export default function AccountForm() {
         <form onSubmit={handleCreateSubmit}>
           <Card>
             <CardHeader>
-              <CardTitle>1️⃣ Create New Account</CardTitle>
+              <CardTitle>1️⃣ Create New Ads Account</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="create-name">Account Name</Label>
+                <Label htmlFor="create-name">Ads Account Name</Label>
                 <Input
                   id="create-name"
                   placeholder="Enter account name"
@@ -139,11 +127,7 @@ export default function AccountForm() {
               </div>
 
               <div className="flex justify-end gap-3 pt-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => navigate("/accounts")}
-                >
+                <Button type="button" variant="outline" onClick={() => navigate("/accounts")}>
                   Cancel
                 </Button>
                 <Button type="submit" className="bg-primary hover:bg-primary-hover">
@@ -206,11 +190,7 @@ export default function AccountForm() {
               </div>
 
               <div className="flex justify-end gap-3 pt-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => navigate("/accounts")}
-                >
+                <Button type="button" variant="outline" onClick={() => navigate("/accounts")}>
                   Cancel
                 </Button>
                 <Button type="submit" className="bg-primary hover:bg-primary-hover">
