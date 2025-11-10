@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { AssetFields } from "@/components/shared/AssetFields";
 
 export default function AddAdGroup() {
   const { toast } = useToast();
@@ -103,7 +104,7 @@ export default function AddAdGroup() {
 
           <div className="space-y-2">
             <Label>Assets</Label>
-            <p className="text-sm text-muted-foreground">Show same assets section here</p>
+            <AssetFields />
           </div>
 
           <div className="space-y-2">
