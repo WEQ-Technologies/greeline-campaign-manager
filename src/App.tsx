@@ -38,7 +38,7 @@ import UploadKeywordsCSV from "./pages/UploadKeywordsCSV";
 import AddAd from "./pages/AddAd";
 import AddAdGroup from "./pages/AddAdGroup";
 import AddAsset from "./pages/AddAsset";
-import NotFound from "./pages/NotFound";
+import { Navigate } from "react-router-dom";
 
 const queryClient = new QueryClient();
 
@@ -95,7 +95,7 @@ const App = () => (
           </Route>
           <Route path="/campaigns/:id/edit" element={<AdEditor />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
