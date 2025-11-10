@@ -1,20 +1,18 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
-interface AddNegativeKeywordDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}
-
-export function AddNegativeKeywordDialog({ open, onOpenChange }: AddNegativeKeywordDialogProps) {
+export default function AddNegativeKeyword() {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [addTo, setAddTo] = useState("");
   const [level, setLevel] = useState("");
   const [keywords, setKeywords] = useState("");
@@ -45,16 +43,30 @@ export function AddNegativeKeywordDialog({ open, onOpenChange }: AddNegativeKeyw
       title: "Negative keywords added",
       description: "Your negative keywords have been successfully added",
     });
-    onOpenChange(false);
+    navigate("/google-ads/keywords");
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle>Add Negative Keywords</DialogTitle>
-        </DialogHeader>
-        <div className="space-y-4 py-4">
+    <div className="p-6 space-y-6">
+      <div className="flex items-center gap-4">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => navigate("/google-ads/keywords")}
+        >
+          <ArrowLeft className="h-5 w-5" />
+        </Button>
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Add Negative Keywords</h1>
+          <p className="text-muted-foreground mt-1">Create negative keywords to exclude from your campaigns</p>
+        </div>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Negative Keyword Details</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="addTo">Add To</Label>
             <Select value={addTo} onValueChange={setAddTo}>
@@ -129,14 +141,15 @@ export function AddNegativeKeywordDialog({ open, onOpenChange }: AddNegativeKeyw
               </SelectContent>
             </Select>
           </div>
-        </div>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
-          <Button onClick={handleSave}>Save</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+
+          <div className="flex justify-end gap-2 pt-4">
+            <Button variant="outline" onClick={() => navigate("/google-ads/keywords")}>
+              Cancel
+            </Button>
+            <Button onClick={handleSave}>Save</Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-import { MoreVertical } from "lucide-react";
+import { MoreVertical, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -7,7 +7,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { AddAssetDialog } from "@/components/assets/AddAssetDialog";
 import { useState } from "react";
 
 const assets = [
@@ -65,7 +64,10 @@ export default function Assets() {
           <h1 className="text-3xl font-bold tracking-tight">Assets</h1>
           <p className="text-muted-foreground mt-1">Manage and monitor all creative assets</p>
         </div>
-        <AddAssetDialog />
+        <Button onClick={() => navigate("/google-ads/assets/new")}>
+          <Plus className="w-4 h-4 mr-2" />
+          Add Asset
+        </Button>
       </div>
 
       {/* Filter Section */}

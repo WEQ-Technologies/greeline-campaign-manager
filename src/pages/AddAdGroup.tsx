@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
-export function AddAdGroupDialog() {
-  const [open, setOpen] = useState(false);
+export default function AddAdGroup() {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     adGroupType: "",
     adGroupName: "",
@@ -23,26 +24,30 @@ export function AddAdGroupDialog() {
 
   const handleSave = () => {
     toast({ title: "Success", description: "Ad Group created successfully" });
-    setOpen(false);
-  };
-
-  const handleCancel = () => {
-    setOpen(false);
+    navigate("/google-ads/ad-groups");
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button>
-          <Plus className="w-4 h-4 mr-2" />
-          Create Ad Group
+    <div className="p-6 space-y-6">
+      <div className="flex items-center gap-4">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => navigate("/google-ads/ad-groups")}
+        >
+          <ArrowLeft className="h-5 w-5" />
         </Button>
-      </DialogTrigger>
-      <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>Add Ad Group</DialogTitle>
-        </DialogHeader>
-        <div className="space-y-4 py-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Add Ad Group</h1>
+          <p className="text-muted-foreground mt-1">Create a new ad group for your campaigns</p>
+        </div>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Ad Group Details</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="adGroupType">Select Ad group Type</Label>
             <Select value={formData.adGroupType} onValueChange={(value) => setFormData({ ...formData, adGroupType: value })}>
@@ -142,11 +147,13 @@ export function AddAdGroupDialog() {
           </div>
 
           <div className="flex justify-end gap-2 pt-4">
-            <Button variant="outline" onClick={handleCancel}>Cancel</Button>
+            <Button variant="outline" onClick={() => navigate("/google-ads/ad-groups")}>
+              Cancel
+            </Button>
             <Button onClick={handleSave}>Save</Button>
           </div>
-        </div>
-      </DialogContent>
-    </Dialog>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

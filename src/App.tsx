@@ -32,6 +32,12 @@ import AssetsForm from "./pages/campaign-detail/AssetsForm";
 import OtherSettings from "./pages/campaign-detail/OtherSettings";
 import CampaignChangeHistory from "./pages/campaign-detail/ChangeHistory";
 import AdEditor from "./pages/AdEditor";
+import AddKeyword from "./pages/AddKeyword";
+import AddNegativeKeyword from "./pages/AddNegativeKeyword";
+import UploadKeywordsCSV from "./pages/UploadKeywordsCSV";
+import AddAd from "./pages/AddAd";
+import AddAdGroup from "./pages/AddAdGroup";
+import AddAsset from "./pages/AddAsset";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -60,10 +66,16 @@ const App = () => (
             <Route path="overview" element={<Overview />} />
             <Route path="campaigns" element={<Campaigns />} />
             <Route path="ad-groups" element={<AdGroups />} />
+            <Route path="ad-groups/new" element={<AddAdGroup />} />
             <Route path="ads" element={<Ads />} />
+            <Route path="ads/new" element={<AddAd />} />
             <Route path="assets" element={<Assets />} />
+            <Route path="assets/new" element={<AddAsset />} />
             <Route path="audience" element={<Audience />} />
             <Route path="keywords" element={<Keywords />} />
+            <Route path="keywords/new" element={<AddKeyword />} />
+            <Route path="keywords/negative/new" element={<AddNegativeKeyword />} />
+            <Route path="keywords/upload" element={<UploadKeywordsCSV />} />
             <Route path="content" element={<Content />} />
             <Route path="location" element={<Location />} />
             <Route path="change-history" element={<ChangeHistory />} />

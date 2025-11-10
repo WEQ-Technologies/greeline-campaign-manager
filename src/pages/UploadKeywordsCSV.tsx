@@ -1,18 +1,15 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Download } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Download, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
-interface UploadCSVDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}
-
-export function UploadCSVDialog({ open, onOpenChange }: UploadCSVDialogProps) {
+export default function UploadKeywordsCSV() {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [file, setFile] = useState<File | null>(null);
 
   const handleDownloadTemplate = () => {
@@ -36,16 +33,30 @@ export function UploadCSVDialog({ open, onOpenChange }: UploadCSVDialogProps) {
       title: "File uploaded",
       description: "Your keyword file has been successfully uploaded",
     });
-    onOpenChange(false);
+    navigate("/google-ads/keywords");
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle>Upload Keywords CSV</DialogTitle>
-        </DialogHeader>
-        <div className="space-y-4 py-4">
+    <div className="p-6 space-y-6">
+      <div className="flex items-center gap-4">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => navigate("/google-ads/keywords")}
+        >
+          <ArrowLeft className="h-5 w-5" />
+        </Button>
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Upload Keywords CSV</h1>
+          <p className="text-muted-foreground mt-1">Bulk upload keywords from a CSV file</p>
+        </div>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Upload File</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
           <div className="space-y-2">
             <Button
               variant="outline"
@@ -71,14 +82,15 @@ export function UploadCSVDialog({ open, onOpenChange }: UploadCSVDialogProps) {
               </p>
             )}
           </div>
-        </div>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
-          <Button onClick={handleUpload}>Upload</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+
+          <div className="flex justify-end gap-2 pt-4">
+            <Button variant="outline" onClick={() => navigate("/google-ads/keywords")}>
+              Cancel
+            </Button>
+            <Button onClick={handleUpload}>Upload</Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

@@ -1,11 +1,10 @@
-import { MoreVertical } from "lucide-react";
+import { MoreVertical, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { AddAdDialog } from "@/components/ads/AddAdDialog";
 
 const ads = [
   {
@@ -41,7 +40,10 @@ export default function Ads() {
           <h1 className="text-3xl font-bold tracking-tight">Ads</h1>
           <p className="text-muted-foreground mt-1">Manage and monitor all ads</p>
         </div>
-        <AddAdDialog />
+        <Button onClick={() => navigate("/google-ads/ads/new")}>
+          <Plus className="w-4 h-4 mr-2" />
+          Create Ad
+        </Button>
       </div>
 
       {/* List View */}

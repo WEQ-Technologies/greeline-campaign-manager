@@ -1,11 +1,10 @@
-import { MoreVertical } from "lucide-react";
+import { MoreVertical, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { AddAdGroupDialog } from "@/components/ad-groups/AddAdGroupDialog";
 
 const adGroups = [
   {
@@ -38,7 +37,10 @@ export default function AdGroups() {
           <h1 className="text-3xl font-bold tracking-tight">Ad Groups</h1>
           <p className="text-muted-foreground mt-1">Manage and monitor all ad groups</p>
         </div>
-        <AddAdGroupDialog />
+        <Button onClick={() => navigate("/google-ads/ad-groups/new")}>
+          <Plus className="w-4 h-4 mr-2" />
+          Create Ad Group
+        </Button>
       </div>
 
       {/* List View */}

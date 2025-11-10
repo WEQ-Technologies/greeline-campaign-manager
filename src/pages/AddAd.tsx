@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
-export function AddAdDialog() {
-  const [open, setOpen] = useState(false);
+export default function AddAd() {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     campaign: "",
     adGroup: "",
@@ -19,26 +20,30 @@ export function AddAdDialog() {
 
   const handleSave = () => {
     toast({ title: "Success", description: "Ad created successfully" });
-    setOpen(false);
-  };
-
-  const handleCancel = () => {
-    setOpen(false);
+    navigate("/google-ads/ads");
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button>
-          <Plus className="w-4 h-4 mr-2" />
-          Create Ad
+    <div className="p-6 space-y-6">
+      <div className="flex items-center gap-4">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => navigate("/google-ads/ads")}
+        >
+          <ArrowLeft className="h-5 w-5" />
         </Button>
-      </DialogTrigger>
-      <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>Add Ad</DialogTitle>
-        </DialogHeader>
-        <div className="space-y-4 py-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Add Ad</h1>
+          <p className="text-muted-foreground mt-1">Create a new ad for your campaigns</p>
+        </div>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Ad Details</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="campaign">Campaign</Label>
             <Select value={formData.campaign} onValueChange={(value) => setFormData({ ...formData, campaign: value })}>
@@ -95,11 +100,13 @@ export function AddAdDialog() {
           </div>
 
           <div className="flex justify-end gap-2 pt-4">
-            <Button variant="outline" onClick={handleCancel}>Cancel</Button>
+            <Button variant="outline" onClick={() => navigate("/google-ads/ads")}>
+              Cancel
+            </Button>
             <Button onClick={handleSave}>Save</Button>
           </div>
-        </div>
-      </DialogContent>
-    </Dialog>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

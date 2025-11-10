@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Plus, MoreVertical, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -6,9 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AddKeywordDialog } from "@/components/keywords/AddKeywordDialog";
-import { AddNegativeKeywordDialog } from "@/components/keywords/AddNegativeKeywordDialog";
-import { UploadCSVDialog } from "@/components/keywords/UploadCSVDialog";
+import { useNavigate } from "react-router-dom";
 
 const keywords = [
   {
@@ -62,9 +59,7 @@ const negativeKeywords = [
 ];
 
 export default function Keywords() {
-  const [addKeywordOpen, setAddKeywordOpen] = useState(false);
-  const [addNegativeKeywordOpen, setAddNegativeKeywordOpen] = useState(false);
-  const [uploadCSVOpen, setUploadCSVOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="p-6 space-y-6">
@@ -74,11 +69,11 @@ export default function Keywords() {
           <p className="text-muted-foreground mt-1">Manage and monitor all keywords</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={() => setUploadCSVOpen(true)}>
+          <Button variant="outline" onClick={() => navigate("/google-ads/keywords/upload")}>
             <Upload className="w-4 h-4 mr-2" />
             Upload CSV
           </Button>
-          <Button onClick={() => setAddKeywordOpen(true)}>
+          <Button onClick={() => navigate("/google-ads/keywords/new")}>
             <Plus className="w-4 h-4 mr-2" />
             Add Keywords
           </Button>
@@ -143,7 +138,7 @@ export default function Keywords() {
 
         <TabsContent value="negative" className="space-y-4">
           <div className="flex justify-end">
-            <Button onClick={() => setAddNegativeKeywordOpen(true)}>
+            <Button onClick={() => navigate("/google-ads/keywords/negative/new")}>
               <Plus className="w-4 h-4 mr-2" />
               Add Negative Keywords
             </Button>
@@ -194,10 +189,6 @@ export default function Keywords() {
           </Card>
         </TabsContent>
       </Tabs>
-
-      <AddKeywordDialog open={addKeywordOpen} onOpenChange={setAddKeywordOpen} />
-      <AddNegativeKeywordDialog open={addNegativeKeywordOpen} onOpenChange={setAddNegativeKeywordOpen} />
-      <UploadCSVDialog open={uploadCSVOpen} onOpenChange={setUploadCSVOpen} />
     </div>
   );
 }
