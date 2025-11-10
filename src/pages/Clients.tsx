@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Plus, MoreVertical, CheckCircle2, XCircle } from "lucide-react";
+import { Plus, MoreVertical, CheckCircle2, XCircle, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -17,17 +17,26 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useNavigate } from "react-router-dom";
 
 const clients = [
   {
     id: 1,
     name: "Tech Startup Inc",
-    status: "active",
+    adsAccountsStatus: "active",
+    adsAccountCount: 2,
     campaignsCount: 3,
-    adCount: 8,
-    totalBudget: "$5,000",
+    totalBudgetAllocated: "$5,000",
+    totalBudgetSpent: "$4,250",
     percentSpent: 85,
+    googleAdsAccountCount: 1,
+    fbAdsAccountCount: 1,
     connections: {
       google: true,
       facebook: true,
@@ -36,11 +45,14 @@ const clients = [
   {
     id: 2,
     name: "Nations Auto Glass",
-    status: "active",
+    adsAccountsStatus: "active",
+    adsAccountCount: 1,
     campaignsCount: 2,
-    adCount: 5,
-    totalBudget: "$2,500",
+    totalBudgetAllocated: "$2,500",
+    totalBudgetSpent: "$1,825",
     percentSpent: 73,
+    googleAdsAccountCount: 1,
+    fbAdsAccountCount: 0,
     connections: {
       google: true,
       facebook: false,
@@ -49,11 +61,14 @@ const clients = [
   {
     id: 3,
     name: "VW Heavy Up",
-    status: "deactive",
+    adsAccountsStatus: "deactive",
+    adsAccountCount: 1,
     campaignsCount: 1,
-    adCount: 3,
-    totalBudget: "$1,200",
+    totalBudgetAllocated: "$1,200",
+    totalBudgetSpent: "$852",
     percentSpent: 71,
+    googleAdsAccountCount: 1,
+    fbAdsAccountCount: 0,
     connections: {
       google: true,
       facebook: false,
@@ -62,11 +77,14 @@ const clients = [
   {
     id: 4,
     name: "Volkswagen",
-    status: "deactive",
+    adsAccountsStatus: "deactive",
+    adsAccountCount: 0,
     campaignsCount: 0,
-    adCount: 0,
-    totalBudget: "$0",
+    totalBudgetAllocated: "$0",
+    totalBudgetSpent: "$0",
     percentSpent: 0,
+    googleAdsAccountCount: 0,
+    fbAdsAccountCount: 0,
     connections: {
       google: false,
       facebook: false,
@@ -77,7 +95,7 @@ const clients = [
 export default function Clients() {
   const navigate = useNavigate();
   const [clientStatus, setClientStatus] = useState<Record<number, string>>(
-    Object.fromEntries(clients.map((c) => [c.id, c.status]))
+    Object.fromEntries(clients.map((c) => [c.id, c.adsAccountsStatus]))
   );
 
   const toggleStatus = (id: number) => {
@@ -88,104 +106,136 @@ export default function Clients() {
   };
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Client Management</h1>
-          <p className="text-muted-foreground mt-1">Manage your client accounts</p>
+    <TooltipProvider>
+      <div className="p-6 space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">Client Management</h1>
+            <p className="text-muted-foreground mt-1">Manage your client accounts</p>
+          </div>
+          <Button 
+            className="bg-primary hover:bg-primary-hover"
+            onClick={() => navigate("/clients/new")}
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Add Client
+          </Button>
         </div>
-        <Button 
-          className="bg-primary hover:bg-primary-hover"
-          onClick={() => navigate("/clients/new")}
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Add Client
-        </Button>
-      </div>
 
-      <Card>
-        <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Client Name</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Campaigns Count</TableHead>
-                <TableHead>Ad Count</TableHead>
-                <TableHead>Total Budget</TableHead>
-                <TableHead>% Spent</TableHead>
-                <TableHead>Connections</TableHead>
-                <TableHead className="w-[50px]"></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {clients.map((client) => (
-                <TableRow key={client.id}>
-                  <TableCell className="font-medium">{client.name}</TableCell>
-                  <TableCell>
-                    <Badge
-                      variant={clientStatus[client.id] === "active" ? "default" : "secondary"}
-                    >
-                      {clientStatus[client.id]}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>{client.campaignsCount}</TableCell>
-                  <TableCell>{client.adCount}</TableCell>
-                  <TableCell>{client.totalBudget}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <div className="w-full bg-muted rounded-full h-2 max-w-[60px]">
-                        <div
-                          className="bg-primary h-2 rounded-full"
-                          style={{ width: `${client.percentSpent}%` }}
-                        />
-                      </div>
-                      <span className="text-sm">{client.percentSpent}%</span>
+        <Card>
+          <CardContent className="p-0">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Client Name</TableHead>
+                  <TableHead>Ads Accounts Status</TableHead>
+                  <TableHead>Ads Account Count</TableHead>
+                  <TableHead>
+                    <div className="flex items-center gap-1">
+                      Campaigns Count
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Info className="w-3.5 h-3.5 text-muted-foreground cursor-help" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>This includes both Google and Facebook campaigns</p>
+                        </TooltipContent>
+                      </Tooltip>
                     </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex gap-2">
-                      {client.connections.google ? (
-                        <CheckCircle2 className="w-4 h-4 text-success" />
-                      ) : (
-                        <XCircle className="w-4 h-4 text-muted-foreground" />
-                      )}
-                      <span className="text-xs">Google</span>
-                      {client.connections.facebook ? (
-                        <CheckCircle2 className="w-4 h-4 text-success ml-2" />
-                      ) : (
-                        <XCircle className="w-4 h-4 text-muted-foreground ml-2" />
-                      )}
-                      <span className="text-xs">Facebook</span>
+                  </TableHead>
+                  <TableHead>
+                    <div className="flex items-center gap-1">
+                      Total Budget Allocated
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Info className="w-3.5 h-3.5 text-muted-foreground cursor-help" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Cumulative budget of all campaigns across platforms</p>
+                        </TooltipContent>
+                      </Tooltip>
                     </div>
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                          <MoreVertical className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="bg-popover" align="end">
-                        <DropdownMenuItem onClick={() => navigate(`/clients/${client.id}`)}>
-                          View Details
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toggleStatus(client.id)}>
-                          Update Status
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate(`/clients/${client.id}/edit`)}>
-                          Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
+                  </TableHead>
+                  <TableHead>Total Budget Spent</TableHead>
+                  <TableHead>% Spent</TableHead>
+                  <TableHead>Google Ads Account Count</TableHead>
+                  <TableHead>FB Ads Account Count</TableHead>
+                  <TableHead>Connections</TableHead>
+                  <TableHead className="w-[50px]"></TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
-    </div>
+              </TableHeader>
+              <TableBody>
+                {clients.map((client) => (
+                  <TableRow key={client.id}>
+                    <TableCell className="font-medium">{client.name}</TableCell>
+                    <TableCell>
+                      <Badge
+                        variant={client.adsAccountsStatus === "active" ? "default" : "secondary"}
+                      >
+                        {client.adsAccountsStatus}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>{client.adsAccountCount}</TableCell>
+                    <TableCell>{client.campaignsCount}</TableCell>
+                    <TableCell>{client.totalBudgetAllocated}</TableCell>
+                    <TableCell>{client.totalBudgetSpent}</TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <div className="w-full bg-muted rounded-full h-2 max-w-[60px]">
+                          <div
+                            className="bg-primary h-2 rounded-full"
+                            style={{ width: `${client.percentSpent}%` }}
+                          />
+                        </div>
+                        <span className="text-sm">{client.percentSpent}%</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>{client.googleAdsAccountCount}</TableCell>
+                    <TableCell>{client.fbAdsAccountCount}</TableCell>
+                    <TableCell>
+                      <div className="flex gap-2">
+                        {client.connections.google ? (
+                          <CheckCircle2 className="w-4 h-4 text-success" />
+                        ) : (
+                          <XCircle className="w-4 h-4 text-muted-foreground" />
+                        )}
+                        <span className="text-xs">Google</span>
+                        {client.connections.facebook ? (
+                          <CheckCircle2 className="w-4 h-4 text-success ml-2" />
+                        ) : (
+                          <XCircle className="w-4 h-4 text-muted-foreground ml-2" />
+                        )}
+                        <span className="text-xs">Facebook</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                            <MoreVertical className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="bg-popover" align="end">
+                          <DropdownMenuItem onClick={() => navigate(`/clients/${client.id}`)}>
+                            View Details
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => toggleStatus(client.id)}>
+                            Update Status
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => navigate(`/clients/${client.id}/edit`)}>
+                            Edit
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </div>
+    </TooltipProvider>
   );
 }
