@@ -57,8 +57,6 @@ export default function Assets() {
   const navigate = useNavigate();
   const [filterDateRange, setFilterDateRange] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
-  const [filterAsset, setFilterAsset] = useState("");
-  const [filterAssetType, setFilterAssetType] = useState("");
 
   return (
     <div className="p-6 space-y-6">
@@ -76,7 +74,7 @@ export default function Assets() {
           <CardTitle className="text-lg">Filter</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="dateRange">Date Range</Label>
               <Input
@@ -95,38 +93,6 @@ export default function Assets() {
                 <SelectContent className="bg-popover z-50">
                   <SelectItem value="Active">Active</SelectItem>
                   <SelectItem value="Deactive">Deactive</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="asset">Asset</Label>
-              <Input
-                id="asset"
-                value={filterAsset}
-                onChange={(e) => setFilterAsset(e.target.value)}
-                placeholder="Search asset"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="assetType">Asset Type</Label>
-              <Select value={filterAssetType} onValueChange={setFilterAssetType}>
-                <SelectTrigger id="assetType">
-                  <SelectValue placeholder="Select type" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover z-50">
-                  <SelectItem value="Headline">Headline</SelectItem>
-                  <SelectItem value="Long headline">Long headline</SelectItem>
-                  <SelectItem value="Description">Description</SelectItem>
-                  <SelectItem value="Images">Images</SelectItem>
-                  <SelectItem value="Videos">Videos</SelectItem>
-                  <SelectItem value="Sitelinks">Sitelinks</SelectItem>
-                  <SelectItem value="Promotion">Promotion</SelectItem>
-                  <SelectItem value="Price">Price</SelectItem>
-                  <SelectItem value="Calls">Calls</SelectItem>
-                  <SelectItem value="Callouts">Callouts</SelectItem>
-                  <SelectItem value="Structured Snippets">Structured Snippets</SelectItem>
-                  <SelectItem value="Lead Form">Lead Form</SelectItem>
-                  <SelectItem value="Location">Location</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -153,8 +119,6 @@ export default function Assets() {
             <TableBody>
               {assets
                 .filter(asset => 
-                  (!filterAssetType || asset.assetType === filterAssetType) &&
-                  (!filterAsset || asset.asset.toLowerCase().includes(filterAsset.toLowerCase())) &&
                   (!filterStatus || asset.status === filterStatus)
                 )
                 .map((asset) => (
