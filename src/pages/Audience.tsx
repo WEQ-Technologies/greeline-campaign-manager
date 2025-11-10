@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
 
 const audiences = [
   {
@@ -43,6 +44,7 @@ const audiences = [
 export default function Audience() {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [dateRange, setDateRange] = useState({ start: "", end: "" });
 
   return (
     <div className="p-6 space-y-6">
@@ -56,6 +58,35 @@ export default function Audience() {
           Create Audience
         </Button>
       </div>
+
+      {/* Filter Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Filter</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="startDate">Start Date</Label>
+              <Input
+                id="startDate"
+                type="date"
+                value={dateRange.start}
+                onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="endDate">End Date</Label>
+              <Input
+                id="endDate"
+                type="date"
+                value={dateRange.end}
+                onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* List View */}
       <Card>

@@ -56,6 +56,7 @@ export default function Assets() {
   const navigate = useNavigate();
   const [filterDateRange, setFilterDateRange] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
+  const [dateRange, setDateRange] = useState({ start: "", end: "" });
 
   return (
     <div className="p-6 space-y-6">
@@ -76,16 +77,7 @@ export default function Assets() {
           <CardTitle className="text-lg">Filter</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="dateRange">Date Range</Label>
-              <Input
-                id="dateRange"
-                type="date"
-                value={filterDateRange}
-                onChange={(e) => setFilterDateRange(e.target.value)}
-              />
-            </div>
+          <div className="grid grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="status">Status</Label>
               <Select value={filterStatus} onValueChange={setFilterStatus}>
@@ -97,6 +89,24 @@ export default function Assets() {
                   <SelectItem value="Deactive">Deactive</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="startDate">Start Date</Label>
+              <Input
+                id="startDate"
+                type="date"
+                value={dateRange.start}
+                onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="endDate">End Date</Label>
+              <Input
+                id="endDate"
+                type="date"
+                value={dateRange.end}
+                onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
+              />
             </div>
           </div>
         </CardContent>

@@ -5,6 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
 
 const ads = [
   {
@@ -32,6 +36,9 @@ const ads = [
 
 export default function Ads() {
   const navigate = useNavigate();
+  const [filterCampaign, setFilterCampaign] = useState("");
+  const [filterAdGroup, setFilterAdGroup] = useState("");
+  const [dateRange, setDateRange] = useState({ start: "", end: "" });
 
   return (
     <div className="p-6 space-y-6">
@@ -45,6 +52,63 @@ export default function Ads() {
           Create Ad
         </Button>
       </div>
+
+      {/* Filter Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Filter</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-4 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="campaign">Campaign</Label>
+              <Select value={filterCampaign} onValueChange={setFilterCampaign}>
+                <SelectTrigger id="campaign">
+                  <SelectValue placeholder="Select campaign" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover z-50">
+                  <SelectItem value="all">All Campaigns</SelectItem>
+                  <SelectItem value="brand-awareness">Brand Awareness Q1</SelectItem>
+                  <SelectItem value="holiday-special">Holiday Special</SelectItem>
+                  <SelectItem value="new-year-promo">New Year Promo</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="adGroup">Ad Group</Label>
+              <Select value={filterAdGroup} onValueChange={setFilterAdGroup}>
+                <SelectTrigger id="adGroup">
+                  <SelectValue placeholder="Select ad group" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover z-50">
+                  <SelectItem value="all">All Ad Groups</SelectItem>
+                  <SelectItem value="suv-winter">SUV Models - Winter</SelectItem>
+                  <SelectItem value="sedan-specials">Sedan Specials</SelectItem>
+                  <SelectItem value="glass-repair">Glass Repair - Emergency</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="startDate">Start Date</Label>
+              <Input
+                id="startDate"
+                type="date"
+                value={dateRange.start}
+                onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="endDate">End Date</Label>
+              <Input
+                id="endDate"
+                type="date"
+                value={dateRange.end}
+                onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* List View */}
       <Card>
