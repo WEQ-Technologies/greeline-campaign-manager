@@ -13,43 +13,68 @@ import { useState } from "react";
 const assets = [
   {
     id: "1",
-    type: "Asset Group name",
-    name: "Winter Campaign Assets",
-  },
-  {
-    id: "2",
-    type: "Business Names",
-    name: "Tech Solutions Inc",
-  },
-  {
-    id: "3",
-    type: "Brand Logos",
-    name: "Company Logo Set",
-  },
-  {
-    id: "4",
-    type: "Marketing Images",
-    name: "Product Photography",
-  },
-  {
-    id: "5",
-    type: "Heading",
+    type: "Headline",
     name: "Winter Sale Headlines",
   },
   {
-    id: "6",
+    id: "2",
     type: "Long headline",
     name: "Extended Product Descriptions",
   },
   {
-    id: "7",
+    id: "3",
     type: "Description",
     name: "Service Descriptions",
   },
   {
-    id: "8",
-    type: "Add videos",
+    id: "4",
+    type: "Images",
+    name: "Product Photography",
+  },
+  {
+    id: "5",
+    type: "Videos",
     name: "Product Demo Videos",
+  },
+  {
+    id: "6",
+    type: "Sitelinks",
+    name: "Navigation Links",
+  },
+  {
+    id: "7",
+    type: "Promotion",
+    name: "Winter Discount Promo",
+  },
+  {
+    id: "8",
+    type: "Price",
+    name: "Service Pricing",
+  },
+  {
+    id: "9",
+    type: "Calls",
+    name: "Contact Numbers",
+  },
+  {
+    id: "10",
+    type: "Callouts",
+    name: "Feature Highlights",
+  },
+  {
+    id: "11",
+    type: "Structured Snippets",
+    name: "Product Categories",
+  },
+  {
+    id: "12",
+    type: "Lead Form",
+    name: "Contact Form",
+  },
+  {
+    id: "13",
+    type: "Location",
+    name: "Business Locations",
   },
 ];
 
@@ -82,14 +107,19 @@ export default function Assets() {
                   <SelectValue placeholder="Select asset type" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="group">Asset Group name</SelectItem>
-                  <SelectItem value="business">Business Names</SelectItem>
-                  <SelectItem value="logo">Brand Logos</SelectItem>
-                  <SelectItem value="images">Marketing Images</SelectItem>
-                  <SelectItem value="heading">Heading</SelectItem>
-                  <SelectItem value="long-heading">Long headline</SelectItem>
-                  <SelectItem value="description">Description</SelectItem>
-                  <SelectItem value="videos">Add videos</SelectItem>
+                  <SelectItem value="Headline">Headline</SelectItem>
+                  <SelectItem value="Long headline">Long headline</SelectItem>
+                  <SelectItem value="Description">Description</SelectItem>
+                  <SelectItem value="Images">Images</SelectItem>
+                  <SelectItem value="Videos">Videos</SelectItem>
+                  <SelectItem value="Sitelinks">Sitelinks</SelectItem>
+                  <SelectItem value="Promotion">Promotion</SelectItem>
+                  <SelectItem value="Price">Price</SelectItem>
+                  <SelectItem value="Calls">Calls</SelectItem>
+                  <SelectItem value="Callouts">Callouts</SelectItem>
+                  <SelectItem value="Structured Snippets">Structured Snippets</SelectItem>
+                  <SelectItem value="Lead Form">Lead Form</SelectItem>
+                  <SelectItem value="Location">Location</SelectItem>
                 </SelectContent>
               </Select>
             </div>

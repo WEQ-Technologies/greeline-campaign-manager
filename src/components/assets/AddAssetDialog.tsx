@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 export function AddAssetDialog() {
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState("price");
+  const [activeTab, setActiveTab] = useState("headline");
 
   // Price Asset Form
   const [priceForm, setPriceForm] = useState({
@@ -86,13 +86,218 @@ export function AddAssetDialog() {
         </DialogHeader>
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-5">
-            <TabsTrigger value="price">Price</TabsTrigger>
-            <TabsTrigger value="calls">Calls</TabsTrigger>
-            <TabsTrigger value="callouts">Callouts</TabsTrigger>
-            <TabsTrigger value="snippets">Structured Snippets</TabsTrigger>
-            <TabsTrigger value="lead">Lead Form</TabsTrigger>
-          </TabsList>
+          <div className="overflow-x-auto">
+            <TabsList className="inline-flex w-auto min-w-full">
+              <TabsTrigger value="headline">Headline</TabsTrigger>
+              <TabsTrigger value="long-headline">Long Headline</TabsTrigger>
+              <TabsTrigger value="description">Description</TabsTrigger>
+              <TabsTrigger value="images">Images</TabsTrigger>
+              <TabsTrigger value="videos">Videos</TabsTrigger>
+              <TabsTrigger value="sitelinks">Sitelinks</TabsTrigger>
+              <TabsTrigger value="promotion">Promotion</TabsTrigger>
+              <TabsTrigger value="price">Price</TabsTrigger>
+              <TabsTrigger value="calls">Calls</TabsTrigger>
+              <TabsTrigger value="callouts">Callouts</TabsTrigger>
+              <TabsTrigger value="snippets">Structured Snippets</TabsTrigger>
+              <TabsTrigger value="lead">Lead Form</TabsTrigger>
+              <TabsTrigger value="location">Location</TabsTrigger>
+            </TabsList>
+          </div>
+
+          {/* Headline Tab */}
+          <TabsContent value="headline" className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="headlineText">Heading (up to 30 characters max)</Label>
+              <Input
+                id="headlineText"
+                maxLength={30}
+                placeholder="Enter headline"
+              />
+            </div>
+          </TabsContent>
+
+          {/* Long Headline Tab */}
+          <TabsContent value="long-headline" className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="longHeadlineText">Long headline (up to 90 characters max)</Label>
+              <Input
+                id="longHeadlineText"
+                maxLength={90}
+                placeholder="Enter long headline"
+              />
+            </div>
+          </TabsContent>
+
+          {/* Description Tab */}
+          <TabsContent value="description" className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="descriptionText">Description (up to 90 characters max)</Label>
+              <Textarea
+                id="descriptionText"
+                maxLength={90}
+                placeholder="Enter description"
+                rows={3}
+              />
+            </div>
+          </TabsContent>
+
+          {/* Images Tab */}
+          <TabsContent value="images" className="space-y-4">
+            <div className="space-y-2">
+              <Label>Add Videos (Max file up to 5 videos)</Label>
+              <div className="border-2 border-dashed border-border rounded-lg p-8 text-center">
+                <p className="text-sm text-muted-foreground mb-4">
+                  Drag and drop images here, or click to browse
+                </p>
+                <Button variant="outline">
+                  Browse Files
+                </Button>
+              </div>
+            </div>
+          </TabsContent>
+
+          {/* Videos Tab */}
+          <TabsContent value="videos" className="space-y-4">
+            <div className="space-y-2">
+              <Label>Add Videos (Max file up to 5 videos)</Label>
+              <div className="border-2 border-dashed border-border rounded-lg p-8 text-center">
+                <p className="text-sm text-muted-foreground mb-4">
+                  Drag and drop videos here, or click to browse
+                </p>
+                <Button variant="outline">
+                  Browse Files
+                </Button>
+              </div>
+            </div>
+          </TabsContent>
+
+          {/* Sitelinks Tab */}
+          <TabsContent value="sitelinks" className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="sitelinkText">Sitelink text</Label>
+              <Input
+                id="sitelinkText"
+                placeholder="Enter sitelink text"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="sitelinkDesc1">Description line 1</Label>
+              <Input
+                id="sitelinkDesc1"
+                placeholder="Enter description line 1"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="sitelinkDesc2">Description line 2</Label>
+              <Input
+                id="sitelinkDesc2"
+                placeholder="Enter description line 2"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="sitelinkFinalUrl">Final URL</Label>
+              <Input
+                id="sitelinkFinalUrl"
+                placeholder="https://example.com"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Tracking URL/URL option</Label>
+              <Input placeholder="Final URL suffix" className="mb-2" />
+              <Input placeholder="Custom parameters: Name, Value" />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Assets Scheduling</Label>
+              <Input type="date" placeholder="Start Date and End Date" className="mb-2" />
+              <Input placeholder="Select Days and time" />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Call to Action</Label>
+              <p className="text-sm text-muted-foreground">(List the Actions)</p>
+            </div>
+          </TabsContent>
+
+          {/* Promotion Tab */}
+          <TabsContent value="promotion" className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="promotionType">Type (Standard/Promotional)</Label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="standard">Standard</SelectItem>
+                  <SelectItem value="promotional">Promotional</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="promotionLanguage">Language (Browser)</Label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select language" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="en">English</SelectItem>
+                  <SelectItem value="es">Spanish</SelectItem>
+                  <SelectItem value="fr">French</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="promotionOccasion">Promotion (Spec)[occasion] (Enter amount [min/max] Date [Min 25]</Label>
+              <Input
+                id="promotionOccasion"
+                placeholder="Enter promotion details"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="promotionCode">Promotion Details[promotion] (enter value [Promotion 15]</Label>
+              <Input
+                id="promotionCode"
+                placeholder="Enter promotion code"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Tracking URL/URL option</Label>
+              <Input placeholder="Final URL suffix" className="mb-2" />
+              <Input placeholder="Custom parameters: Name, Value" />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Use a different final URL for mobile: Checkbox</Label>
+              <Input type="checkbox" className="w-4 h-4" />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Assets Scheduling</Label>
+              <Input type="date" placeholder="Start Date and End Date" className="mb-2" />
+              <Input placeholder="Select Days and time" />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Call to Action</Label>
+              <p className="text-sm text-muted-foreground">(List the Actions)</p>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Additional promotional terms and conditions</Label>
+              <Textarea
+                placeholder="Enter terms and conditions"
+                rows={3}
+              />
+            </div>
+          </TabsContent>
 
           {/* Price Tab */}
           <TabsContent value="price" className="space-y-4">
@@ -379,6 +584,64 @@ export function AddAssetDialog() {
               <Button variant="outline" className="w-full">
                 Upload Background Image
               </Button>
+            </div>
+          </TabsContent>
+
+          {/* Location Tab */}
+          <TabsContent value="location" className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="locationAddress">Business Address</Label>
+              <Input
+                id="locationAddress"
+                placeholder="Enter business address"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="locationCity">City</Label>
+              <Input
+                id="locationCity"
+                placeholder="Enter city"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="locationState">State/Region</Label>
+              <Input
+                id="locationState"
+                placeholder="Enter state or region"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="locationZip">ZIP/Postal Code</Label>
+              <Input
+                id="locationZip"
+                placeholder="Enter ZIP or postal code"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="locationCountry">Country</Label>
+              <Select>
+                <SelectTrigger id="locationCountry">
+                  <SelectValue placeholder="Select country" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="us">United States</SelectItem>
+                  <SelectItem value="ca">Canada</SelectItem>
+                  <SelectItem value="uk">United Kingdom</SelectItem>
+                  <SelectItem value="au">Australia</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="locationPhone">Phone Number</Label>
+              <Input
+                id="locationPhone"
+                placeholder="Enter phone number"
+              />
             </div>
           </TabsContent>
         </Tabs>
