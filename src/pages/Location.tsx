@@ -1,4 +1,4 @@
-import { Plus, MoreVertical, Filter } from "lucide-react";
+import { Plus, MoreVertical, Filter, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -53,6 +53,7 @@ export default function Location() {
   const { toast } = useToast();
   const [dateRange, setDateRange] = useState({ start: "", end: "" });
   const [filterOpen, setFilterOpen] = useState(false);
+  const [createLocationOpen, setCreateLocationOpen] = useState(false);
 
   return (
     <div className="p-6 space-y-6">
@@ -102,10 +103,37 @@ export default function Location() {
               </div>
             </DialogContent>
           </Dialog>
-          <Button onClick={() => toast({ title: "Feature coming soon", description: "Location creation page is not yet available" })}>
-            <Plus className="w-4 h-4 mr-2" />
-            Add Location
+          <Button 
+            variant="outline"
+            onClick={() => toast({ title: "Syncing locations", description: "Fetching latest location data from Google Ads" })}
+          >
+            <RefreshCw className="w-4 h-4 mr-2" />
+            Sync Location
           </Button>
+          <Dialog open={createLocationOpen} onOpenChange={setCreateLocationOpen}>
+            <DialogTrigger asChild>
+              <Button>
+                <Plus className="w-4 h-4 mr-2" />
+                Add Location
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Add Location</DialogTitle>
+              </DialogHeader>
+              <div className="py-4 space-y-4">
+                <p className="text-sm text-muted-foreground">
+                  Please use the below link for Location targeting
+                </p>
+                <Button 
+                  className="w-full" 
+                  onClick={() => window.open('https://ads.google.com', '_blank')}
+                >
+                  Open Google Ads
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 

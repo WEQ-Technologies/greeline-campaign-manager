@@ -1,4 +1,4 @@
-import { Plus, MoreVertical, Filter } from "lucide-react";
+import { Plus, MoreVertical, Filter, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -50,6 +50,7 @@ export default function Content() {
   const { toast } = useToast();
   const [dateRange, setDateRange] = useState({ start: "", end: "" });
   const [filterOpen, setFilterOpen] = useState(false);
+  const [createContentOpen, setCreateContentOpen] = useState(false);
 
   return (
     <div className="p-6 space-y-6">
@@ -99,10 +100,37 @@ export default function Content() {
               </div>
             </DialogContent>
           </Dialog>
-          <Button onClick={() => toast({ title: "Feature coming soon", description: "Content creation page is not yet available" })}>
-            <Plus className="w-4 h-4 mr-2" />
-            Create Content
+          <Button 
+            variant="outline"
+            onClick={() => toast({ title: "Syncing content", description: "Fetching latest content data from Google Ads" })}
+          >
+            <RefreshCw className="w-4 h-4 mr-2" />
+            Sync Content
           </Button>
+          <Dialog open={createContentOpen} onOpenChange={setCreateContentOpen}>
+            <DialogTrigger asChild>
+              <Button>
+                <Plus className="w-4 h-4 mr-2" />
+                Create Content
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Create Content</DialogTitle>
+              </DialogHeader>
+              <div className="py-4 space-y-4">
+                <p className="text-sm text-muted-foreground">
+                  Please use the below link for Content creation
+                </p>
+                <Button 
+                  className="w-full" 
+                  onClick={() => window.open('https://ads.google.com', '_blank')}
+                >
+                  Open Google Ads
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 
