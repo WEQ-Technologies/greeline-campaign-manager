@@ -1,4 +1,4 @@
-import { Plus, MoreVertical, Filter } from "lucide-react";
+import { Plus, MoreVertical, Filter, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -47,6 +47,7 @@ export default function Audience() {
   const { toast } = useToast();
   const [dateRange, setDateRange] = useState({ start: "", end: "" });
   const [filterOpen, setFilterOpen] = useState(false);
+  const [createAudienceOpen, setCreateAudienceOpen] = useState(false);
 
   return (
     <div className="p-6 space-y-6">
@@ -96,10 +97,37 @@ export default function Audience() {
               </div>
             </DialogContent>
           </Dialog>
-          <Button onClick={() => toast({ title: "Feature coming soon", description: "Audience creation page is not yet available" })}>
-            <Plus className="w-4 h-4 mr-2" />
-            Create Audience
+          <Button 
+            variant="outline"
+            onClick={() => toast({ title: "Syncing audiences", description: "Fetching latest audience data from Google Ads" })}
+          >
+            <RefreshCw className="w-4 h-4 mr-2" />
+            Sync Audience
           </Button>
+          <Dialog open={createAudienceOpen} onOpenChange={setCreateAudienceOpen}>
+            <DialogTrigger asChild>
+              <Button>
+                <Plus className="w-4 h-4 mr-2" />
+                Create Audience
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Create Audience</DialogTitle>
+              </DialogHeader>
+              <div className="py-4 space-y-4">
+                <p className="text-sm text-muted-foreground">
+                  Please use the below link for Audience creation
+                </p>
+                <Button 
+                  className="w-full" 
+                  onClick={() => window.open('https://ads.google.com/aw/audiences', '_blank')}
+                >
+                  Open Google Ads
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 

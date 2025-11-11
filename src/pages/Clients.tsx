@@ -129,7 +129,6 @@ export default function Clients() {
                 <TableRow>
                   <TableHead>Client Name</TableHead>
                   <TableHead>Ads Accounts Status</TableHead>
-                  <TableHead>Ads Account Count</TableHead>
                   <TableHead>
                     <div className="flex items-center gap-1">
                       Campaigns Count
@@ -158,8 +157,6 @@ export default function Clients() {
                   </TableHead>
                   <TableHead>Total Budget Spent</TableHead>
                   <TableHead>% Spent</TableHead>
-                  <TableHead>Google Ads Account Count</TableHead>
-                  <TableHead>FB Ads Account Count</TableHead>
                   <TableHead>Connections</TableHead>
                   <TableHead className="w-[50px]"></TableHead>
                 </TableRow>
@@ -175,7 +172,6 @@ export default function Clients() {
                         {client.adsAccountsStatus}
                       </Badge>
                     </TableCell>
-                    <TableCell>{client.adsAccountCount}</TableCell>
                     <TableCell>{client.campaignsCount}</TableCell>
                     <TableCell>{client.totalBudgetAllocated}</TableCell>
                     <TableCell>{client.totalBudgetSpent}</TableCell>
@@ -190,22 +186,23 @@ export default function Clients() {
                         <span className="text-sm">{client.percentSpent}%</span>
                       </div>
                     </TableCell>
-                    <TableCell>{client.googleAdsAccountCount}</TableCell>
-                    <TableCell>{client.fbAdsAccountCount}</TableCell>
                     <TableCell>
-                      <div className="flex gap-2">
-                        {client.connections.google ? (
-                          <CheckCircle2 className="w-4 h-4 text-success" />
-                        ) : (
-                          <XCircle className="w-4 h-4 text-muted-foreground" />
+                      <div className="flex items-center gap-3">
+                        {client.connections.google && (
+                          <div className="flex items-center gap-1">
+                            <CheckCircle2 className="w-4 h-4 text-success" />
+                            <span className="text-sm">Google ({client.googleAdsAccountCount})</span>
+                          </div>
                         )}
-                        <span className="text-xs">Google</span>
-                        {client.connections.facebook ? (
-                          <CheckCircle2 className="w-4 h-4 text-success ml-2" />
-                        ) : (
-                          <XCircle className="w-4 h-4 text-muted-foreground ml-2" />
+                        {client.connections.facebook && (
+                          <div className="flex items-center gap-1">
+                            <CheckCircle2 className="w-4 h-4 text-success" />
+                            <span className="text-sm">Facebook ({client.fbAdsAccountCount})</span>
+                          </div>
                         )}
-                        <span className="text-xs">Facebook</span>
+                        {!client.connections.google && !client.connections.facebook && (
+                          <span className="text-sm text-muted-foreground">No connections</span>
+                        )}
                       </div>
                     </TableCell>
                     <TableCell>

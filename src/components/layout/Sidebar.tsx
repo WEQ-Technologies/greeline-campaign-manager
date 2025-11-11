@@ -20,8 +20,8 @@ export function Sidebar() {
     <div className="flex h-screen w-64 flex-col bg-sidebar border-r border-sidebar-border">
       <div className="flex h-16 items-center px-6 border-b border-sidebar-border">
         <div className="flex items-center gap-3">
-          <img src={logo} alt="Campaign Manager" className="w-10 h-10" />
-          <span className="text-lg font-semibold text-sidebar-foreground">Campaign Manager</span>
+          <img src={logo} alt="Launchpad" className="w-10 h-10" />
+          <span className="text-lg font-semibold text-sidebar-foreground">Launchpad</span>
         </div>
       </div>
 

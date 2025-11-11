@@ -15,6 +15,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
 
 const availableAccounts = [
   { id: "123-456-7890", name: "Tech Startup Google Ads" },
@@ -33,6 +34,8 @@ export default function ClientForm() {
     destinationType: "website",
     website: "",
     phoneNo: "",
+    preferredCampaignName: "",
+    preferredDealershipName: "",
     linkedAccounts: [] as string[],
   });
 
@@ -147,6 +150,27 @@ export default function ClientForm() {
                 />
               </div>
             )}
+
+            <div className="space-y-2">
+              <Label htmlFor="preferredCampaignName">Preferred Campaign Name</Label>
+              <Input
+                id="preferredCampaignName"
+                placeholder="Enter preferred campaign name"
+                value={formData.preferredCampaignName}
+                onChange={(e) => setFormData({ ...formData, preferredCampaignName: e.target.value })}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="preferredDealershipName">Preferred Dealership Name</Label>
+              <Textarea
+                id="preferredDealershipName"
+                placeholder="Enter preferred dealership name"
+                value={formData.preferredDealershipName}
+                onChange={(e) => setFormData({ ...formData, preferredDealershipName: e.target.value })}
+                rows={3}
+              />
+            </div>
           </CardContent>
         </Card>
 
