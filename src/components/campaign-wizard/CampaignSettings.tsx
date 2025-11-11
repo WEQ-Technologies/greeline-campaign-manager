@@ -97,7 +97,7 @@ export function CampaignSettings({ data, onChange }: CampaignSettingsProps) {
             <SelectContent className="bg-popover">
               <SelectItem value="google-search">Search</SelectItem>
               <SelectItem value="performance-max">Performance Max (PMax)</SelectItem>
-              <SelectItem value="facebook">Facebook Ads</SelectItem>
+              <SelectItem value="facebook">Meta Ads</SelectItem>
               <SelectItem value="instagram">Instagram Ads</SelectItem>
               <SelectItem value="linkedin">LinkedIn Ads</SelectItem>
             </SelectContent>

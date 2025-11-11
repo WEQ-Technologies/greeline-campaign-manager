@@ -21,7 +21,7 @@ const GoogleIcon = () => (
   </svg>
 );
 
-const FacebookIcon = () => (
+const MetaIcon = () => (
   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="#1877F2">
     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
   </svg>
@@ -29,29 +29,29 @@ const FacebookIcon = () => (
 
 const accounts = [
   { id: 1, accId: "123456789012", name: "Tech Startup Search", clientName: "Tech Startup Inc", budget: "$5,000", spent: "$4,250", status: "active", type: "google" },
-  { id: 2, accId: "987654321098", name: "Tech Startup Social", clientName: "Tech Startup Inc", budget: "$3,000", spent: "$2,100", status: "active", type: "facebook" },
+  { id: 2, accId: "987654321098", name: "Tech Startup Social", clientName: "Tech Startup Inc", budget: "$3,000", spent: "$2,100", status: "active", type: "meta" },
   { id: 3, accId: "456789123456", name: "Nations Auto Main", clientName: "Nations Auto Glass", budget: "$2,500", spent: "$1,825", status: "active", type: "google" },
   { id: 4, accId: "789123456789", name: "VW Heavy Display", clientName: "VW Heavy Up", budget: "$1,200", spent: "$852", status: "active", type: "google" },
   { id: 5, accId: "321654987321", name: "VW Shopping Ads", clientName: "Volkswagen", budget: "$4,500", spent: "$3,600", status: "active", type: "google" },
-  { id: 6, accId: "654987321654", name: "VW Brand Campaign", clientName: "Volkswagen", budget: "$2,800", spent: "$1,960", status: "active", type: "facebook" },
-  { id: 7, accId: "147258369147", name: "Auto Glass Local", clientName: "Nations Auto Glass", budget: "$1,800", spent: "$1,440", status: "active", type: "facebook" },
+  { id: 6, accId: "654987321654", name: "VW Brand Campaign", clientName: "Volkswagen", budget: "$2,800", spent: "$1,960", status: "active", type: "meta" },
+  { id: 7, accId: "147258369147", name: "Auto Glass Local", clientName: "Nations Auto Glass", budget: "$1,800", spent: "$1,440", status: "active", type: "meta" },
   { id: 8, accId: "258369147258", name: "Tech Display Network", clientName: "Tech Startup Inc", budget: "$3,500", spent: "$2,625", status: "active", type: "google" },
   { id: 9, accId: "369147258369", name: "Heavy Equipment Ads", clientName: "VW Heavy Up", budget: "$2,200", spent: "$1,540", status: "deactive", type: "google" },
-  { id: 10, accId: "741852963741", name: "Brand Awareness FB", clientName: "Tech Startup Inc", budget: "$4,000", spent: "$3,200", status: "active", type: "facebook" },
+  { id: 10, accId: "741852963741", name: "Brand Awareness FB", clientName: "Tech Startup Inc", budget: "$4,000", spent: "$3,200", status: "active", type: "meta" },
   { id: 11, accId: "852963741852", name: "Local Service Search", clientName: "Nations Auto Glass", budget: "$1,500", spent: "$1,200", status: "active", type: "google" },
   { id: 12, accId: "963741852963", name: "Performance Max", clientName: "Volkswagen", budget: "$5,500", spent: "$4,675", status: "active", type: "google" },
-  { id: 13, accId: "159753486159", name: "Instagram Stories", clientName: "Tech Startup Inc", budget: "$2,000", spent: "$1,600", status: "active", type: "facebook" },
-  { id: 14, accId: "357951468357", name: "Video Campaign", clientName: "VW Heavy Up", budget: "$3,800", spent: "$2,660", status: "active", type: "facebook" },
+  { id: 13, accId: "159753486159", name: "Instagram Stories", clientName: "Tech Startup Inc", budget: "$2,000", spent: "$1,600", status: "active", type: "meta" },
+  { id: 14, accId: "357951468357", name: "Video Campaign", clientName: "VW Heavy Up", budget: "$3,800", spent: "$2,660", status: "active", type: "meta" },
   { id: 15, accId: "486159357486", name: "Search Network", clientName: "Nations Auto Glass", budget: "$2,700", spent: "$2,160", status: "active", type: "google" },
   { id: 16, accId: "624813579624", name: "Remarketing Ads", clientName: "Volkswagen", budget: "$1,900", spent: "$1,330", status: "deactive", type: "google" },
-  { id: 17, accId: "813579624813", name: "Lead Generation", clientName: "Tech Startup Inc", budget: "$3,300", spent: "$2,640", status: "active", type: "facebook" },
+  { id: 17, accId: "813579624813", name: "Lead Generation", clientName: "Tech Startup Inc", budget: "$3,300", spent: "$2,640", status: "active", type: "meta" },
   { id: 18, accId: "579246813579", name: "Shopping Campaign", clientName: "VW Heavy Up", budget: "$4,200", spent: "$3,360", status: "active", type: "google" },
   { id: 19, accId: "246813579246", name: "Display Remarketing", clientName: "Nations Auto Glass", budget: "$1,600", spent: "$1,120", status: "active", type: "google" },
-  { id: 20, accId: "135792468135", name: "Messenger Ads", clientName: "Volkswagen", budget: "$2,400", spent: "$1,680", status: "active", type: "facebook" },
+  { id: 20, accId: "135792468135", name: "Messenger Ads", clientName: "Volkswagen", budget: "$2,400", spent: "$1,680", status: "active", type: "meta" },
   { id: 21, accId: "792468135792", name: "Brand Search", clientName: "Tech Startup Inc", budget: "$5,200", spent: "$4,160", status: "active", type: "google" },
-  { id: 22, accId: "468135792468", name: "Carousel Ads", clientName: "VW Heavy Up", budget: "$2,900", spent: "$2,030", status: "deactive", type: "facebook" },
+  { id: 22, accId: "468135792468", name: "Carousel Ads", clientName: "VW Heavy Up", budget: "$2,900", spent: "$2,030", status: "deactive", type: "meta" },
   { id: 23, accId: "913578246913", name: "Call Ads", clientName: "Nations Auto Glass", budget: "$1,400", spent: "$1,050", status: "active", type: "google" },
-  { id: 24, accId: "578246913578", name: "Collection Ads", clientName: "Volkswagen", budget: "$3,700", spent: "$2,960", status: "active", type: "facebook" },
+  { id: 24, accId: "578246913578", name: "Collection Ads", clientName: "Volkswagen", budget: "$3,700", spent: "$2,960", status: "active", type: "meta" },
   { id: 25, accId: "246913578246", name: "Smart Campaign", clientName: "Tech Startup Inc", budget: "$2,100", spent: "$1,680", status: "active", type: "google" },
 ];
 
@@ -111,7 +111,7 @@ export default function Accounts() {
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center justify-center">
-                      {account.type === "google" ? <GoogleIcon /> : <FacebookIcon />}
+                      {account.type === "google" ? <GoogleIcon /> : <MetaIcon />}
                     </div>
                   </TableCell>
                   <TableCell>

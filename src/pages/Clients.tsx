@@ -39,7 +39,7 @@ const clients = [
     fbAdsAccountCount: 1,
     connections: {
       google: true,
-      facebook: true,
+      meta: true,
     },
   },
   {
@@ -55,7 +55,7 @@ const clients = [
     fbAdsAccountCount: 0,
     connections: {
       google: true,
-      facebook: false,
+      meta: false,
     },
   },
   {
@@ -71,7 +71,7 @@ const clients = [
     fbAdsAccountCount: 0,
     connections: {
       google: true,
-      facebook: false,
+      meta: false,
     },
   },
   {
@@ -87,7 +87,7 @@ const clients = [
     fbAdsAccountCount: 0,
     connections: {
       google: false,
-      facebook: false,
+      meta: false,
     },
   },
 ];
@@ -137,7 +137,7 @@ export default function Clients() {
                           <Info className="w-3.5 h-3.5 text-muted-foreground cursor-help" />
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>This includes both Google and Facebook campaigns</p>
+                          <p>This includes both Google and Meta campaigns</p>
                         </TooltipContent>
                       </Tooltip>
                     </div>
@@ -194,13 +194,13 @@ export default function Clients() {
                             <span className="text-sm">Google ({client.googleAdsAccountCount})</span>
                           </div>
                         )}
-                        {client.connections.facebook && (
+                        {client.connections.meta && (
                           <div className="flex items-center gap-1">
                             <CheckCircle2 className="w-4 h-4 text-success" />
-                            <span className="text-sm">Facebook ({client.fbAdsAccountCount})</span>
+                            <span className="text-sm">Meta ({client.fbAdsAccountCount})</span>
                           </div>
                         )}
-                        {!client.connections.google && !client.connections.facebook && (
+                        {!client.connections.google && !client.connections.meta && (
                           <span className="text-sm text-muted-foreground">No connections</span>
                         )}
                       </div>

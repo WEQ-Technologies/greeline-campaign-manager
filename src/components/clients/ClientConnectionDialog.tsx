@@ -23,8 +23,8 @@ interface ClientConnectionDialogProps {
     googleMyBusiness: string;
     googleAds: string;
     googleAnalytics: string;
-    facebookPage: string;
-    facebookPixel: string;
+    metaPage: string;
+    metaPixel: string;
     youtubeChannel: string;
   };
 }
@@ -39,8 +39,8 @@ export function ClientConnectionDialog({
     googleMyBusiness: existingConnections?.googleMyBusiness || "",
     googleAds: existingConnections?.googleAds || "",
     googleAnalytics: existingConnections?.googleAnalytics || "",
-    facebookPage: existingConnections?.facebookPage || "",
-    facebookPixel: existingConnections?.facebookPixel || "",
+    metaPage: existingConnections?.metaPage || "",
+    metaPixel: existingConnections?.metaPixel || "",
     youtubeChannel: existingConnections?.youtubeChannel || "",
   });
 
@@ -164,15 +164,15 @@ export function ClientConnectionDialog({
             </p>
           </div>
 
-          {/* Facebook Page */}
+          {/* Meta Page */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label htmlFor="fb-page" className="flex items-center gap-2">
+              <Label htmlFor="meta-page" className="flex items-center gap-2">
                 <LinkIcon className="w-4 h-4" />
-                Facebook Page URL
+                Meta Page URL
               </Label>
-              {connections.facebookPage && (
-                getConnectionStatus(connections.facebookPage) ? (
+              {connections.metaPage && (
+                getConnectionStatus(connections.metaPage) ? (
                   <Badge variant="default" className="gap-1">
                     <CheckCircle2 className="w-3 h-3" />
                     Connected
@@ -186,26 +186,26 @@ export function ClientConnectionDialog({
               )}
             </div>
             <Input
-              id="fb-page"
+              id="meta-page"
               placeholder="https://www.facebook.com/yourpage"
-              value={connections.facebookPage}
+              value={connections.metaPage}
               onChange={(e) =>
-                setConnections({ ...connections, facebookPage: e.target.value })
+                setConnections({ ...connections, metaPage: e.target.value })
               }
             />
             <p className="text-xs text-muted-foreground">
-              Enter your Facebook business page URL
+              Enter your Meta business page URL
             </p>
           </div>
 
-          {/* Facebook Pixel */}
+          {/* Meta Pixel */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label htmlFor="fb-pixel" className="flex items-center gap-2">
+              <Label htmlFor="meta-pixel" className="flex items-center gap-2">
                 <LinkIcon className="w-4 h-4" />
-                Facebook Pixel ID
+                Meta Pixel ID
               </Label>
-              {connections.facebookPixel && (
+              {connections.metaPixel && (
                 <Badge variant="default" className="gap-1">
                   <CheckCircle2 className="w-3 h-3" />
                   Connected
@@ -213,15 +213,15 @@ export function ClientConnectionDialog({
               )}
             </div>
             <Input
-              id="fb-pixel"
+              id="meta-pixel"
               placeholder="XXXXXXXXXXXXXXX"
-              value={connections.facebookPixel}
+              value={connections.metaPixel}
               onChange={(e) =>
-                setConnections({ ...connections, facebookPixel: e.target.value })
+                setConnections({ ...connections, metaPixel: e.target.value })
               }
             />
             <p className="text-xs text-muted-foreground">
-              Enter your Facebook Pixel ID (15-16 digits)
+              Enter your Meta Pixel ID (15-16 digits)
             </p>
           </div>
 
