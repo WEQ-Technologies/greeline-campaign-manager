@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 export function AssetFields() {
   const [activeTab, setActiveTab] = useState("business-names");
   
+  const [assetName, setAssetName] = useState("");
   const [businessName, setBusinessName] = useState("");
   const [logos, setLogos] = useState<string[]>([]);
   const [finalUrl, setFinalUrl] = useState("");
@@ -31,6 +32,17 @@ export function AssetFields() {
 
   return (
     <Card className="p-4">
+      <div className="mb-6">
+        <Label htmlFor="asset-name">Asset Name</Label>
+        <Input
+          id="asset-name"
+          placeholder="Enter asset name"
+          value={assetName}
+          onChange={(e) => setAssetName(e.target.value)}
+          className="mt-2"
+        />
+      </div>
+      
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <div className="overflow-x-auto">
           <TabsList className="inline-flex w-auto min-w-full">
