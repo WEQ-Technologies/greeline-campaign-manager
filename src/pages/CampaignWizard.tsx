@@ -3,85 +3,59 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Stepper } from "@/components/campaign-wizard/Stepper";
-import { SelectClient } from "@/components/campaign-wizard/SelectClient";
-import { CampaignSettings } from "@/components/campaign-wizard/CampaignSettings";
-import { BudgetBidding } from "@/components/campaign-wizard/BudgetBidding";
-import { LocationsTargeting } from "@/components/campaign-wizard/LocationsTargeting";
-import { AdGroupsKeywords } from "@/components/campaign-wizard/AdGroupsKeywords";
-import { AdsCreation } from "@/components/campaign-wizard/AdsCreation";
-import { Extensions } from "@/components/campaign-wizard/Extensions";
-import { ReviewLaunch } from "@/components/campaign-wizard/ReviewLaunch";
+import { CampaignDetailsStep } from "@/components/campaign-wizard/CampaignDetailsStep";
+import { SetBudgetStep } from "@/components/campaign-wizard/SetBudgetStep";
+import { CampaignSettingsStep } from "@/components/campaign-wizard/CampaignSettingsStep";
+import { AdsKeywordsStep } from "@/components/campaign-wizard/AdsKeywordsStep";
+import { AssetGenerationStep } from "@/components/campaign-wizard/AssetGenerationStep";
+import { SummaryStep } from "@/components/campaign-wizard/SummaryStep";
 import { toast } from "sonner";
 
 const steps = [
-  { id: 0, title: "Client", description: "Select client" },
-  { id: 1, title: "Settings", description: "Campaign details" },
-  { id: 2, title: "Budget", description: "Budget & bidding" },
-  { id: 3, title: "Targeting", description: "Locations & targeting" },
-  { id: 4, title: "Keywords", description: "Ad groups & keywords" },
-  { id: 5, title: "Ads", description: "Create ads" },
-  { id: 6, title: "Extensions", description: "Ad extensions" },
-  { id: 7, title: "Review", description: "Review & launch" },
+  { id: 0, title: "Campaign Details", description: "Basic information" },
+  { id: 1, title: "Set Budget", description: "Budget & bidding" },
+  { id: 2, title: "Campaign Settings", description: "Audience & targeting" },
+  { id: 3, title: "Ads and Keywords", description: "Ad groups & keywords" },
+  { id: 4, title: "Asset Generation", description: "Select assets" },
+  { id: 5, title: "Summary", description: "Review & publish" },
 ];
 
 export default function CampaignWizard() {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
-    client: "",
-    settings: { 
-      name: "", 
-      type: "", 
+    campaignDetails: {
+      client: "Tech Startup Inc", // Pre-filled from header context
+      campaignName: "",
       objective: "",
-      reachGoals: [] as string[],
-      businessWebsiteUrl: "",
-      phoneNumber: "",
-      countryCode: "+1",
-      salesConversionGoals: [] as string[],
-      leadsConversionGoals: [] as string[],
-      finalUrl: "",
+      campaignType: "",
     },
-    budget: { 
-      focusOn: "conversions",
+    budget: {
+      focusOn: "conversion",
       targetCpa: "",
       targetRoas: "",
       budgetType: "daily",
-      averageDailyBudget: "",
-      totalBudget: "",
+      budgetAmount: "",
       startDate: "",
       endDate: "",
+      noEndDate: false,
     },
-    targeting: { 
-      locationType: "all-countries",
-      customLocations: [] as string[],
+    campaignSettings: {
+      audience: "",
+      locations: [] as string[],
       languages: [] as string[],
       adSchedule: [] as Array<{ days: string; startTime: string; endTime: string }>,
-      devices: [] as string[],
-      brandExclusions: [] as string[],
-      ageExclusions: [] as string[],
       trackingTemplate: "",
       finalUrlSuffix: "",
       customParameters: [] as Array<{ name: string; value: string }>,
       pageFeed: "",
     },
-    adGroups: { adGroups: [{ id: "1", name: "Ad Group 1", keywords: [] }] },
-    ads: { headline1: "", headline2: "", headline3: "", description1: "", description2: "", finalUrl: "" },
-    extensions: { 
-      sitelinks: [] as Array<{ text: string; desc1: string; desc2: string; finalUrl: string; trackingUrl: string; startDate: string; endDate: string; }>,
-      priceAssets: [] as Array<{ language: string; type: string; currency: string; qualifier: string; header: string; amount: string; unit: string; description: string; finalUrl: string; }>,
-      calls: [] as Array<{ countryCode: string; phoneNumber: string; conversionAction: string; }>,
-      callouts: [] as Array<{ text: string; startDate: string; endDate: string; }>,
-      structuredSnippets: [] as Array<{ header: string; headerType: string; values: string[]; }>,
-      leadForm: { headline: "", businessName: "", description: "", privacyPolicyUrl: "", submissionHeadline: "", submissionDescription: "", webhookUrl: "", formType: "" },
-      displayPath: "",
-      mobileFinalUrl: "",
-      assetTracking: "",
-      assetUrlSuffix: "",
-      textCustomization: false,
-      finalUrlExpansion: false,
-      imageEnhancements: false,
-      searchThemes: [] as string[],
-      audienceName: "",
+    adsKeywords: {
+      adGroup: "",
+      keywords: [] as string[],
+    },
+    assetGeneration: {
+      assetGroup: "",
     },
   });
 
@@ -109,51 +83,42 @@ export default function CampaignWizard() {
   const renderStep = () => {
     switch (currentStep) {
       case 0:
-        return <SelectClient value={formData.client} onChange={(value) => updateFormData("client", value)} />;
-      case 1:
         return (
-          <CampaignSettings
-            data={formData.settings}
-            onChange={(field, value) => updateFormData("settings", { ...formData.settings, [field]: value })}
+          <CampaignDetailsStep
+            data={formData.campaignDetails}
+            onChange={(field, value) => updateFormData("campaignDetails", { ...formData.campaignDetails, [field]: value })}
           />
         );
-      case 2:
+      case 1:
         return (
-          <BudgetBidding
+          <SetBudgetStep
             data={formData.budget}
             onChange={(field, value) => updateFormData("budget", { ...formData.budget, [field]: value })}
           />
         );
+      case 2:
+        return (
+          <CampaignSettingsStep
+            data={formData.campaignSettings}
+            onChange={(field, value) => updateFormData("campaignSettings", { ...formData.campaignSettings, [field]: value })}
+          />
+        );
       case 3:
         return (
-          <LocationsTargeting
-            data={formData.targeting}
-            onChange={(field, value) => updateFormData("targeting", { ...formData.targeting, [field]: value })}
+          <AdsKeywordsStep
+            data={formData.adsKeywords}
+            onChange={(field, value) => updateFormData("adsKeywords", { ...formData.adsKeywords, [field]: value })}
           />
         );
       case 4:
         return (
-          <AdGroupsKeywords
-            data={formData.adGroups}
-            onChange={(field, value) => updateFormData("adGroups", { ...formData.adGroups, [field]: value })}
+          <AssetGenerationStep
+            data={formData.assetGeneration}
+            onChange={(field, value) => updateFormData("assetGeneration", { ...formData.assetGeneration, [field]: value })}
           />
         );
       case 5:
-        return (
-          <AdsCreation
-            data={formData.ads}
-            onChange={(field, value) => updateFormData("ads", { ...formData.ads, [field]: value })}
-          />
-        );
-      case 6:
-        return (
-          <Extensions
-            data={formData.extensions}
-            onChange={(field, value) => updateFormData("extensions", { ...formData.extensions, [field]: value })}
-          />
-        );
-      case 7:
-        return <ReviewLaunch data={formData} />;
+        return <SummaryStep data={formData} />;
       default:
         return null;
     }
@@ -181,11 +146,11 @@ export default function CampaignWizard() {
           Back
         </Button>
         {currentStep === steps.length - 1 ? (
-          <Button onClick={handleLaunch} className="bg-primary hover:bg-primary-hover">
-            Launch Campaign
+          <Button onClick={handleLaunch}>
+            Publish Campaign
           </Button>
         ) : (
-          <Button onClick={handleNext} className="bg-primary hover:bg-primary-hover">
+          <Button onClick={handleNext}>
             Next
             <ArrowRight className="w-4 h-4 ml-2" />
           </Button>
