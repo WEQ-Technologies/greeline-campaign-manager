@@ -17,13 +17,14 @@ export default function AssetsForm() {
 
   const [formData, setFormData] = useState({
     finalUrl: "",
-    shortHeadline: "",
-    longHeadline: "",
-    description1: "",
-    description2: "",
-    description3: "",
-    description4: "",
   });
+
+  const [logos, setLogos] = useState<string[]>([]);
+  const [headlines, setHeadlines] = useState<string[]>([""]);
+  const [longHeadlines, setLongHeadlines] = useState<string[]>([""]);
+  const [descriptions, setDescriptions] = useState<string[]>([""]);
+  const [images, setImages] = useState<string[]>([]);
+  const [videos, setVideos] = useState<string[]>([""]);
 
   const [sitelinks, setSitelinks] = useState<Array<{
     text: string;
@@ -44,7 +45,7 @@ export default function AssetsForm() {
     phoneNumber: string;
   }>>([]);
 
-  const [callouts, setCallouts] = useState<string[]>([]);
+  const [callouts, setCallouts] = useState<string[]>([""]);
 
   const [structuredSnippets, setStructuredSnippets] = useState<Array<{
     header: string;
@@ -64,14 +65,6 @@ export default function AssetsForm() {
     setSitelinks(sitelinks.filter((_, i) => i !== index));
   };
 
-  const addPriceAsset = () => {
-    setPriceAssets([...priceAssets, { type: "", header: "", amount: "", description: "" }]);
-  };
-
-  const removePriceAsset = (index: number) => {
-    setPriceAssets(priceAssets.filter((_, i) => i !== index));
-  };
-
   const addCall = () => {
     setCalls([...calls, { countryCode: "+1", phoneNumber: "" }]);
   };
@@ -81,15 +74,31 @@ export default function AssetsForm() {
   };
 
   const addCallout = () => {
-    setCallouts([...callouts, ""]);
+    if (callouts.length < 20) {
+      setCallouts([...callouts, ""]);
+    }
   };
 
   const removeCallout = (index: number) => {
-    setCallouts(callouts.filter((_, i) => i !== index));
+    if (callouts.length > 1) {
+      setCallouts(callouts.filter((_, i) => i !== index));
+    }
+  };
+
+  const addPriceAsset = () => {
+    if (priceAssets.length < 8) {
+      setPriceAssets([...priceAssets, { type: "", header: "", amount: "", description: "" }]);
+    }
+  };
+
+  const removePriceAsset = (index: number) => {
+    setPriceAssets(priceAssets.filter((_, i) => i !== index));
   };
 
   const addStructuredSnippet = () => {
-    setStructuredSnippets([...structuredSnippets, { header: "", values: [] }]);
+    if (structuredSnippets.length < 10) {
+      setStructuredSnippets([...structuredSnippets, { header: "", values: [] }]);
+    }
   };
 
   const removeStructuredSnippet = (index: number) => {
@@ -110,19 +119,55 @@ export default function AssetsForm() {
         </div>
       </div>
 
-      <Tabs defaultValue="finalUrl" className="w-full">
-        <TabsList className="grid w-full grid-cols-4 lg:grid-cols-9">
-          <TabsTrigger value="finalUrl">Final URL</TabsTrigger>
+      <Tabs defaultValue="logos" className="w-full">
+        <TabsList className="grid w-full grid-cols-4 lg:grid-cols-11">
+          <TabsTrigger value="logos">Logos</TabsTrigger>
+          <TabsTrigger value="finalUrl">URL</TabsTrigger>
           <TabsTrigger value="headlines">Headlines</TabsTrigger>
           <TabsTrigger value="descriptions">Descriptions</TabsTrigger>
           <TabsTrigger value="images">Images</TabsTrigger>
           <TabsTrigger value="videos">Videos</TabsTrigger>
           <TabsTrigger value="sitelinks">Sitelinks</TabsTrigger>
-          <TabsTrigger value="prices">Price Assets</TabsTrigger>
+          <TabsTrigger value="prices">Prices</TabsTrigger>
           <TabsTrigger value="calls">Calls</TabsTrigger>
           <TabsTrigger value="callouts">Callouts</TabsTrigger>
           <TabsTrigger value="snippets" className="hidden lg:block">Snippets</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="logos" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>Brand Logos</CardTitle>
+                  <CardDescription>Upload up to 5 logos</CardDescription>
+                </div>
+                <Button 
+                  onClick={() => logos.length < 5 && setLogos([...logos, ""])} 
+                  variant="outline" 
+                  size="sm"
+                  disabled={logos.length >= 5}
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Logo
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="border-2 border-dashed border-border rounded-lg p-12 text-center">
+                <Upload className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                <p className="text-sm text-muted-foreground mb-2">
+                  Upload logo files (PNG, SVG recommended)
+                </p>
+                <p className="text-xs text-muted-foreground mb-4">
+                  Up to 5 logos
+                </p>
+                <Button variant="outline">Browse Logos</Button>
+              </div>
+              <p className="text-xs text-muted-foreground mt-2">{logos.length}/5 logos uploaded</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
         <TabsContent value="finalUrl" className="space-y-4">
           <Card>
@@ -148,32 +193,100 @@ export default function AssetsForm() {
         <TabsContent value="headlines" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Headlines</CardTitle>
-              <CardDescription>Create short and long headlines for your ads</CardDescription>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>Headlines</CardTitle>
+                  <CardDescription>Add up to 15 headlines (30 chars) and 5 long headlines (90 chars)</CardDescription>
+                </div>
+              </div>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="shortHeadline">Short Headline (30 chars max)</Label>
-                <Input
-                  id="shortHeadline"
-                  value={formData.shortHeadline}
-                  onChange={(e) => setFormData({ ...formData, shortHeadline: e.target.value })}
-                  maxLength={30}
-                  placeholder="e.g., Winter Sale - Save 30%"
-                />
-                <p className="text-xs text-muted-foreground">{formData.shortHeadline.length}/30</p>
+            <CardContent className="space-y-6">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <Label>Headlines (up to 15, 30 chars max)</Label>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => headlines.length < 15 && setHeadlines([...headlines, ""])}
+                    disabled={headlines.length >= 15}
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Headline
+                  </Button>
+                </div>
+                <div className="space-y-3">
+                  {headlines.map((headline, index) => (
+                    <div key={index} className="flex gap-2 items-start">
+                      <div className="flex-1 space-y-1">
+                        <Input
+                          value={headline}
+                          onChange={(e) => {
+                            const updated = [...headlines];
+                            updated[index] = e.target.value;
+                            setHeadlines(updated);
+                          }}
+                          maxLength={30}
+                          placeholder={`Headline ${index + 1}`}
+                        />
+                        <p className="text-xs text-muted-foreground">{headline.length}/30</p>
+                      </div>
+                      {headlines.length > 1 && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => setHeadlines(headlines.filter((_, i) => i !== index))}
+                        >
+                          <Trash2 className="w-4 h-4 text-destructive" />
+                        </Button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground">{headlines.length}/15 headlines</p>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="longHeadline">Long Headline (90 chars max)</Label>
-                <Input
-                  id="longHeadline"
-                  value={formData.longHeadline}
-                  onChange={(e) => setFormData({ ...formData, longHeadline: e.target.value })}
-                  maxLength={90}
-                  placeholder="e.g., Experience Premium Quality Winter Products - Up to 30% Off All Models"
-                />
-                <p className="text-xs text-muted-foreground">{formData.longHeadline.length}/90</p>
+              <div className="space-y-4 pt-4 border-t">
+                <div className="flex items-center justify-between">
+                  <Label>Long Headlines (up to 5, 90 chars max)</Label>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => longHeadlines.length < 5 && setLongHeadlines([...longHeadlines, ""])}
+                    disabled={longHeadlines.length >= 5}
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Long Headline
+                  </Button>
+                </div>
+                <div className="space-y-3">
+                  {longHeadlines.map((headline, index) => (
+                    <div key={index} className="flex gap-2 items-start">
+                      <div className="flex-1 space-y-1">
+                        <Input
+                          value={headline}
+                          onChange={(e) => {
+                            const updated = [...longHeadlines];
+                            updated[index] = e.target.value;
+                            setLongHeadlines(updated);
+                          }}
+                          maxLength={90}
+                          placeholder={`Long headline ${index + 1}`}
+                        />
+                        <p className="text-xs text-muted-foreground">{headline.length}/90</p>
+                      </div>
+                      {longHeadlines.length > 1 && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => setLongHeadlines(longHeadlines.filter((_, i) => i !== index))}
+                        >
+                          <Trash2 className="w-4 h-4 text-destructive" />
+                        </Button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground">{longHeadlines.length}/5 long headlines</p>
               </div>
             </CardContent>
           </Card>
@@ -182,28 +295,53 @@ export default function AssetsForm() {
         <TabsContent value="descriptions" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Descriptions</CardTitle>
-              <CardDescription>Add up to 4 descriptions (90 chars each)</CardDescription>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>Descriptions</CardTitle>
+                  <CardDescription>Add up to 5 descriptions (90 chars each)</CardDescription>
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => descriptions.length < 5 && setDescriptions([...descriptions, ""])}
+                  disabled={descriptions.length >= 5}
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Description
+                </Button>
+              </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              {[1, 2, 3, 4].map((num) => (
-                <div key={num} className="space-y-2">
-                  <Label htmlFor={`description${num}`}>Description {num}</Label>
-                  <Textarea
-                    id={`description${num}`}
-                    value={formData[`description${num}` as keyof typeof formData]}
-                    onChange={(e) =>
-                      setFormData({ ...formData, [`description${num}`]: e.target.value })
-                    }
-                    maxLength={90}
-                    rows={2}
-                    placeholder={`Enter description ${num}`}
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    {String(formData[`description${num}` as keyof typeof formData]).length}/90
-                  </p>
+              {descriptions.map((description, index) => (
+                <div key={index} className="flex gap-2 items-start">
+                  <div className="flex-1 space-y-1">
+                    <Label>Description {index + 1}</Label>
+                    <Textarea
+                      value={description}
+                      onChange={(e) => {
+                        const updated = [...descriptions];
+                        updated[index] = e.target.value;
+                        setDescriptions(updated);
+                      }}
+                      maxLength={90}
+                      rows={2}
+                      placeholder={`Enter description ${index + 1}`}
+                    />
+                    <p className="text-xs text-muted-foreground">{description.length}/90</p>
+                  </div>
+                  {descriptions.length > 1 && (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setDescriptions(descriptions.filter((_, i) => i !== index))}
+                      className="mt-6"
+                    >
+                      <Trash2 className="w-4 h-4 text-destructive" />
+                    </Button>
+                  )}
                 </div>
               ))}
+              <p className="text-xs text-muted-foreground">{descriptions.length}/5 descriptions</p>
             </CardContent>
           </Card>
         </TabsContent>
@@ -211,8 +349,21 @@ export default function AssetsForm() {
         <TabsContent value="images" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Images</CardTitle>
-              <CardDescription>Upload images for your ads (recommended sizes: 1200x628, 1200x1200)</CardDescription>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>Images</CardTitle>
+                  <CardDescription>Upload up to 20 images (recommended sizes: 1200x628, 1200x1200)</CardDescription>
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => images.length < 20 && setImages([...images, ""])}
+                  disabled={images.length >= 20}
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Image
+                </Button>
+              </div>
             </CardHeader>
             <CardContent>
               <div className="border-2 border-dashed border-border rounded-lg p-12 text-center">
@@ -221,10 +372,11 @@ export default function AssetsForm() {
                   Drag and drop images here, or click to browse
                 </p>
                 <p className="text-xs text-muted-foreground mb-4">
-                  Supports: JPG, PNG, GIF (max 5MB each)
+                  Supports: JPG, PNG, GIF (max 5MB each, up to 20 images)
                 </p>
                 <Button variant="outline">Browse Images</Button>
               </div>
+              <p className="text-xs text-muted-foreground mt-2">{images.length}/20 images uploaded</p>
             </CardContent>
           </Card>
         </TabsContent>
@@ -232,17 +384,49 @@ export default function AssetsForm() {
         <TabsContent value="videos" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Videos</CardTitle>
-              <CardDescription>Upload videos or add YouTube links</CardDescription>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>Videos</CardTitle>
+                  <CardDescription>Add up to 5 videos via YouTube link or upload</CardDescription>
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => videos.length < 5 && setVideos([...videos, ""])}
+                  disabled={videos.length >= 5}
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Video
+                </Button>
+              </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="youtubeUrl">YouTube URL</Label>
-                <Input
-                  id="youtubeUrl"
-                  placeholder="https://www.youtube.com/watch?v=..."
-                />
-              </div>
+              {videos.map((video, index) => (
+                <div key={index} className="flex gap-2 items-start">
+                  <div className="flex-1">
+                    <Label>Video {index + 1}</Label>
+                    <Input
+                      value={video}
+                      onChange={(e) => {
+                        const updated = [...videos];
+                        updated[index] = e.target.value;
+                        setVideos(updated);
+                      }}
+                      placeholder="https://www.youtube.com/watch?v=..."
+                    />
+                  </div>
+                  {videos.length > 1 && (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setVideos(videos.filter((_, i) => i !== index))}
+                      className="mt-6"
+                    >
+                      <Trash2 className="w-4 h-4 text-destructive" />
+                    </Button>
+                  )}
+                </div>
+              ))}
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
                   <span className="w-full border-t" />
@@ -258,6 +442,7 @@ export default function AssetsForm() {
                   Browse Videos
                 </Button>
               </div>
+              <p className="text-xs text-muted-foreground">{videos.length}/5 videos</p>
             </CardContent>
           </Card>
         </TabsContent>
@@ -353,9 +538,14 @@ export default function AssetsForm() {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle>Price Assets</CardTitle>
-                  <CardDescription>Showcase your products and pricing</CardDescription>
+                  <CardDescription>Add up to 8 price assets to showcase your products and pricing</CardDescription>
                 </div>
-                <Button onClick={addPriceAsset} variant="outline" size="sm">
+                <Button 
+                  onClick={addPriceAsset} 
+                  variant="outline" 
+                  size="sm"
+                  disabled={priceAssets.length >= 8}
+                >
                   <Plus className="w-4 h-4 mr-2" />
                   Add Price
                 </Button>
@@ -435,6 +625,7 @@ export default function AssetsForm() {
                   </div>
                 </Card>
               ))}
+              <p className="text-xs text-muted-foreground">{priceAssets.length}/8 price assets</p>
             </CardContent>
           </Card>
         </TabsContent>
@@ -502,9 +693,14 @@ export default function AssetsForm() {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle>Callouts</CardTitle>
-                  <CardDescription>Highlight key selling points (25 chars max each)</CardDescription>
+                  <CardDescription>Add up to 20 callouts (25 chars max each) to highlight key selling points</CardDescription>
                 </div>
-                <Button onClick={addCallout} variant="outline" size="sm">
+                <Button 
+                  onClick={addCallout} 
+                  variant="outline" 
+                  size="sm"
+                  disabled={callouts.length >= 20}
+                >
                   <Plus className="w-4 h-4 mr-2" />
                   Add Callout
                 </Button>
@@ -512,22 +708,28 @@ export default function AssetsForm() {
             </CardHeader>
             <CardContent className="space-y-3">
               {callouts.map((callout, index) => (
-                <div key={index} className="flex gap-2">
-                  <Input
-                    maxLength={25}
-                    placeholder="e.g., Free Shipping"
-                    value={callout}
-                    onChange={(e) => {
-                      const updated = [...callouts];
-                      updated[index] = e.target.value;
-                      setCallouts(updated);
-                    }}
-                  />
-                  <Button variant="ghost" size="icon" onClick={() => removeCallout(index)}>
-                    <Trash2 className="w-4 h-4 text-destructive" />
-                  </Button>
+                <div key={index} className="flex gap-2 items-start">
+                  <div className="flex-1 space-y-1">
+                    <Input
+                      maxLength={25}
+                      placeholder={`Callout ${index + 1} (e.g., Free Shipping)`}
+                      value={callout}
+                      onChange={(e) => {
+                        const updated = [...callouts];
+                        updated[index] = e.target.value;
+                        setCallouts(updated);
+                      }}
+                    />
+                    <p className="text-xs text-muted-foreground">{callout.length}/25</p>
+                  </div>
+                  {callouts.length > 1 && (
+                    <Button variant="ghost" size="icon" onClick={() => removeCallout(index)}>
+                      <Trash2 className="w-4 h-4 text-destructive" />
+                    </Button>
+                  )}
                 </div>
               ))}
+              <p className="text-xs text-muted-foreground">{callouts.length}/20 callouts</p>
             </CardContent>
           </Card>
         </TabsContent>
@@ -538,9 +740,14 @@ export default function AssetsForm() {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle>Structured Snippets</CardTitle>
-                  <CardDescription>Highlight specific aspects of your products or services</CardDescription>
+                  <CardDescription>Add up to 10 snippets to highlight specific aspects of your products or services</CardDescription>
                 </div>
-                <Button onClick={addStructuredSnippet} variant="outline" size="sm">
+                <Button 
+                  onClick={addStructuredSnippet} 
+                  variant="outline" 
+                  size="sm"
+                  disabled={structuredSnippets.length >= 10}
+                >
                   <Plus className="w-4 h-4 mr-2" />
                   Add Snippet
                 </Button>
@@ -580,22 +787,25 @@ export default function AssetsForm() {
                         </Select>
                       </div>
                       <div className="space-y-2">
-                        <Label>Values (comma-separated, 25 chars max each)</Label>
+                        <Label>Values (comma-separated, up to 10 values, 25 chars max each)</Label>
                         <Textarea
                           placeholder="Value 1, Value 2, Value 3"
                           rows={2}
                           value={snippet.values.join(", ")}
                           onChange={(e) => {
                             const updated = [...structuredSnippets];
-                            updated[index].values = e.target.value.split(",").map(v => v.trim());
+                            const values = e.target.value.split(",").map(v => v.trim().slice(0, 25));
+                            updated[index].values = values.slice(0, 10);
                             setStructuredSnippets(updated);
                           }}
                         />
+                        <p className="text-xs text-muted-foreground">{snippet.values.length}/10 values</p>
                       </div>
                     </div>
                   </div>
                 </Card>
               ))}
+              <p className="text-xs text-muted-foreground">{structuredSnippets.length}/10 structured snippets</p>
             </CardContent>
           </Card>
         </TabsContent>
