@@ -2,8 +2,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Plus } from "lucide-react";
+import { useState } from "react";
+import { AddKeywordDialog } from "./dialogs/AddKeywordDialog";
+import { AddAdDialog } from "./dialogs/AddAdDialog";
 
 interface AdsKeywordsStepProps {
   data: {
@@ -26,7 +28,8 @@ const availableKeywords = [
 ];
 
 export function AdsKeywordsStep({ data, onChange }: AdsKeywordsStepProps) {
-  const navigate = useNavigate();
+  const [keywordDialogOpen, setKeywordDialogOpen] = useState(false);
+  const [adDialogOpen, setAdDialogOpen] = useState(false);
 
   return (
     <div className="space-y-6">
@@ -55,10 +58,10 @@ export function AdsKeywordsStep({ data, onChange }: AdsKeywordsStepProps) {
           <Button
             variant="outline"
             className="w-full"
-            onClick={() => navigate("/google-ads/ad-groups/add")}
+            onClick={() => setAdDialogOpen(true)}
           >
-            <ExternalLink className="w-4 h-4 mr-2" />
-            Create New Ad Group
+            <Plus className="w-4 h-4 mr-2" />
+            Create New Ad
           </Button>
         </CardContent>
       </Card>
@@ -91,13 +94,29 @@ export function AdsKeywordsStep({ data, onChange }: AdsKeywordsStepProps) {
           <Button
             variant="outline"
             className="w-full"
-            onClick={() => navigate("/google-ads/keywords/add")}
+            onClick={() => setKeywordDialogOpen(true)}
           >
-            <ExternalLink className="w-4 h-4 mr-2" />
+            <Plus className="w-4 h-4 mr-2" />
             Add Keywords
           </Button>
         </CardContent>
       </Card>
+
+      <AddKeywordDialog 
+        open={keywordDialogOpen} 
+        onOpenChange={setKeywordDialogOpen}
+        onSuccess={() => {
+          // Refresh keywords list or update state as needed
+        }}
+      />
+      
+      <AddAdDialog 
+        open={adDialogOpen} 
+        onOpenChange={setAdDialogOpen}
+        onSuccess={() => {
+          // Refresh ads list or update state as needed
+        }}
+      />
     </div>
   );
 }

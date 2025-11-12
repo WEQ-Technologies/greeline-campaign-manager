@@ -2,8 +2,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Plus } from "lucide-react";
+import { useState } from "react";
+import { AddAssetDialog } from "./dialogs/AddAssetDialog";
 
 interface AssetGenerationStepProps {
   data: {
@@ -19,7 +20,7 @@ const availableAssetGroups = [
 ];
 
 export function AssetGenerationStep({ data, onChange }: AssetGenerationStepProps) {
-  const navigate = useNavigate();
+  const [assetDialogOpen, setAssetDialogOpen] = useState(false);
 
   return (
     <div className="space-y-6">
@@ -48,13 +49,21 @@ export function AssetGenerationStep({ data, onChange }: AssetGenerationStepProps
           <Button
             variant="outline"
             className="w-full"
-            onClick={() => navigate("/google-ads/assets")}
+            onClick={() => setAssetDialogOpen(true)}
           >
-            <ExternalLink className="w-4 h-4 mr-2" />
+            <Plus className="w-4 h-4 mr-2" />
             Create New Asset
           </Button>
         </CardContent>
       </Card>
+
+      <AddAssetDialog 
+        open={assetDialogOpen} 
+        onOpenChange={setAssetDialogOpen}
+        onSuccess={() => {
+          // Refresh assets list or update state as needed
+        }}
+      />
     </div>
   );
 }
