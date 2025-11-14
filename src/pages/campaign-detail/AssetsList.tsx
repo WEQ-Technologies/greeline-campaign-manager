@@ -1,9 +1,20 @@
-import { Plus, Edit, Eye, Image as ImageIcon, Video, Type, FileText } from "lucide-react";
+import { Plus, Edit, Eye, Image as ImageIcon, Video, Type, FileText, ChevronsLeft, ChevronsRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate, useParams } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Card, CardContent } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { useState } from "react";
 
 const assets = [
   {
@@ -62,6 +73,19 @@ function getAssetIcon(type: string) {
 export default function AssetsList() {
   const navigate = useNavigate();
   const { id: campaignId } = useParams();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(20);
+
+  // Calculate pagination
+  const totalPages = Math.ceil(assets.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = assets.slice(startIndex, endIndex);
+
+  const goToFirstPage = () => setCurrentPage(1);
+  const goToLastPage = () => setCurrentPage(totalPages);
+  const goToNextPage = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  const goToPreviousPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
 
   return (
     <div className="p-6 space-y-6">
@@ -91,7 +115,7 @@ export default function AssetsList() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {assets.map((asset) => (
+              {currentItems.map((asset) => (
                 <TableRow key={asset.id}>
                   <TableCell>
                     <div className="flex items-center gap-2">
@@ -129,6 +153,92 @@ export default function AssetsList() {
           </Table>
         </CardContent>
       </Card>
+
+      {/* Pagination */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-muted-foreground">Rows per page:</span>
+          <Select value={itemsPerPage.toString()} onValueChange={(value) => {
+            setItemsPerPage(Number(value));
+            setCurrentPage(1);
+          }}>
+            <SelectTrigger className="w-[70px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="10">10</SelectItem>
+              <SelectItem value="20">20</SelectItem>
+              <SelectItem value="50">50</SelectItem>
+              <SelectItem value="100">100</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={goToFirstPage}
+                disabled={currentPage === 1}
+                className="h-8 w-8"
+              >
+                <ChevronsLeft className="h-4 w-4" />
+              </Button>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationPrevious 
+                onClick={goToPreviousPage}
+                className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+              />
+            </PaginationItem>
+            {Array.from({ length: totalPages }, (_, i) => i + 1)
+              .filter(page => {
+                return page === 1 || 
+                       page === totalPages || 
+                       Math.abs(page - currentPage) <= 1;
+              })
+              .map((page, index, array) => {
+                if (index > 0 && array[index - 1] !== page - 1) {
+                  return (
+                    <PaginationItem key={`ellipsis-${page}`}>
+                      <PaginationEllipsis />
+                    </PaginationItem>
+                  );
+                }
+                return (
+                  <PaginationItem key={page}>
+                    <PaginationLink
+                      onClick={() => setCurrentPage(page)}
+                      isActive={currentPage === page}
+                      className="cursor-pointer"
+                    >
+                      {page}
+                    </PaginationLink>
+                  </PaginationItem>
+                );
+              })}
+            <PaginationItem>
+              <PaginationNext 
+                onClick={goToNextPage}
+                className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+              />
+            </PaginationItem>
+            <PaginationItem>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={goToLastPage}
+                disabled={currentPage === totalPages}
+                className="h-8 w-8"
+              >
+                <ChevronsRight className="h-4 w-4" />
+              </Button>
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      </div>
     </div>
   );
 }
