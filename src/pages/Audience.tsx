@@ -11,6 +11,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
+import { ModuleSyncPanel, SyncStatusBadge, SyncErrorBanner } from "@/components/sync";
+import { useSync } from "@/hooks/use-sync";
 
 const audiences = [
   {
@@ -49,8 +51,14 @@ export default function Audience() {
   const [filterOpen, setFilterOpen] = useState(false);
   const [createAudienceOpen, setCreateAudienceOpen] = useState(false);
 
+  const { globalLock, modules, syncModule } = useSync();
+  const isModuleLocked = globalLock || modules.audience.status === "syncing";
+
   return (
     <div className="p-6 space-y-6">
+      <SyncErrorBanner module="audience" />
+      <ModuleSyncPanel module="audience" />
+
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Audience</h1>
