@@ -10,6 +10,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
+import { ModuleSyncPanel, SyncStatusBadge, SyncErrorBanner } from "@/components/sync";
+import { useSync } from "@/hooks/use-sync";
 
 const ads = [
   {
@@ -42,8 +44,14 @@ export default function Ads() {
   const [dateRange, setDateRange] = useState({ start: "", end: "" });
   const [filterOpen, setFilterOpen] = useState(false);
 
+  const { globalLock, modules } = useSync();
+  const isModuleLocked = globalLock || modules.ads.status === "syncing";
+
   return (
     <div className="p-6 space-y-6">
+      <SyncErrorBanner module="ads" />
+      <ModuleSyncPanel module="ads" />
+
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Ads</h1>
