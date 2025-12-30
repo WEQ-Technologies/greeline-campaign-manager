@@ -4,14 +4,13 @@ import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { AccountSyncOverview } from "@/components/sync";
+import { CompactSyncButton } from "@/components/sync/CompactSyncButton";
 
 export function GoogleAdsHeader() {
   const navigate = useNavigate();
 
   return (
     <header className="border-b border-border bg-card">
-      {/* Main Header Row */}
       <div className="h-16 flex items-center px-6 gap-4">
         {/* Back Button */}
         <Button
@@ -54,6 +53,9 @@ export function GoogleAdsHeader() {
                 <SelectItem value="client3">VW Heavy Up</SelectItem>
               </SelectContent>
             </Select>
+
+            {/* Sync Button next to dropdowns */}
+            <CompactSyncButton />
           </div>
         </div>
 
@@ -79,11 +81,6 @@ export function GoogleAdsHeader() {
             </AvatarFallback>
           </Avatar>
         </div>
-      </div>
-
-      {/* Sync Overview Bar */}
-      <div className="px-6 py-2 bg-muted/30 border-t border-border">
-        <AccountSyncOverview />
       </div>
     </header>
   );

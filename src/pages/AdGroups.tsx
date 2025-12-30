@@ -10,8 +10,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
-import { ModuleSyncPanel, SyncStatusBadge, SyncErrorBanner } from "@/components/sync";
-import { useSync } from "@/hooks/use-sync";
 
 const adGroups = [
   {
@@ -40,17 +38,8 @@ export default function AdGroups() {
   const [dateRange, setDateRange] = useState({ start: "", end: "" });
   const [filterOpen, setFilterOpen] = useState(false);
 
-  const { globalLock, modules } = useSync();
-  const isModuleLocked = globalLock || modules["ad-groups"].status === "syncing";
-
   return (
     <div className="p-6 space-y-6">
-      {/* Sync Error Banner */}
-      <SyncErrorBanner module="ad-groups" />
-
-      {/* Module Sync Panel */}
-      <ModuleSyncPanel module="ad-groups" />
-
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Ad Groups</h1>
@@ -130,13 +119,12 @@ export default function AdGroups() {
                 <TableHead>Ad Group Name</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Ad Group Type</TableHead>
-                <TableHead>Sync Status</TableHead>
                 <TableHead>Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {adGroups.map((group) => (
-                <TableRow key={group.id} className={isModuleLocked ? "opacity-60 pointer-events-none" : ""}>
+                <TableRow key={group.id}>
                   <TableCell className="font-medium">{group.name}</TableCell>
                   <TableCell>
                     <Badge variant="secondary">
@@ -145,12 +133,9 @@ export default function AdGroups() {
                   </TableCell>
                   <TableCell>{group.adGroupType}</TableCell>
                   <TableCell>
-                    <SyncStatusBadge itemId={`adgroup-${group.id}`} module="ad-groups" />
-                  </TableCell>
-                  <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0" disabled={isModuleLocked}>
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                           <MoreVertical className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>

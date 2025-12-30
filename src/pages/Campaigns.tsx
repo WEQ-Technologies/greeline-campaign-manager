@@ -32,8 +32,6 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
-import { ModuleSyncPanel, SyncStatusBadge, SyncErrorBanner } from "@/components/sync";
-import { useSync } from "@/hooks/use-sync";
 
 const campaigns = [
   {
@@ -92,17 +90,8 @@ export default function Campaigns() {
   const goToNextPage = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   const goToPreviousPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
 
-  const { globalLock, modules } = useSync();
-  const isModuleLocked = globalLock || modules.campaigns.status === "syncing";
-
   return (
     <div className="p-6 space-y-6">
-      {/* Sync Error Banner */}
-      <SyncErrorBanner module="campaigns" />
-
-      {/* Module Sync Panel */}
-      <ModuleSyncPanel module="campaigns" />
-
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Campaigns</h1>
@@ -157,7 +146,6 @@ export default function Campaigns() {
       </div>
 
       {/* List View */}
-
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">List View</CardTitle>
@@ -175,13 +163,12 @@ export default function Campaigns() {
                 <TableHead className="text-right">Spend</TableHead>
                 <TableHead className="text-right">Clicks</TableHead>
                 <TableHead className="text-right">Conversions</TableHead>
-                <TableHead>Sync Status</TableHead>
                 <TableHead className="w-[50px]"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {currentItems.map((campaign) => (
-                <TableRow key={campaign.id} className={isModuleLocked ? "opacity-60 pointer-events-none" : ""}>
+                <TableRow key={campaign.id}>
                   <TableCell className="font-medium">{campaign.name}</TableCell>
                   <TableCell>{campaign.client}</TableCell>
                   <TableCell>{campaign.budget}</TableCell>
@@ -200,12 +187,9 @@ export default function Campaigns() {
                   </TableCell>
                   <TableCell className="text-right">{campaign.conversions}</TableCell>
                   <TableCell>
-                    <SyncStatusBadge itemId={`campaign-${campaign.id}`} module="campaigns" />
-                  </TableCell>
-                  <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0" disabled={isModuleLocked}>
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                           <MoreVertical className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
