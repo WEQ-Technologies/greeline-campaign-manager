@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { useParams, useNavigate, Outlet, useLocation } from "react-router-dom";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { ArrowLeft, Layers, Image, Settings, History, FolderKanban } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { CompactSyncButton } from "@/components/sync/CompactSyncButton";
 
 const campaigns = [
   { id: "1", name: "Brand Awareness Q1", client: "Tech Startup Inc", type: "Search", goal: "Sales" },
@@ -37,7 +37,7 @@ export default function CampaignDetail() {
       <div className="flex min-h-screen w-full">
         <Sidebar className="border-r border-border">
           <div className="p-4 border-b border-border">
-            <Button variant="ghost" size="sm" onClick={() => navigate("/campaigns")} className="mb-2">
+            <Button variant="ghost" size="sm" onClick={() => navigate("/google-ads/campaigns")} className="mb-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Campaigns
             </Button>
@@ -71,8 +71,9 @@ export default function CampaignDetail() {
         </Sidebar>
 
         <main className="flex-1">
-          <div className="border-b border-border p-4">
+          <div className="border-b border-border p-4 flex items-center justify-between">
             <SidebarTrigger />
+            <CompactSyncButton />
           </div>
           <Outlet />
         </main>
